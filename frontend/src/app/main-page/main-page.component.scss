@@ -27,7 +27,6 @@
 }
 
 .imageHelp {
-  // background-image: url("../../images/test2.png");
   background-image: url("../../../../backend/src/processImages/rice.jpeg");
   background-image: url("../../../../backend/src/processImages/tumor.jpeg");
   background-image: url("../../../../backend/src/processImages/tumor2.jpeg");
@@ -45,16 +44,15 @@
 }
 
 .main-page {
-  position: relative;
-  height: 1200px;
-  background-color: #ff4343;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(to right, black, #3533cd);
 
   .white_container {
-    position: relative;
-    top: 12px;
-    margin-left: 91px;
-    margin-right: 12px;
-    background-color: #f0f0f0;
+    width: 90%;
+    background-color: #EEEEFF;
     border-radius: 20px;
   }
 
@@ -64,7 +62,7 @@
     align-items: center;
     justify-content: space-between;
     height: 70px;
-    background-color: #F39F9F;
+    background-color: #2a29a1;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
 
@@ -87,7 +85,7 @@
         font-family: "Inter";
         font-size: 40px;
         font-weight: 700;
-        color: #DFFDDD;
+        color: #EEEEFF;
       }
     }
 
