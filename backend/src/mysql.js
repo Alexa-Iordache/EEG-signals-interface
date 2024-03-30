@@ -6,7 +6,7 @@ function connect(callback) {
     host: "localhost",
     user: "root",
     password: "password",
-    database: "medicalImages",
+    database: "EEG_signals",
   });
 
   connection.getConnection((error, variable) => {

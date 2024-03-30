@@ -3,7 +3,7 @@
     <div class="navbar">
       <div class="navbar_text">
         <div class="navbar_text_first">Welcome to</div>
-        <div class="navbar_text_second">MediScan</div>
+        <div class="navbar_text_second">EEG Signals</div>
       </div>
 
       <div class="navbar_exit-icon" (click)="exitButton()">
@@ -12,20 +12,15 @@
     </div>
     <div class="main-page_top-part">
       <div class="main-page_menu-container">
-        <form #heroForm="ngForm">
-          <input type="file" id="myFile" name="filename" ngModel />
-          <input (click)="fileUpload(heroForm)" type="submit" />
-        </form>
-
         <button
           [ngClass]="{ enabledButton: !isDisabled, disabledButton: isDisabled }"
           [disabled]="isDisabled"
           mat-raised-button
           color="accent"
           class="menu-button"
-          (click)="imageSegmentation(originalImagePath)"
+          (click)="antrenareModel()"
         >
-          Image Segmentation
+          Antrenare model
         </button>
         <button
           [ngClass]="{ enabledButton: !isDisabled, disabledButton: isDisabled }"
@@ -34,194 +29,20 @@
           color="accent"
           class="menu-button"
           (click)="
-            brightnessEnhancement(originalImagePath, brightness, contrast)
+            utilizareModel();
           "
         >
-          Brightness & Contrast Enhancement
+          Utilizare model existent
         </button>
-        <button
-          [ngClass]="{ enabledButton: !isDisabled, disabledButton: isDisabled }"
-          [disabled]="isDisabled"
-          mat-raised-button
-          color="accent"
-          class="menu-button"
-          (click)="sharpnessEnhancement(originalImagePath)"
-        >
-          Sharpness Enhancement
-        </button>
-        <button
-          [ngClass]="{ enabledButton: !isDisabled, disabledButton: isDisabled }"
-          [disabled]="isDisabled"
-          mat-raised-button
-          color="accent"
-          class="menu-button"
-          (click)="resetButton()"
-        >
-          Reset
-        </button>
-        <!-- <button
-          mat-raised-button
-          color="accent"
-          class="menu-button"
-          (click)="exitButton()"
-        >
-          Exit
-        </button> -->
       </div>
 
-      <div class="main-page_photo-container">
-        <div
-          *ngIf="
-            originalImagePath === '' &&
-            imgBrightnessEnhPath === '' &&
-            imageSegmentationPath === '' &&
-            imgSharpnessEnhPath === ''
-          "
-          class="placehorder_text"
-        >
-          photos will be displayed here
-        </div>
-
-        <div *ngIf="originalImagePath !== ''" class="title-and-photo">
-          <div class="image-title">Original image:</div>
-          <img src="{{ originalImagePath }}" class="photoDisplayed" />
-        </div>
-
-        <div *ngIf="imageSegmentationPath !== ''" class="title-and-photo">
-          <div class="image-title">Image after segmentation process:</div>
-          <img src="{{ imageSegmentationPath }}" class="photoDisplayed" />
-        </div>
-
-        <div
-          *ngIf="imgBrightnessEnhPath !== '' && imgSharpnessEnhPath === ''"
-          class="title-and-photo"
-        >
-          <div class="image-title">
-            Image after brightness and contrast enhancement:
-          </div>
-          <img src="{{ imgBrightnessEnhPath }}" class="photoDisplayed" />
-        </div>
-        <div
-          *ngIf="imgSharpnessEnhPath !== '' && imgBrightnessEnhPath === ''"
-          class="title-and-photo"
-        >
-          <div class="image-title">
-            Image after sharpness enhancement process:
-          </div>
-          <img src="{{ imgSharpnessEnhPath }}" class="photoDisplayed" />
-        </div>
-      </div>
+      <div class="main-page_photo-container"></div>
     </div>
 
     <div class="main-page_bottom-part">
-      <div class="parameters-containter">
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Parameters for brightness and contrast enhancement
-              </mat-panel-title>
-              <mat-panel-description>
-                Click here to see the parameter values
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div class="inputs_and_button">
-              <div class="inputs_containers">
-                <div class="parameter_row">
-                  <div>Brightness</div>
-                  <input
-                    matInput
-                    placeholder="50"
-                    value="50"
-                    #brightnessValue
-                  />
-                </div>
+      <div class="parameters-containter"></div>
 
-                <div class="parameter_row">
-                  <div>Contrast</div>
-                  <input
-                    matInput
-                    placeholder="1.5"
-                    value="1.5"
-                    #contrastValue
-                  />
-                </div>
-              </div>
-              <button
-                mat-stroked-button
-                class="changeBrightnessContrastButton"
-                (click)="
-                  changeBrightnessContrast(
-                    originalImagePath,
-                    brightness,
-                    contrast
-                  )
-                "
-              >
-                Change
-              </button>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-
-      <div class="bottom_containers">
-        <div class="left_container">
-          <button
-            *ngIf="finalImageButton == false"
-            [ngClass]="{
-              enabledFinalButton: !resultButtonsDisabled,
-              disabledResultButton: resultButtonsDisabled
-            }"
-            [disabled]="resultButtonsDisabled"
-            mat-raised-button
-            (click)="showFinalImage()"
-          >
-            Show image after processing
-          </button>
-
-          <div
-            *ngIf="finalImageButton == true"
-            class="title-and-photo-resulted"
-          >
-            <div class="image-title">Processed image:</div>
-            <img src="{{ imgFinalPath }}" class="resultedImageDisplayed" />
-          </div>
-        </div>
-
-        <div class="right_container">
-          <button
-            *ngIf="resultButtonClicked == false"
-            [ngClass]="{
-              enabledResultButton: !resultButtonsDisabled,
-              disabledResultButton: resultButtonsDisabled
-            }"
-            [disabled]="resultButtonsDisabled"
-            mat-raised-button
-            (click)="showResults()"
-          >
-            Show result
-          </button>
-
-          <div class="result_container">
-            <div *ngIf="resultButtonClicked == true" class="result_title">
-              RESULT:
-            </div>
-            <div
-              *ngIf="hasTumor == true && resultButtonClicked == true"
-              class="positive_result"
-            >
-              tumor detected
-            </div>
-            <div
-              *ngIf="hasTumor == false && resultButtonClicked == true"
-              class="negative_result"
-            >
-              tumor is not detected
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="bottom_containers"></div>
     </div>
   </div>
 </div>

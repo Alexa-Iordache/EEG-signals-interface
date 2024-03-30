@@ -44,7 +44,7 @@ export class LoginPageComponent implements OnInit {
     let parameters = {
       username: username,
       password: password,
-      query: `SELECT * FROM Users WHERE Username = '${username}' LIMIT 1;`
+      query: `SELECT * FROM Users WHERE username = '${username}' LIMIT 1;`
     }
 
     let copyInstance = this; // a copy of this class (atributes + methods)
@@ -57,7 +57,7 @@ export class LoginPageComponent implements OnInit {
       }
 
       // daca nu avem eroare
-      copyInstance.cookieService.set('medical-login', res.result.encoded);
+      copyInstance.cookieService.set('eeg-login', res.result.encoded);
       copyInstance.loginButtonPressed.emit('done');
       copyInstance.router.navigate(['/main-page']);
       console.log('a mers logarea');
