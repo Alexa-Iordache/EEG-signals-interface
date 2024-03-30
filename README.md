@@ -11,3 +11,4 @@ You have to generate another Atlas Cloud and change the uri in the connection st
 This boilerplate uses JSON RPC as a way of communication between backend and frontend.
 Here is where you can find more about JSON RPC: https://www.jsonrpc.org/specification
 # EEG-signals-interface
+# EEG-signals-interface
