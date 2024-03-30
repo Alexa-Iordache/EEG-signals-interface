@@ -15,8 +15,38 @@
     >
       Login
     </button>
+    <div *ngIf="loginButtonClicked === true" class="login-page-input-container">
+      <form>
+        <div *ngIf="authFailed === true" class="login-page-error-message">
+          Incorrect username or password
+        </div>
+
+        <div class="login-page-first-input-container">
+          <mat-form-field appearance="fill" class="login-page-input">
+            <mat-label>Username</mat-label>
+            <input matInput #username />
+          </mat-form-field>
+        </div>
+
+        <div class="login-page-second-input-container">
+          <mat-form-field appearance="fill" class="login-page-input">
+            <mat-label>Password</mat-label>
+            <input matInput #password type="password" />
+          </mat-form-field>
+        </div>
+      </form>
+      <div class="login-page-button-container">
+        <button
+          mat-flat-button
+          class="login-page-button"
+          (click)="login(username.value, password.value)"
+        >
+          Login
+        </button>
+      </div>
+    </div>
   </div>
-  <div *ngIf="loginButtonClicked === true" class="login-page-input-container">
+  <!-- <div *ngIf="loginButtonClicked === true" class="login-page-input-container">
     <form>
       <div *ngIf="authFailed === true" class="login-page-error-message">
         Incorrect username or password
@@ -45,5 +75,5 @@
         Login
       </button>
     </div>
-  </div>
+  </div> -->
 </div>
