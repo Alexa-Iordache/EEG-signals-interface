@@ -13,36 +13,30 @@
     <div class="main-page_top-part">
       <div class="main-page_menu-container">
         <button
-          [ngClass]="{ enabledButton: !isDisabled, disabledButton: isDisabled }"
-          [disabled]="isDisabled"
           mat-raised-button
           color="accent"
           class="menu-button"
-          (click)="antrenareModel()"
+          (click)="trainModel()"
         >
-          Antrenare model
+          Train new model
         </button>
         <button
-          [ngClass]="{ enabledButton: !isDisabled, disabledButton: isDisabled }"
-          [disabled]="isDisabled"
           mat-raised-button
           color="accent"
           class="menu-button"
-          (click)="
-            utilizareModel();
-          "
+          (click)="useModel()"
         >
-          Utilizare model existent
+          Use existent model
         </button>
       </div>
 
-      <div class="main-page_photo-container"></div>
+      <!-- <div class="main-page_photo-container"></div> -->
     </div>
 
     <div class="main-page_bottom-part">
-      <div class="parameters-containter"></div>
+      <!-- <div class="parameters-containter"></div> -->
 
-      <div class="bottom_containers"></div>
+      <!-- <div class="bottom_containers"></div> -->
     </div>
   </div>
 </div>
