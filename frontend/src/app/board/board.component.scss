@@ -1,0 +1,19 @@
+.plansa {
+  // TO DO: use display instead of position
+  position: relative;
+  width: 800px;
+  height: 600px;
+  border: 1px solid black;
+}
+
+.punct {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+}
+
+.obstacle {
+  position: absolute;
+  background-color: blue;
+}

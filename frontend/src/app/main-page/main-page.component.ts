@@ -7,15 +7,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-
   constructor(private router: Router) {}
 
   trainModel(): void {
     console.log('Train new model');
+    this.router.navigate(['/train-model']);
   }
 
   useModel(): void {
     console.log('Use existing model');
+  }
+
+  showProfile(): void {
+    console.log('Show user profile');
+    this.router.navigate(['/profile-page']);
   }
 
   // exit function - returns to login page

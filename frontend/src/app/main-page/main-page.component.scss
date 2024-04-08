@@ -72,8 +72,19 @@
       }
     }
 
-    .navbar_exit-icon {
-      margin-right: 50px;
+    .navbar_icons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+
+      .icon {
+        margin-right: 20px;
+
+        &.exit {
+          margin-right: 50px;
+        }
+      }
     }
   }
 

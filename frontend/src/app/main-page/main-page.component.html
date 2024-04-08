@@ -6,8 +6,13 @@
         <div class="navbar_text_second">EEG Signals</div>
       </div>
 
-      <div class="navbar_exit-icon" (click)="exitButton()">
-        <mat-icon>exit_to_app</mat-icon>
+      <div class="navbar_icons">
+        <div class="icon" (click)="showProfile()">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="icon" (click)="exitButton()">
+          <mat-icon>exit_to_app</mat-icon>
+        </div>
       </div>
     </div>
     <div class="main-page_top-part">
@@ -29,14 +34,8 @@
           Use existent model
         </button>
       </div>
-
-      <!-- <div class="main-page_photo-container"></div> -->
     </div>
 
-    <div class="main-page_bottom-part">
-      <!-- <div class="parameters-containter"></div> -->
-
-      <!-- <div class="bottom_containers"></div> -->
-    </div>
+    <div class="main-page_bottom-part"></div>
   </div>
 </div>

@@ -1,0 +1,11 @@
+<div class="plansa" tabindex="0" (click)="addObstacle($event)">
+  <div class="punct" [style.left.px]="posX" [style.top.px]="posY"></div>
+  <div
+    *ngFor="let obstacle of obstacles"
+    class="obstacle"
+    [style.left.px]="obstacle.x"
+    [style.top.px]="obstacle.y"
+    [style.width.px]="obstacle.width"
+    [style.height.px]="obstacle.height"
+  ></div>
+</div>
