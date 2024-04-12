@@ -1,13 +1,4 @@
-@mixin displayFormat($display, $alignItems, $justifyContent) {
-  display: $display;
-  align-items: $alignItems;
-  justify-content: $justifyContent;
-}
-
-@mixin dimension($width, $height) {
-  width: $width;
-  height: $height;
-}
+@import "../../general/mixins.scss";
 
 .board-page {
   @include displayFormat(flex, flex-start, space-around);

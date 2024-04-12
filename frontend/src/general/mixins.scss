@@ -1,0 +1,22 @@
+@mixin dimension($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin displayFormat($display, $alignItems, $justifyContent) {
+  display: $display;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+}
+
+@mixin displayFormatWithDirection(
+  $display,
+  $direction,
+  $alignItems,
+  $justifyContent
+) {
+  display: $display;
+  flex-direction: $direction;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+}

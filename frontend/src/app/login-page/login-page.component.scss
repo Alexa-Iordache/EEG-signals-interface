@@ -1,4 +1,4 @@
-@import "../../typography.scss";
+@import "../../general/mixins.scss";
 
 @mixin input-container {
   display: flex;
@@ -7,51 +7,53 @@
   border-radius: 10px;
 }
 
+
 .login-page-main-component {
-  height: 100%;
-  width: 100%;
+  @include displayFormat(flex, center, flex-end);
+  @include dimension(100%, 100%);
   background-image: url("../../images/EEG_login-page.png");
   background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
 
   .login-page_description-container {
-    width: 600px;
-    height: 500px;
-    margin-left: 750px;
+    @include dimension(80%, auto);
+    max-width: 600px;
+    padding: 20px;
+    margin-right: 150px;
+    text-align: justify;
 
     .login-page_title {
       font-family: "Inter";
-      font-size: 80px;
+      font-size: 4vw;
       font-weight: 700;
       color: #02c4ff;
+      margin-bottom: 20px;
     }
 
     .login-page_description-text {
-      margin-top: 30px;
       font-family: "Inter";
-      font-size: 20px;
+      font-size: 1.5vw;
       font-weight: 400;
       color: white;
+      margin-bottom: 20px;
     }
 
     .login_button {
-      margin-top: 40px;
-      width: 100px;
-      height: 50px;
-      font-size: 16px;
+      @include dimension(100%, 50px);
+      max-width: 200px;
+      font-size: 1.5vw;
       background-color: #02c4ff;
     }
 
     .login-page-input-container {
-      display: flex;
-      flex-direction: column;
-      width: 400px;
-      background-color: white;
-      border-radius: 10px;
-      margin-top: 30px;
-      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      // display: flex;
+      // flex-direction: column;
+      // width: 400px;
+      // background-color: white;
+      // border-radius: 10px;
+      // margin-top: 30px;
+      // padding: 30px;
     }
   }
 }
@@ -91,5 +93,22 @@ input {
 
   .login-page-button {
     background-color: #02c4ff;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login-page_main-component {
+    .login-page_description-container {
+      width: 90%;
+      padding: 10px;
+
+      .login-page_title {
+        font-size: 6vw;
+      }
+
+      .login-page_description-text {
+        font-size: 2vw;
+      }
+    }
   }
 }

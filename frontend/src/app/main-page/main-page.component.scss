@@ -1,3 +1,5 @@
+@import "../../general/mixins.scss";
+
 @mixin photo($borderWidth, $borderStyle, $borderColor, $width, $marginLeft) {
   border-width: $borderWidth;
   border-style: $borderStyle;
@@ -27,9 +29,7 @@
 }
 
 .main-page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include displayFormat(flex, center, center);
   height: 100%;
   background: linear-gradient(to right, black, #3533cd);
 
@@ -40,19 +40,14 @@
   }
 
   .navbar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    @include displayFormatWithDirection(flex, row, center, space-between);
     height: 70px;
     background-color: #2a29a1;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
 
     .navbar_text {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+      @include displayFormatWithDirection(flex, row, center, none);
       height: 100%;
       margin-left: 50px;
 
@@ -73,10 +68,7 @@
     }
 
     .navbar_icons {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-end;
+      @include displayFormatWithDirection(flex, row, center, flex-end);
 
       .icon {
         margin-right: 20px;
@@ -112,9 +104,7 @@
   }
 
   .main-page_bottom-part {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include displayFormatWithDirection(flex, column, center, none);
     margin: 50px 100px;
   }
 }
