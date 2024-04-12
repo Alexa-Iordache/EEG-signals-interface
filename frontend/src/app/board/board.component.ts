@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { RpcService } from '../services/rpc.service';
 
 export interface Obstacle {
   x: number;
@@ -17,9 +18,12 @@ export class BoardComponent {
   posY = 0;
   obstacles: Obstacle[] = [];
 
-  constructor() {}
+  obstacleInfo: any;
+
+  constructor(private rpcService: RpcService) {}
 
   ngOnInit(): void {
+    this.getObstacles();
   }
 
   // the point can be moved on the board using the 4 arrow keys
@@ -43,10 +47,28 @@ export class BoardComponent {
     }
   }
 
+  // Method to get all the existing obstacles from database
+  getObstacles(): void {
+    let params = {
+      username: 'admin',
+    };
 
-  // adds obstacles on the board
+    this.rpcService.callRPC(
+      'obstacles.getObstacles',
+      params,
+      (err: any, res: any) => {
+        if (err || res.error) {
+          console.log('the obstacles could not be displayed');
+          return;
+        }
+        this.obstacleInfo = res.result;
+        console.log(this.obstacleInfo);
+      }
+    );
+  }
+
+  // Method to add a new obstacle (on the board and in database)
   addObstacle(event: MouseEvent) {
-    // TO DO: the dimension of the obstacle to be customzible
     const obstacle: Obstacle = {
       x: event.offsetX,
       y: event.offsetY,
@@ -55,5 +77,24 @@ export class BoardComponent {
     };
     this.obstacles.push(obstacle);
     console.log(this.obstacles);
+
+    let paramsAddObstacle = {
+      xPos: obstacle.x,
+      yPos: obstacle.y,
+      width: obstacle.width,
+      height: obstacle.height,
+    };
+
+    this.rpcService.callRPC(
+      'obstacles.addObstacle',
+      paramsAddObstacle,
+      (error: any, res: any) => {
+        if (error) {
+          console.log(error);
+          return;
+        }
+        this.getObstacles();
+      }
+    );
   }
 }
