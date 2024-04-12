@@ -1,5 +1,11 @@
 import { Component, HostListener } from '@angular/core';
-import axios from 'axios';
+
+export interface Obstacle {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 @Component({
   selector: 'app-board',
@@ -9,12 +15,11 @@ import axios from 'axios';
 export class BoardComponent {
   posX = 0;
   posY = 0;
-  obstacles: any = [];
+  obstacles: Obstacle[] = [];
 
   constructor() {}
 
   ngOnInit(): void {
-    this.loadObstacles();
   }
 
   // the point can be moved on the board using the 4 arrow keys
@@ -38,38 +43,17 @@ export class BoardComponent {
     }
   }
 
-  // !!! TO DO: fix GET/ train-model
 
   // adds obstacles on the board
   addObstacle(event: MouseEvent) {
     // TO DO: the dimension of the obstacle to be customzible
-    const obstacle = {
+    const obstacle: Obstacle = {
       x: event.offsetX,
       y: event.offsetY,
       width: 20,
       height: 30,
     };
     this.obstacles.push(obstacle);
-
-    axios
-      .post('http://localhost:3000/train-model', obstacle)
-      .then((response) => {
-        console.log('Obstacle was successfully added. ', response.data);
-      })
-      .catch((error) => {
-        console.error('Error while adding a new obstacle', error);
-      });
-  }
-
-  // loads the existent obstacles
-  loadObstacles() {
-    axios
-      .get('http://localhost:3000/train-model')
-      .then((response) => {
-        this.obstacles = response.data;
-      })
-      .catch((error) => {
-        console.error('Error while loading obstacles.', error);
-      });
+    console.log(this.obstacles);
   }
 }
