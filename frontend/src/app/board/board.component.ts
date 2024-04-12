@@ -20,6 +20,9 @@ export class BoardComponent {
 
   obstacleInfo: any;
 
+  widthValue = '20';
+  heightValue = '30';
+
   constructor(private rpcService: RpcService) {}
 
   ngOnInit(): void {
@@ -124,5 +127,9 @@ export class BoardComponent {
         this.getObstacles();
       }
     );
+  }
+
+  applyChanges(width: string, height: string) {
+    console.log(width, height);
   }
 }

@@ -1,19 +1,81 @@
-.plansa {
-  // TO DO: use display instead of position
-  position: relative;
-  width: 800px;
-  height: 600px;
-  border: 1px solid black;
+@mixin displayFormat($display, $alignItems, $justifyContent) {
+  display: $display;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
 }
 
-.punct {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: red;
+@mixin dimension($width, $height) {
+  width: $width;
+  height: $height;
 }
 
-.obstacle {
-  position: absolute;
-  background-color: blue;
+.board-page {
+  @include displayFormat(flex, flex-start, space-around);
+  flex-direction: column;
+  height: 100%;
+  background: linear-gradient(to right, black, #3533cd);
+
+  .board-page_title {
+    font-size: 40px;
+    color: white;
+    margin-left: 100px;
+  }
+
+  .board-page_content {
+    display: flex;
+    flex-direction: row;
+    margin-left: 100px;
+
+    .board-page_left-content {
+      display: flex;
+      flex-direction: column;
+
+      .board-page_instruction-text {
+        font-size: 30px;
+        color: white;
+      }
+
+      .arrow-icon {
+        margin-top: 20px;
+        font-size: 30px;
+        color: white;
+        margin-bottom: 10px;
+        margin-left: -5px;
+      }
+
+      .board-page_board {
+        @include dimension(800px, 600px);
+        position: relative;
+        background-color: white;
+
+        .board-page_avatar {
+          @include dimension(20px, 20px);
+          position: absolute;
+          background-color: red;
+        }
+
+        .board-page_obstacle {
+          position: absolute;
+          background-color: blue;
+        }
+      }
+    }
+
+    .board-page_right-content {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      margin-left: 200px;
+
+      .right-container_form-field {
+        width: 100%;
+      }
+
+      .right-container_text {
+        font-size: 30px;
+        color: white;
+        margin-bottom: 50px;
+      }
+    }
+  }
 }

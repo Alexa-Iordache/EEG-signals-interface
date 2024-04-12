@@ -1,11 +1,57 @@
-<div class="plansa" tabindex="0" (click)="addObstacle($event)">
-  <div class="punct" [style.left.px]="posX" [style.top.px]="posY"></div>
-  <div
-    *ngFor="let obstacle of obstacles"
-    class="obstacle"
-    [style.left.px]="obstacle.x"
-    [style.top.px]="obstacle.y"
-    [style.width.px]="obstacle.width"
-    [style.height.px]="obstacle.height"
-  ></div>
+<div class="board-page">
+  <div class="board-page_title">Train the new model here:</div>
+
+  <div class="board-page_content">
+    <div class="board-page_left-content">
+      <div class="board-page_instruction-text">You are here</div>
+      <mat-icon class="arrow-icon">arrow_downward</mat-icon>
+      <div class="board-page_board" tabindex="0" (click)="addObstacle($event)">
+        <div
+          class="board-page_avatar"
+          [style.left.px]="posX"
+          [style.top.px]="posY"
+        ></div>
+        <div
+          *ngFor="let obstacle of obstacles"
+          class="board-page_obstacle"
+          [style.left.px]="obstacle.x"
+          [style.top.px]="obstacle.y"
+          [style.width.px]="obstacle.width"
+          [style.height.px]="obstacle.height"
+        ></div>
+      </div>
+    </div>
+    <div class="board-page_right-content">
+      <div class="right-container_text">Customize the object: </div>
+      <mat-form-field class="right-container_form-field">
+        <mat-label>Width (px)</mat-label>
+        <input matInput type="text" [(ngModel)]="widthValue" />
+        <button
+          *ngIf="widthValue"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="widthValue = ''"
+          [(ngModel)]="widthValue"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field class="right-container_form-field">
+        <mat-label>Height (px)</mat-label>
+        <input matInput type="text" [(ngModel)]="heightValue" />
+        <button
+          *ngIf="heightValue"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="heightValue = ''"
+          [(ngModel)]="heightValue"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="applyChanges(widthValue, heightValue)">Apply changes</button>
+    </div>
+  </div>
 </div>
