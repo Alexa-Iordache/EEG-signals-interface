@@ -3,17 +3,13 @@ const mysql = require("../mysql");
 let obstacles = {
   getObstacles(req, res, next) {
     mysql.query(`SELECT * FROM Obstacles;`, (error, result) => {
-      if (result.length == 0) {
-        res.json({ id: 1, error: "does not exist obstacles", result: null });
-      }
-
       res.json({ id: 1, error: null, result: result });
     });
   },
 
   addObstacle(req, res, next) {
     let xPos = req.body.params.xPos;
-    let yPos = req.body.params.xPos;
+    let yPos = req.body.params.yPos;
     let width = req.body.params.width;
     let height = req.body.params.height;
 

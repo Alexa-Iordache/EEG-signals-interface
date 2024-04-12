@@ -30,20 +30,40 @@ export class BoardComponent {
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     // TO DO: moving step to be customizable
-    const step = 20;
+    const step = 10;
+
+    // Calculate the potential new position of the point
+    let newX = this.posX;
+    let newY = this.posY;
     switch (event.key) {
       case 'ArrowUp':
-        this.posY -= step;
+        newY -= step;
         break;
       case 'ArrowDown':
-        this.posY += step;
+        newY += step;
         break;
       case 'ArrowLeft':
-        this.posX -= step;
+        newX -= step;
         break;
       case 'ArrowRight':
-        this.posX += step;
+        newX += step;
         break;
+    }
+
+    // Check if the new position intersects with any obstacle
+    const intersects = this.obstacles.some((obstacle) => {
+      return (
+        newX < obstacle.x + obstacle.width &&
+        newX + step > obstacle.x &&
+        newY < obstacle.y + obstacle.height &&
+        newY + step > obstacle.y
+      );
+    });
+
+    // If the new position does not intersect with any obstacle, update the position
+    if (!intersects) {
+      this.posX = newX;
+      this.posY = newY;
     }
   }
 
@@ -63,6 +83,14 @@ export class BoardComponent {
         }
         this.obstacleInfo = res.result;
         console.log(this.obstacleInfo);
+
+        // Display the existing obstacles from database
+        this.obstacles = this.obstacleInfo.map((obstacle: any) => ({
+          x: obstacle.xPos,
+          y: obstacle.yPos,
+          width: obstacle.width,
+          height: obstacle.height,
+        }));
       }
     );
   }
@@ -76,7 +104,7 @@ export class BoardComponent {
       height: 30,
     };
     this.obstacles.push(obstacle);
-    console.log(this.obstacles);
+    console.log(obstacle);
 
     let paramsAddObstacle = {
       xPos: obstacle.x,
