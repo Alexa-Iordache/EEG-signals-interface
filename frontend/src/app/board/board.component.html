@@ -22,36 +22,52 @@
       </div>
     </div>
     <div class="board-page_right-content">
-      <div class="right-container_text">Customize the object: </div>
-      <mat-form-field class="right-container_form-field">
-        <mat-label>Width (px)</mat-label>
-        <input matInput type="text" [(ngModel)]="widthValue" />
+      <div class="right-container_text">Customize the object:</div>
+      <form>
+        <mat-form-field class="right-container_form-field">
+          <mat-label>Width (px)</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="widthValue"
+            name="widthValue"
+          />
+          <button
+            *ngIf="widthValue"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="widthValue = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="right-container_form-field">
+          <mat-label>Height (px)</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="heightValue"
+            name="heightValue"
+          />
+          <button
+            *ngIf="heightValue"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="heightValue = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
         <button
-          *ngIf="widthValue"
-          matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          (click)="widthValue = ''"
-          [(ngModel)]="widthValue"
+          mat-raised-button
+          color="accent"
+          (click)="applyChanges(widthValue, heightValue)"
         >
-          <mat-icon>close</mat-icon>
+          Apply changes
         </button>
-      </mat-form-field>
-      <mat-form-field class="right-container_form-field">
-        <mat-label>Height (px)</mat-label>
-        <input matInput type="text" [(ngModel)]="heightValue" />
-        <button
-          *ngIf="heightValue"
-          matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          (click)="heightValue = ''"
-          [(ngModel)]="heightValue"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-      <button mat-raised-button color="accent" (click)="applyChanges(widthValue, heightValue)">Apply changes</button>
+      </form>
     </div>
   </div>
 </div>
