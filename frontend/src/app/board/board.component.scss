@@ -1,8 +1,7 @@
 @import "../../general/mixins.scss";
 
 .board-page {
-  @include displayFormat(flex, flex-start, space-around);
-  flex-direction: column;
+  @include displayFormatWithDirection(flex, column, flex-start, space-around);
   height: 100%;
   background: linear-gradient(to right, black, #3533cd);
 
@@ -13,9 +12,8 @@
   }
 
   .board-page_content {
-    display: flex;
-    flex-direction: row;
-    margin-left: 100px;
+    @include displayFormatWithDirection(flex, row, center, space-around);
+    width: 100%;
 
     .board-page_left-content {
       display: flex;
@@ -53,10 +51,8 @@
     }
 
     .board-page_right-content {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      margin-left: 200px;
+      @include displayFormatWithDirection(flex, column, none, center);
+      max-width: 20%;
 
       .right-container_form-field {
         width: 100%;
