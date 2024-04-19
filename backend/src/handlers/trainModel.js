@@ -30,7 +30,6 @@ let obstacles = {
     let xPos = req.body.params.xPos;
     let yPos = req.body.params.yPos;
 
-    console.log(width, height, xPos, yPos);
     mysql.query(
       `DELETE FROM Obstacles WHERE (xPos = '${xPos}' and yPos = '${yPos}' and
         width = '${width}' and height = '${height}');`,

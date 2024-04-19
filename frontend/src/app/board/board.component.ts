@@ -22,8 +22,11 @@ export class BoardComponent {
 
   obstacleInfo: any;
 
+  // Variables from form-fields
   widthValue = '20';
   heightValue = '30';
+  stepValue = '10';
+  selectedPosition = '';
 
   yesBtn = '';
   noBtn = '';
@@ -41,8 +44,7 @@ export class BoardComponent {
   // the point can be moved on the board using the 4 arrow keys
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    // TO DO: moving step to be customizable
-    const step = 10;
+    const step = parseInt(this.stepValue);
 
     // Calculate the potential new position of the point
     let newX = this.posX;
@@ -137,9 +139,20 @@ export class BoardComponent {
   }
 
   // Method to customize an obstacle before adding it to the board
-  applyChanges(width: string, height: string) {
+  applyChanges(width: string, height: string, step: string, position: string) {
     this.widthValue = width;
     this.heightValue = height;
+    this.stepValue = step;
+    this.selectedPosition = position;
+    if (this.selectedPosition === 'top-left') {
+      (this.posX = 0), (this.posY = 0);
+    }
+    if (this.selectedPosition === 'middle-left') {
+      (this.posX = 0), (this.posY = 300);
+    }
+    if (this.selectedPosition === 'bottom-left') {
+      (this.posX = 0), (this.posY = 580);
+    }
   }
 
   // Method to handle obstacle click event
@@ -188,7 +201,7 @@ export class BoardComponent {
         width: this.obstacleToDelete.width,
         height: this.obstacleToDelete.height,
         xPos: this.obstacleToDelete.x,
-        yPos: this.obstacleToDelete.y
+        yPos: this.obstacleToDelete.y,
       };
 
       this.rpcService.callRPC(

@@ -5,7 +5,7 @@
     <div class="board-page_left-content">
       <div class="board-page_instruction-text">You are here</div>
       <mat-icon class="arrow-icon">arrow_downward</mat-icon>
-      <div class="board-page_board" tabindex="0">
+      <div class="board-page_board" tabindex="0" (click)="addObstacle($event)">
         <div
           class="board-page_avatar"
           [style.left.px]="posX"
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="board-page_right-content">
-      <div class="right-container_text">Customize the object:</div>
+      <div class="right-container_text">Settings:</div>
       <form>
         <mat-form-field class="right-container_form-field">
           <mat-label>Width (px)</mat-label>
@@ -61,10 +61,38 @@
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
+        <mat-form-field class="right-container_form-field">
+          <mat-label>Step used by the point to meve</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="stepValue"
+            name="stepValue"
+          />
+          <button
+            *ngIf="stepValue"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="stepValue = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Starting position</mat-label>
+          <mat-select [(ngModel)]="selectedPosition" name="position">
+            <mat-option value="top-left">Top left</mat-option>
+            <mat-option value="middle-left">Middle left</mat-option>
+            <mat-option value="bottom-left">Bottom left</mat-option>
+          </mat-select>
+        </mat-form-field>
         <button
           mat-raised-button
           color="accent"
-          (click)="applyChanges(widthValue, heightValue)"
+          (click)="
+            applyChanges(widthValue, heightValue, stepValue, selectedPosition)
+          "
         >
           Apply changes
         </button>
