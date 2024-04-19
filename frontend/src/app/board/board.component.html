@@ -1,3 +1,12 @@
+<!-- Add a delete confirmation popup -->
+<div *ngIf="showDeleteConfirmation" class="delete-confirmation">
+  <div class="message">Do you want to delete this obstacle?</div>
+  <div class="buttons">
+    <button (click)="cancelDelete()">No</button>
+    <button (click)="confirmDelete()">Yes</button>
+  </div>
+</div>
+
 <div class="board-page">
   <div class="board-page_title">Train the new model here:</div>
 
@@ -5,7 +14,7 @@
     <div class="board-page_left-content">
       <div class="board-page_instruction-text">You are here</div>
       <mat-icon class="arrow-icon">arrow_downward</mat-icon>
-      <div class="board-page_board" tabindex="0" (click)="addObstacle($event)">
+      <div class="board-page_board" tabindex="0">
         <div
           class="board-page_avatar"
           [style.left.px]="posX"
@@ -18,6 +27,7 @@
           [style.top.px]="obstacle.y"
           [style.width.px]="obstacle.width"
           [style.height.px]="obstacle.height"
+          (click)="handleObstacleClick(obstacle)"
         ></div>
       </div>
     </div>

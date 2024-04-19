@@ -23,6 +23,10 @@ export class BoardComponent {
   widthValue = '20';
   heightValue = '30';
 
+  // Variables for delete confirmation popup
+  showDeleteConfirmation = false;
+  obstacleToDelete: Obstacle | null = null;
+
   constructor(private rpcService: RpcService) {}
 
   ngOnInit(): void {
@@ -103,8 +107,8 @@ export class BoardComponent {
     const obstacle: Obstacle = {
       x: event.offsetX,
       y: event.offsetY,
-      width: 20,
-      height: 30,
+      width: parseFloat(this.widthValue),
+      height: parseFloat(this.heightValue),
     };
     this.obstacles.push(obstacle);
     console.log(obstacle);
@@ -129,7 +133,37 @@ export class BoardComponent {
     );
   }
 
+  // Method to customize an obstacle before adding it to the board
   applyChanges(width: string, height: string) {
-    console.log(width, height);
+    this.widthValue = width;
+    this.heightValue = height;
+    console.log(this.widthValue, this.heightValue);
+  }
+
+  // Method to handle obstacle click event
+  handleObstacleClick(obstacle: Obstacle) {
+    this.obstacleToDelete = obstacle;
+    this.showDeleteConfirmation = true;
+  }
+
+  // Method to cancel obstacle deletion
+  cancelDelete() {
+    this.obstacleToDelete = null;
+    this.showDeleteConfirmation = false;
+  }
+
+  // Method to confirm obstacle deletion
+  confirmDelete() {
+    if (this.obstacleToDelete) {
+      // Remove obstacle from obstacles array
+      const index = this.obstacles.indexOf(this.obstacleToDelete);
+      if (index !== -1) {
+        this.obstacles.splice(index, 1);
+      }
+
+      // Reset variables
+      this.obstacleToDelete = null;
+      this.showDeleteConfirmation = false;
+    }
   }
 }
