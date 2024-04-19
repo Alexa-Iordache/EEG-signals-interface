@@ -19,6 +19,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { BoardComponent } from './board/board.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { DeleteObstacleModalComponent } from './delete-obstacle-modal/delete-obstacle-modal.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     LoginPageComponent,
     MainPageComponent,
     BoardComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    DeleteObstacleModalComponent
   ],
   imports: [
     BrowserModule,

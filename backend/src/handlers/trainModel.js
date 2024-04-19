@@ -24,19 +24,23 @@ let obstacles = {
     );
   },
 
-  // deletePatient(req, res, next) {
-  //   let id = req.body.params.id;
-  //   console.log("a intrat in be");
-  //   console.log(id);
-  //   mysql.query(
-  //     `DELETE FROM Patients P WHERE ((P.PatientID = '${id}'));`,
-  //     (err, result) => {
-  //       if (err) {
-  //         throw err;
-  //       }
-  //     }
-  //   );
-  // }
+  deleteObstacle(req, res, next) {
+    let width = req.body.params.width;
+    let height = req.body.params.height;
+    let xPos = req.body.params.xPos;
+    let yPos = req.body.params.yPos;
+
+    console.log(width, height, xPos, yPos);
+    mysql.query(
+      `DELETE FROM Obstacles WHERE (xPos = '${xPos}' and yPos = '${yPos}' and
+        width = '${width}' and height = '${height}');`,
+      (err, result) => {
+        if (err) {
+          throw err;
+        }
+      }
+    );
+  },
 };
 
 module.exports = obstacles;

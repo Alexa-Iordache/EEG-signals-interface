@@ -1,5 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { RpcService } from '../services/rpc.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteObstacleModalComponent } from '../delete-obstacle-modal/delete-obstacle-modal.component';
 
 export interface Obstacle {
   x: number;
@@ -23,11 +25,14 @@ export class BoardComponent {
   widthValue = '20';
   heightValue = '30';
 
+  yesBtn = '';
+  noBtn = '';
+
   // Variables for delete confirmation popup
   showDeleteConfirmation = false;
   obstacleToDelete: Obstacle | null = null;
 
-  constructor(private rpcService: RpcService) {}
+  constructor(private rpcService: RpcService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getObstacles();
@@ -89,7 +94,6 @@ export class BoardComponent {
           return;
         }
         this.obstacleInfo = res.result;
-        console.log(this.obstacleInfo);
 
         // Display the existing obstacles from database
         this.obstacles = this.obstacleInfo.map((obstacle: any) => ({
@@ -111,7 +115,6 @@ export class BoardComponent {
       height: parseFloat(this.heightValue),
     };
     this.obstacles.push(obstacle);
-    console.log(obstacle);
 
     let paramsAddObstacle = {
       xPos: obstacle.x,
@@ -137,13 +140,32 @@ export class BoardComponent {
   applyChanges(width: string, height: string) {
     this.widthValue = width;
     this.heightValue = height;
-    console.log(this.widthValue, this.heightValue);
   }
 
   // Method to handle obstacle click event
   handleObstacleClick(obstacle: Obstacle) {
     this.obstacleToDelete = obstacle;
-    this.showDeleteConfirmation = true;
+
+    // Open the dialog modal
+    const dialogRef = this.dialog.open(DeleteObstacleModalComponent, {
+      data: {
+        noBtn: this.noBtn,
+        yesBtn: this.yesBtn,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (!result) {
+        console.log('nothing');
+        return;
+      }
+
+      if (result === 'no') {
+        this.cancelDelete();
+      } else {
+        this.confirmDelete();
+      }
+    });
   }
 
   // Method to cancel obstacle deletion
@@ -160,6 +182,26 @@ export class BoardComponent {
       if (index !== -1) {
         this.obstacles.splice(index, 1);
       }
+
+      // Delete obstacle from database
+      let paramsDeleteObstacle = {
+        width: this.obstacleToDelete.width,
+        height: this.obstacleToDelete.height,
+        xPos: this.obstacleToDelete.x,
+        yPos: this.obstacleToDelete.y
+      };
+
+      this.rpcService.callRPC(
+        'obstacles.deleteObstacle',
+        paramsDeleteObstacle,
+        (error: any, res: any) => {
+          if (error) {
+            console.log(error);
+            return;
+          }
+          this.getObstacles();
+        }
+      );
 
       // Reset variables
       this.obstacleToDelete = null;
