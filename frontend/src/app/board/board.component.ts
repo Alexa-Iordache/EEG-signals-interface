@@ -1,8 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { RpcService } from '../services/rpc.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteObstacleModalComponent } from '../delete-obstacle-modal/delete-obstacle-modal.component';
-
+import { HttpClient } from '@angular/common/http';
 export interface Obstacle {
   x: number;
   y: number;
@@ -35,7 +35,14 @@ export class BoardComponent {
   showDeleteConfirmation = false;
   obstacleToDelete: Obstacle | null = null;
 
-  constructor(private rpcService: RpcService, public dialog: MatDialog) {}
+  constructor(
+    private http: HttpClient,
+    private rpcService: RpcService,
+    public dialog: MatDialog
+  ) {
+    this.widthValue = '10';
+    this.heightValue = '10';
+  }
 
   ngOnInit(): void {
     this.getObstacles();
@@ -153,6 +160,20 @@ export class BoardComponent {
     if (this.selectedPosition === 'bottom-left') {
       (this.posX = 0), (this.posY = 580);
     }
+
+    this.http
+      .post('http://localhost:4201/apply-changes', {
+        width: this.widthValue,
+        height: this.heightValue,
+      })
+      .subscribe(
+        (response) => {
+          console.log('Response from server:', response);
+        },
+        (error) => {
+          console.error('Error sending data to the server:', error);
+        }
+      );
   }
 
   // Method to handle obstacle click event
@@ -220,5 +241,17 @@ export class BoardComponent {
       this.obstacleToDelete = null;
       this.showDeleteConfirmation = false;
     }
+  }
+
+  startRecord(): void {
+    console.log('start record');
+  }
+
+  stopRecord(): void {
+    console.log('stop record');
+  }
+
+  saveTrainingSession(): void {
+    console.log('save training session');
   }
 }

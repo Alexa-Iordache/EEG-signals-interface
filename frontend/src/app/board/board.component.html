@@ -3,8 +3,6 @@
 
   <div class="board-page_content">
     <div class="board-page_left-content">
-      <div class="board-page_instruction-text">You are here</div>
-      <mat-icon class="arrow-icon">arrow_downward</mat-icon>
       <div class="board-page_board" tabindex="0" (click)="addObstacle($event)">
         <div
           class="board-page_avatar"
@@ -89,12 +87,36 @@
         </mat-form-field>
         <button
           mat-raised-button
-          color="accent"
+          color="warn"
           (click)="
-            applyChanges(widthValue, heightValue, stepValue, selectedPosition)
+            applyChanges(widthValue, heightValue, stepValue, selectedPosition);
           "
         >
           Apply changes
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="board_button"
+          (click)="startRecord()"
+        >
+          Start record
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="board_button"
+          (click)="stopRecord()"
+        >
+          Stop record
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="board_button"
+          (click)="saveTrainingSession()"
+        >
+          Save training session
         </button>
       </form>
     </div>
