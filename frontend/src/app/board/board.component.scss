@@ -19,6 +19,21 @@
       display: flex;
       flex-direction: column;
 
+      .board-page_direction {
+        display: flex;
+        align-items: center;
+        font-size: 30px;
+        color: white;
+        margin-bottom: 20px;
+
+        .direction-icon {
+          margin-left: 10px;
+          .mat-icon {
+            color: white;
+          }
+        }
+      }
+
       .board-page_board {
         @include dimension(800px, 600px);
         position: relative;

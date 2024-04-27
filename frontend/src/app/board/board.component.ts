@@ -38,6 +38,8 @@ export class BoardComponent {
   recording = false;
   recordedEvents: string[] = [];
 
+  lastKeyPressed: string = '';
+
   constructor(
     private http: HttpClient,
     private rpcService: RpcService,
@@ -52,6 +54,7 @@ export class BoardComponent {
   // the point can be moved on the board using the 4 arrow keys
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
+    this.lastKeyPressed = event.key;
     const step = parseInt(this.stepValue);
 
     // Calculate the potential new position of the point

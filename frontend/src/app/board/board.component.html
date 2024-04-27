@@ -3,6 +3,21 @@
 
   <div class="board-page_content">
     <div class="board-page_left-content">
+      <div class="board-page_direction">
+        <span>Direction: </span>
+        <mat-icon *ngIf="lastKeyPressed === 'ArrowLeft'" class="direction-icon"
+          >arrow_back</mat-icon
+        >
+        <mat-icon *ngIf="lastKeyPressed === 'ArrowRight'" class="direction-icon"
+          >arrow_forward</mat-icon
+        >
+        <mat-icon *ngIf="lastKeyPressed === 'ArrowUp'" class="direction-icon"
+          >arrow_upward</mat-icon
+        >
+        <mat-icon *ngIf="lastKeyPressed === 'ArrowDown'" class="direction-icon"
+          >arrow_downward</mat-icon
+        >
+      </div>
       <div class="board-page_board" tabindex="0" (click)="addObstacle($event)">
         <div
           class="board-page_avatar"
@@ -89,7 +104,7 @@
           mat-raised-button
           color="warn"
           (click)="
-            applyChanges(widthValue, heightValue, stepValue, selectedPosition);
+            applyChanges(widthValue, heightValue, stepValue, selectedPosition)
           "
         >
           Apply changes
