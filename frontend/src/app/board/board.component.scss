@@ -19,19 +19,6 @@
       display: flex;
       flex-direction: column;
 
-      // .board-page_instruction-text {
-      //   font-size: 30px;
-      //   color: white;
-      // }
-
-      // .arrow-icon {
-      //   margin-top: 20px;
-      //   font-size: 30px;
-      //   color: white;
-      //   margin-bottom: 10px;
-      //   margin-left: -5px;
-      // }
-
       .board-page_board {
         @include dimension(800px, 600px);
         position: relative;
@@ -51,8 +38,9 @@
     }
 
     .board-page_right-content {
-      @include displayFormatWithDirection(flex, column, none, center);
+      @include displayFormatWithDirection(flex, column, center, space-around);
       max-width: 20%;
+      height: 100%;
 
       .right-container_form-field {
         width: 100%;
@@ -61,7 +49,11 @@
       .right-container_text {
         font-size: 30px;
         color: white;
-        margin-bottom: 50px;
+      }
+
+      .board-page_inputs-and-buttons {
+        display: flex;
+        flex-direction: column;
       }
 
       .board_button {

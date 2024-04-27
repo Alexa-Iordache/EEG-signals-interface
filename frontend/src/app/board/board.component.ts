@@ -35,6 +35,9 @@ export class BoardComponent {
   showDeleteConfirmation = false;
   obstacleToDelete: Obstacle | null = null;
 
+  recording = false;
+  recordedEvents: string[] = [];
+
   constructor(
     private http: HttpClient,
     private rpcService: RpcService,
@@ -44,9 +47,7 @@ export class BoardComponent {
     this.heightValue = '10';
   }
 
-  ngOnInit(): void {
-    this.getObstacles();
-  }
+  ngOnInit(): void {}
 
   // the point can be moved on the board using the 4 arrow keys
   @HostListener('document:keydown', ['$event'])
@@ -85,6 +86,10 @@ export class BoardComponent {
     if (!intersects) {
       this.posX = newX;
       this.posY = newY;
+
+      if (this.recording) {
+        this.recordedEvents.push(`Moved to (${newX}, ${newY})`);
+      }
     }
   }
 
@@ -123,7 +128,13 @@ export class BoardComponent {
       width: parseFloat(this.widthValue),
       height: parseFloat(this.heightValue),
     };
+
     this.obstacles.push(obstacle);
+    if (this.recording) {
+      this.recordedEvents.push(
+        `Obstacle added: x=${obstacle.x}, y=${obstacle.y}, width=${obstacle.width}, height=${obstacle.height}`
+      );
+    }
 
     let paramsAddObstacle = {
       xPos: obstacle.x,
@@ -151,6 +162,13 @@ export class BoardComponent {
     this.heightValue = height;
     this.stepValue = step;
     this.selectedPosition = position;
+
+    if (this.recording) {
+      this.recordedEvents.push(
+        `Settings changed: width=${width}, height=${height}, step=${step}, position=${position}`
+      );
+    }
+
     if (this.selectedPosition === 'top-left') {
       (this.posX = 0), (this.posY = 0);
     }
@@ -160,24 +178,12 @@ export class BoardComponent {
     if (this.selectedPosition === 'bottom-left') {
       (this.posX = 0), (this.posY = 580);
     }
-
-    this.http
-      .post('http://localhost:4201/apply-changes', {
-        width: this.widthValue,
-        height: this.heightValue,
-      })
-      .subscribe(
-        (response) => {
-          console.log('Response from server:', response);
-        },
-        (error) => {
-          console.error('Error sending data to the server:', error);
-        }
-      );
   }
 
   // Method to handle obstacle click event
-  handleObstacleClick(obstacle: Obstacle) {
+  handleObstacleClick(event: MouseEvent, obstacle: Obstacle) {
+    event.stopPropagation(); // This stops the event from propagating further
+
     this.obstacleToDelete = obstacle;
 
     // Open the dialog modal
@@ -243,15 +249,60 @@ export class BoardComponent {
     }
   }
 
+  // Method to start a new record
   startRecord(): void {
-    console.log('start record');
+    this.recording = true;
+    this.recordedEvents = [];
+    console.log('Recording started');
   }
 
+  // Method to stop the record
   stopRecord(): void {
-    console.log('stop record');
+    this.recording = false;
+    console.log('Recording stopped');
+    console.log('Recorded Events:', this.recordedEvents);
   }
 
+  // Method to save the record
   saveTrainingSession(): void {
-    console.log('save training session');
+    console.log('Save training session');
+    console.log(this.recordedEvents);
+  }
+
+  // Method to recreate actions from the last record
+  recreateActions(): void {
+    // Reset to initial conditions or a specific start point
+    this.posX = 0;
+    this.posY = 0;
+    this.obstacles = []; // Clear existing obstacles if they need to be reset
+
+    this.recordedEvents.forEach((event, index) => {
+      setTimeout(() => {
+        if (event.startsWith('Moved to')) {
+          // Extract coordinates from the log string
+          const match = /Moved to \((\d+), (\d+)\)/.exec(event);
+          if (match) {
+            this.posX = parseInt(match[1], 10);
+            this.posY = parseInt(match[2], 10);
+          }
+        } else if (event.startsWith('Settings changed')) {
+          // Apply settings changes or ignore if only move events need to be recreated
+        } else if (event.startsWith('Obstacle added')) {
+          // Example log might be "Obstacle added: x=50, y=50, width=20, height=20"
+          const match = /x=(\d+), y=(\d+), width=(\d+), height=(\d+)/.exec(
+            event
+          );
+          if (match) {
+            this.obstacles.push({
+              x: parseInt(match[1], 10),
+              y: parseInt(match[2], 10),
+              width: parseInt(match[3], 10),
+              height: parseInt(match[4], 10),
+            });
+          }
+        }
+        console.log(`Recreating: ${event}`);
+      }, 1000 * index); // Delay each action to visually distinguish them
+    });
   }
 }

@@ -16,13 +16,13 @@
           [style.top.px]="obstacle.y"
           [style.width.px]="obstacle.width"
           [style.height.px]="obstacle.height"
-          (click)="handleObstacleClick(obstacle)"
+          (click)="handleObstacleClick($event, obstacle)"
         ></div>
       </div>
     </div>
     <div class="board-page_right-content">
       <div class="right-container_text">Settings:</div>
-      <form>
+      <form class="board-page_inputs-and-buttons">
         <mat-form-field class="right-container_form-field">
           <mat-label>Width (px)</mat-label>
           <input
@@ -117,6 +117,14 @@
           (click)="saveTrainingSession()"
         >
           Save training session
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="board_button"
+          (click)="recreateActions()"
+        >
+          Recreate actions
         </button>
       </form>
     </div>
