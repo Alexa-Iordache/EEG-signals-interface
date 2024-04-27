@@ -20,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BoardComponent } from './board/board.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { DeleteObstacleModalComponent } from './delete-obstacle-modal/delete-obstacle-modal.component';
+import { SaveRecrdingModalComponent } from './stop-recording-modal/stop-recording-modal.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { DeleteObstacleModalComponent } from './delete-obstacle-modal/delete-obs
     MainPageComponent,
     BoardComponent,
     ProfilePageComponent,
-    DeleteObstacleModalComponent
+    DeleteObstacleModalComponent,
+    SaveRecrdingModalComponent
   ],
   imports: [
     BrowserModule,

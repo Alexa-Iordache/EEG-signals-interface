@@ -3,6 +3,7 @@ import { RpcService } from '../services/rpc.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteObstacleModalComponent } from '../delete-obstacle-modal/delete-obstacle-modal.component';
 import { HttpClient } from '@angular/common/http';
+import { SaveRecrdingModalComponent } from '../stop-recording-modal/stop-recording-modal.component';
 export interface Obstacle {
   x: number;
   y: number;
@@ -19,7 +20,6 @@ export class BoardComponent {
   posX = 0;
   posY = 0;
   obstacles: Obstacle[] = [];
-
   obstacleInfo: any;
 
   // Variables from form-fields
@@ -28,6 +28,7 @@ export class BoardComponent {
   stepValue = '10';
   selectedPosition = '';
 
+  // Variables from delete-obstacle modal
   yesBtn = '';
   noBtn = '';
 
@@ -35,21 +36,33 @@ export class BoardComponent {
   showDeleteConfirmation = false;
   obstacleToDelete: Obstacle | null = null;
 
+  // Variables for recording process
   recording = false;
   recordedEvents: string[] = [];
 
+  // Variable for the last key that was pressed
   lastKeyPressed: string = '';
+
+  // Variables to illustrate which buttons have been clicked on
+  recreateActionsButton = false;
+  startRecordButton = false;
+  stopRecordButton = false;
+
 
   constructor(
     private http: HttpClient,
     private rpcService: RpcService,
     public dialog: MatDialog
   ) {
-    this.widthValue = '10';
-    this.heightValue = '10';
+    // this.widthValue = '10';
+    // this.heightValue = '10';
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.recreateActionsButton = false;
+    this.startRecordButton = false;
+    this.stopRecordButton = false;
+  }
 
   // the point can be moved on the board using the 4 arrow keys
   @HostListener('document:keydown', ['$event'])
@@ -257,6 +270,7 @@ export class BoardComponent {
     this.recording = true;
     this.recordedEvents = [];
     console.log('Recording started');
+    this.startRecordButton = true;
   }
 
   // Method to stop the record
@@ -264,16 +278,13 @@ export class BoardComponent {
     this.recording = false;
     console.log('Recording stopped');
     console.log('Recorded Events:', this.recordedEvents);
-  }
-
-  // Method to save the record
-  saveTrainingSession(): void {
-    console.log('Save training session');
-    console.log(this.recordedEvents);
+    this.dialog.open(SaveRecrdingModalComponent);
+    this.stopRecordButton = true;
   }
 
   // Method to recreate actions from the last record
   recreateActions(): void {
+    this.recreateActionsButton = true;
     // Reset to initial conditions or a specific start point
     this.posX = 0;
     this.posY = 0;

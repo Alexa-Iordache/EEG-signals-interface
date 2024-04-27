@@ -3,7 +3,7 @@
 
   <div class="board-page_content">
     <div class="board-page_left-content">
-      <div class="board-page_direction">
+      <div *ngIf="!recreateActionsButton" class="board-page_direction">
         <span>Direction: </span>
         <mat-icon *ngIf="lastKeyPressed === 'ArrowLeft'" class="direction-icon"
           >arrow_back</mat-icon
@@ -17,6 +17,9 @@
         <mat-icon *ngIf="lastKeyPressed === 'ArrowDown'" class="direction-icon"
           >arrow_downward</mat-icon
         >
+      </div>
+      <div *ngIf="recreateActionsButton" class="board-page_direction">
+        <span>Recreating the last record </span>
       </div>
       <div class="board-page_board" tabindex="0" (click)="addObstacle($event)">
         <div
@@ -102,7 +105,8 @@
         </mat-form-field>
         <button
           mat-raised-button
-          color="warn"
+          color="accent"
+          [disabled]="recreateActionsButton"
           (click)="
             applyChanges(widthValue, heightValue, stepValue, selectedPosition)
           "
@@ -113,6 +117,7 @@
           mat-raised-button
           color="accent"
           class="board_button"
+          [disabled]="recreateActionsButton"
           (click)="startRecord()"
         >
           Start record
@@ -121,6 +126,7 @@
           mat-raised-button
           color="accent"
           class="board_button"
+          [disabled]="recreateActionsButton || !startRecordButton"
           (click)="stopRecord()"
         >
           Stop record
@@ -129,14 +135,7 @@
           mat-raised-button
           color="accent"
           class="board_button"
-          (click)="saveTrainingSession()"
-        >
-          Save training session
-        </button>
-        <button
-          mat-raised-button
-          color="accent"
-          class="board_button"
+          [disabled]="!stopRecordButton"
           (click)="recreateActions()"
         >
           Recreate actions
