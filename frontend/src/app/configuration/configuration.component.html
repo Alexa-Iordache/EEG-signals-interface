@@ -31,9 +31,19 @@
           [style.height.px]="
             ['0', '00', ''].includes(boardHeight) ? '600' : boardHeight
           "
-          (click)="addObstacle($event)"
+          (click)="customizeBoard($event)"
         >
-          <div class="robot" [style.left.px]="posX" [style.top.px]="posY"></div>
+          <div
+            class="robot"
+            [style.left.px]="startPoint.x"
+            [style.top.px]="startPoint.y"
+          ></div>
+          <div
+            *ngIf="chooseFinishPointActive"
+            class="finish-point"
+            [style.left.px]="finishPoint.x"
+            [style.top.px]="finishPoint.y"
+          ></div>
           <div
             *ngFor="let obstacle of obstacles"
             class="obstacle"
@@ -105,7 +115,7 @@
           *ngIf="step === 2"
           mat-raised-button
           class="form-field-button"
-          (click)="chooseStartingPoint()"
+          (click)="chooseFinishPoint()"
         >
           Choose finish point for robot
         </button>
@@ -144,7 +154,7 @@
           *ngIf="step === 4"
           mat-raised-button
           class="form-field-button"
-          [disabled]="recreateActionsButton || !startRecordButton"
+          [disabled]="!stopRecordButton"
           (click)="stopRecord()"
         >
           Stop record
@@ -152,11 +162,20 @@
         <button
           *ngIf="step === 4"
           mat-raised-button
-          [disabled]="!stopRecordButton"
+          [disabled]="!recreateActionsButton"
           class="form-field-button"
           (click)="recreateActions()"
         >
           Recreate actions
+        </button>
+        <button
+          *ngIf="step === 4"
+          mat-raised-button
+          [disabled]="!recreateActionsButton"
+          class="form-field-button"
+          (click)="tryAgain()"
+        >
+          Try again
         </button>
       </form>
 

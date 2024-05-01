@@ -4,11 +4,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteObstacleModalComponent } from '../delete-obstacle-modal/delete-obstacle-modal.component';
 import { HttpClient } from '@angular/common/http';
 import { SaveRecrdingModalComponent } from '../stop-recording-modal/stop-recording-modal.component';
+
 export interface Obstacle {
   x: number;
   y: number;
   width: number;
   height: number;
+}
+
+export interface Point {
+  x: number;
+  y: number;
 }
 
 @Component({
@@ -17,15 +23,23 @@ export interface Obstacle {
   styleUrls: ['./configuration.component.scss'],
 })
 export class ConfigurationComponent {
-  posX = 0;
-  posY = 0;
+  initialPosX = 0;
+  initialPosY = 0;
   obstacles: Obstacle[] = [];
   obstacleInfo: any;
+  startPoint: Point = {
+    x: 0,
+    y: 0,
+  };
+  finishPoint: Point = {
+    x: 0,
+    y: 0,
+  };
 
   // Variables from form-fields
   obstacleWidth = '20';
   obstacleHeight = '30';
-  stepValue = '10';
+  stepValue = '50';
   boardWidth = '800';
   boardHeight = '600';
 
@@ -55,6 +69,8 @@ export class ConfigurationComponent {
   // Variable for 'board settings' button
   boardSettingsActive = false;
   robotSettingsActive = false;
+  chooseStartingPointActive = false;
+  chooseFinishPointActive = false;
   obstaclesSettingsActive = false;
   trainModelActive = false;
 
@@ -80,8 +96,8 @@ export class ConfigurationComponent {
     const step = parseInt(this.stepValue);
 
     // Calculate the potential new position of the point
-    let newX = this.posX;
-    let newY = this.posY;
+    let newX = this.startPoint.x;
+    let newY = this.startPoint.y;
     switch (event.key) {
       case 'ArrowUp':
         newY -= step;
@@ -109,8 +125,8 @@ export class ConfigurationComponent {
 
     // If the new position does not intersect with any obstacle, update the position
     if (!intersects) {
-      this.posX = newX;
-      this.posY = newY;
+      this.startPoint.x = newX;
+      this.startPoint.y = newY;
 
       if (this.recording) {
         this.recordedEvents.push(`Moved to (${newX}, ${newY})`);
@@ -146,39 +162,48 @@ export class ConfigurationComponent {
   }
 
   // Method to add a new obstacle (on the board and in database)
-  addObstacle(event: MouseEvent) {
-    const obstacle: Obstacle = {
-      x: event.offsetX,
-      y: event.offsetY,
-      width: parseFloat(this.obstacleWidth),
-      height: parseFloat(this.obstacleHeight),
-    };
+  customizeBoard(event: MouseEvent) {
+    if (this.step === 3) {
+      const obstacle: Obstacle = {
+        x: event.offsetX,
+        y: event.offsetY,
+        width: parseFloat(this.obstacleWidth),
+        height: parseFloat(this.obstacleHeight),
+      };
 
-    this.obstacles.push(obstacle);
-    if (this.recording) {
-      this.recordedEvents.push(
-        `Obstacle added: x=${obstacle.x}, y=${obstacle.y}, width=${obstacle.width}, height=${obstacle.height}`
+      this.obstacles.push(obstacle);
+
+      let paramsAddObstacle = {
+        xPos: obstacle.x,
+        yPos: obstacle.y,
+        width: obstacle.width,
+        height: obstacle.height,
+      };
+
+      this.rpcService.callRPC(
+        'obstacles.addObstacle',
+        paramsAddObstacle,
+        (error: any, res: any) => {
+          if (error) {
+            console.log(error);
+            return;
+          }
+          this.getObstacles();
+        }
       );
     }
 
-    let paramsAddObstacle = {
-      xPos: obstacle.x,
-      yPos: obstacle.y,
-      width: obstacle.width,
-      height: obstacle.height,
-    };
+    if (this.chooseStartingPointActive) {
+      this.startPoint.x = event.offsetX;
+      this.startPoint.y = event.offsetY;
+      this.initialPosX = this.startPoint.x;
+      this.initialPosY = this.startPoint.y;
+    }
 
-    this.rpcService.callRPC(
-      'obstacles.addObstacle',
-      paramsAddObstacle,
-      (error: any, res: any) => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-        this.getObstacles();
-      }
-    );
+    if (this.chooseFinishPointActive) {
+      this.finishPoint.x = event.offsetX;
+      this.finishPoint.y = event.offsetY;
+    }
   }
 
   // Method to customize an obstacle before adding it to the board
@@ -195,13 +220,6 @@ export class ConfigurationComponent {
     this.obstacleWidth = obstacleWidth;
     this.obstacleHeight = obstacleHeight;
     this.stepValue = step;
-    console.log(
-      this.boardWidth,
-      this.boardHeight,
-      this.obstacleWidth,
-      this.obstacleHeight,
-      this.stepValue
-    );
 
     // Update state for 'step' buttons
     this.step = 0;
@@ -291,26 +309,25 @@ export class ConfigurationComponent {
   startRecord(): void {
     this.recording = true;
     this.recordedEvents = [];
-    console.log('Recording started');
     this.startRecordButton = true;
+    this.stopRecordButton = true;
   }
 
   // Method to stop the record
   stopRecord(): void {
     this.recording = false;
-    console.log('Recording stopped');
     console.log('Recorded Events:', this.recordedEvents);
     this.dialog.open(SaveRecrdingModalComponent);
-    this.stopRecordButton = true;
+    this.recreateActionsButton = true;
+    this.stopRecordButton = false;
   }
 
   // Method to recreate actions from the last record
   recreateActions(): void {
     this.recreateActionsButton = true;
     // Reset to initial conditions or a specific start point
-    this.posX = 0;
-    this.posY = 0;
-    this.obstacles = []; // Clear existing obstacles if they need to be reset
+    this.startPoint.x = this.initialPosX;
+    this.startPoint.y = this.initialPosY;
 
     this.recordedEvents.forEach((event, index) => {
       setTimeout(() => {
@@ -318,23 +335,8 @@ export class ConfigurationComponent {
           // Extract coordinates from the log string
           const match = /Moved to \((\d+), (\d+)\)/.exec(event);
           if (match) {
-            this.posX = parseInt(match[1], 10);
-            this.posY = parseInt(match[2], 10);
-          }
-        } else if (event.startsWith('Settings changed')) {
-          // Apply settings changes or ignore if only move events need to be recreated
-        } else if (event.startsWith('Obstacle added')) {
-          // Example log might be "Obstacle added: x=50, y=50, width=20, height=20"
-          const match = /x=(\d+), y=(\d+), width=(\d+), height=(\d+)/.exec(
-            event
-          );
-          if (match) {
-            this.obstacles.push({
-              x: parseInt(match[1], 10),
-              y: parseInt(match[2], 10),
-              width: parseInt(match[3], 10),
-              height: parseInt(match[4], 10),
-            });
+            this.startPoint.x = parseInt(match[1], 10);
+            this.startPoint.y = parseInt(match[2], 10);
           }
         }
         console.log(`Recreating: ${event}`);
@@ -344,11 +346,18 @@ export class ConfigurationComponent {
 
   // Method to choose the starting position of the robot
   chooseStartingPoint(): void {
-    console.log('choose starting position');
+    this.chooseStartingPointActive = true;
+    this.chooseFinishPointActive = false;
   }
 
+  // Method to choose the finish position of the robot
+  chooseFinishPoint(): void {
+    this.chooseFinishPointActive = true;
+    this.chooseStartingPointActive = false;
+  }
+
+  // Method that reveal neccessary form-fields to customize board dimension
   boardSettings(): void {
-    console.log('board settings');
     this.boardSettingsActive = true;
     this.robotSettingsActive = false;
     this.obstaclesSettingsActive = false;
@@ -356,8 +365,8 @@ export class ConfigurationComponent {
     this.step = 1;
   }
 
+  // Method that reveal neccessary form-fields and buttons to customize robot dimension
   robotSettings(): void {
-    console.log('robot settings');
     this.robotSettingsActive = true;
     this.boardSettingsActive = false;
     this.obstaclesSettingsActive = false;
@@ -365,8 +374,8 @@ export class ConfigurationComponent {
     this.step = 2;
   }
 
+  // Method that reveal neccessary form-fields to customize obstacle dimension
   obstaclesSettings(): void {
-    console.log('obstacles settings');
     this.obstaclesSettingsActive = true;
     this.boardSettingsActive = false;
     this.robotSettingsActive = false;
@@ -374,12 +383,21 @@ export class ConfigurationComponent {
     this.step = 3;
   }
 
+  // Method that reveal neccessary buttons to train a new model
   trainModel(): void {
-    console.log('train model');
     this.trainModelActive = true;
     this.boardSettingsActive = false;
     this.robotSettingsActive = false;
     this.obstaclesSettingsActive = false;
     this.step = 4;
+  }
+
+  // The board and robot are reinitialised
+  tryAgain(): void {
+    this.startPoint.x = 0;
+    this.startPoint.y = 0;
+    this.obstacles = [];
+    this.stopRecordButton = false;
+    this.recreateActionsButton = false;
   }
 }

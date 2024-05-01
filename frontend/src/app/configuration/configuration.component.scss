@@ -51,6 +51,12 @@
             background-color: red;
           }
 
+          .finish-point {
+            @include dimension(60px, 30px);
+            position: absolute;
+            background-color: green;
+          }
+
           .obstacle {
             position: absolute;
             background-color: blue;
