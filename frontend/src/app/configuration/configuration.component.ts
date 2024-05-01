@@ -218,14 +218,6 @@ export class ConfigurationComponent {
     }
   }
 
-  backOption(): void {
-    this.step = 0;
-    this.boardSettingsActive = false;
-    this.robotSettingsActive = false;
-    this.obstaclesSettingsActive = false;
-    this.trainModelActive = false;
-  }
-
   // Method to handle obstacle click event
   handleObstacleClick(event: MouseEvent, obstacle: Obstacle) {
     event.stopPropagation(); // This stops the event from propagating further

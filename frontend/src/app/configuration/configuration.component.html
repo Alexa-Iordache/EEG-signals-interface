@@ -21,27 +21,29 @@
       <div *ngIf="recreateActionsButton" class="direction-container">
         <span>Recreating the last record </span>
       </div>
-      <div
-        class="board"
-        tabindex="0"
-        [style.width.px]="
-          ['0', '00', ''].includes(boardWidth) ? '800' : boardWidth
-        "
-        [style.height.px]="
-          ['0', '00', ''].includes(boardHeight) ? '600' : boardHeight
-        "
-        (click)="addObstacle($event)"
-      >
-        <div class="robot" [style.left.px]="posX" [style.top.px]="posY"></div>
+      <div class="board-container">
         <div
-          *ngFor="let obstacle of obstacles"
-          class="obstacle"
-          [style.left.px]="obstacle.x"
-          [style.top.px]="obstacle.y"
-          [style.width.px]="obstacle.width"
-          [style.height.px]="obstacle.height"
-          (click)="handleObstacleClick($event, obstacle)"
-        ></div>
+          class="board"
+          tabindex="0"
+          [style.width.px]="
+            ['0', '00', ''].includes(boardWidth) ? '800' : boardWidth
+          "
+          [style.height.px]="
+            ['0', '00', ''].includes(boardHeight) ? '600' : boardHeight
+          "
+          (click)="addObstacle($event)"
+        >
+          <div class="robot" [style.left.px]="posX" [style.top.px]="posY"></div>
+          <div
+            *ngFor="let obstacle of obstacles"
+            class="obstacle"
+            [style.left.px]="obstacle.x"
+            [style.top.px]="obstacle.y"
+            [style.width.px]="obstacle.width"
+            [style.height.px]="obstacle.height"
+            (click)="handleObstacleClick($event, obstacle)"
+          ></div>
+        </div>
       </div>
     </div>
     <div *ngIf="step !== 0" class="configuration-page_right-content">
@@ -158,34 +160,23 @@
         </button>
       </form>
 
-      <!-- OPTION BUTTON -->
-      <div class="option-buttons">
-        <button
-          *ngIf="step !== 0"
-          mat-raised-button
-          color="warn"
-          (click)="
-            applyChanges(
-              boardWidth,
-              boardHeight,
-              obstacleWidth,
-              obstacleHeight,
-              stepValue
-            )
-          "
-        >
-          Apply changes
-        </button>
-
-        <button
-          *ngIf="step !== 0"
-          mat-raised-button
-          color="basic"
-          (click)="backOption()"
-        >
-          Back
-        </button>
-      </div>
+      <!-- BACK BUTTON -->
+      <button
+        *ngIf="step !== 0"
+        mat-raised-button
+        color="warn"
+        (click)="
+          applyChanges(
+            boardWidth,
+            boardHeight,
+            obstacleWidth,
+            obstacleHeight,
+            stepValue
+          )
+        "
+      >
+        Back to steps
+      </button>
     </div>
 
     <!-- STEP BUTTONS -->

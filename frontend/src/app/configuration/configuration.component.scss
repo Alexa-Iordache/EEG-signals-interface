@@ -30,24 +30,31 @@
           margin-left: 10px;
           .mat-icon {
             color: white;
+            font-size: 30px;
           }
         }
       }
 
-      .board {
-        // @include dimension(800px, 600px);
-        position: relative;
-        background-color: white;
+      .board-container {
+        display: flex;
+        align-items: center;
+        min-height: 650px;
 
-        .robot {
-          @include dimension(30px, 30px);
-          position: absolute;
-          background-color: red;
-        }
+        .board {
+          // @include dimension(800px, 600px);
+          position: relative;
+          background-color: white;
 
-        .obstacle {
-          position: absolute;
-          background-color: blue;
+          .robot {
+            @include dimension(30px, 30px);
+            position: absolute;
+            background-color: red;
+          }
+
+          .obstacle {
+            position: absolute;
+            background-color: blue;
+          }
         }
       }
     }
@@ -79,11 +86,6 @@
         .form-field-button {
           margin-bottom: 20px;
         }
-      }
-
-      .option-buttons {
-        @include displayFormatWithDirection(flex, row, center, space-evenly);
-        width: 100%;
       }
     }
 
