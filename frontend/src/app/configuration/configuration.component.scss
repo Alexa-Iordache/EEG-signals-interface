@@ -19,7 +19,7 @@
       display: flex;
       flex-direction: column;
 
-      .configuration-page_direction {
+      .direction-container {
         display: flex;
         align-items: center;
         font-size: 30px;
@@ -34,18 +34,18 @@
         }
       }
 
-      .configuration-page_board {
+      .board {
         @include dimension(800px, 600px);
         position: relative;
         background-color: white;
 
-        .configuration-page_avatar {
-          @include dimension(20px, 20px);
+        .robot {
+          @include dimension(30px, 30px);
           position: absolute;
           background-color: red;
         }
 
-        .configuration-page_obstacle {
+        .obstacle {
           position: absolute;
           background-color: blue;
         }
@@ -54,24 +54,25 @@
 
     .configuration-page_right-content {
       @include displayFormatWithDirection(flex, column, center, space-around);
-      max-width: 20%;
+      max-width: 30%;
       height: 100%;
-
-      .right-container_form-field {
-        width: 100%;
-      }
 
       .right-container_text {
         font-size: 30px;
         color: white;
       }
 
-      .configuration-page_inputs-and-buttons {
+      .right-container_form-field {
+        width: 100%;
+      }
+
+      .inputs-and-buttons {
         display: flex;
         flex-direction: column;
       }
 
       .configuration_button {
+        width: 100%;
         margin-top: 10px;
       }
     }

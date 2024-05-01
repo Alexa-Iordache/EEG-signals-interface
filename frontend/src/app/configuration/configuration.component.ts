@@ -26,7 +26,8 @@ export class ConfigurationComponent {
   widthValue = '20';
   heightValue = '30';
   stepValue = '10';
-  selectedPosition = '';
+  boardWidth = '800';
+  boardHeight = '600';
 
   // Variables from delete-obstacle modal
   yesBtn = '';
@@ -47,6 +48,15 @@ export class ConfigurationComponent {
   recreateActionsButton = false;
   startRecordButton = false;
   stopRecordButton = false;
+
+  // Step number for configuration
+  step = 0;
+
+  // Variable for 'board settings' button
+  boardSettingsActive = false;
+  robotSettingsActive = false;
+  obstaclesSettingsActive = false;
+  trainModelActive = false;
 
 
   constructor(
@@ -173,26 +183,21 @@ export class ConfigurationComponent {
   }
 
   // Method to customize an obstacle before adding it to the board
-  applyChanges(width: string, height: string, step: string, position: string) {
+  applyChanges(width: string, height: string, step: string) {
     this.widthValue = width;
     this.heightValue = height;
     this.stepValue = step;
-    this.selectedPosition = position;
+
+    this.step = 0;
+    this.boardSettingsActive = false;
+    this.robotSettingsActive = false;
+    this.obstaclesSettingsActive = false;
+    this.trainModelActive = false;
 
     if (this.recording) {
       this.recordedEvents.push(
-        `Settings changed: width=${width}, height=${height}, step=${step}, position=${position}`
+        `Settings changed: width=${width}, height=${height}, step=${step}`
       );
-    }
-
-    if (this.selectedPosition === 'top-left') {
-      (this.posX = 0), (this.posY = 0);
-    }
-    if (this.selectedPosition === 'middle-left') {
-      (this.posX = 0), (this.posY = 300);
-    }
-    if (this.selectedPosition === 'bottom-left') {
-      (this.posX = 0), (this.posY = 580);
     }
   }
 
@@ -318,5 +323,46 @@ export class ConfigurationComponent {
         console.log(`Recreating: ${event}`);
       }, 1000 * index); // Delay each action to visually distinguish them
     });
+  }
+
+  // Method to choose the starting position of the robot
+  chooseStartingPoint(): void {
+    console.log('choose starting position');
+  }
+
+  boardSettings(): void {
+    console.log('board settings');
+    this.boardSettingsActive = true;
+    this.robotSettingsActive = false;
+    this.obstaclesSettingsActive = false;
+    this.trainModelActive = false;
+    this.step = 1;
+  }
+
+  robotSettings(): void {
+    console.log('robot settings');
+    this.robotSettingsActive = true;
+    this.boardSettingsActive = false;
+    this.obstaclesSettingsActive = false;
+    this.trainModelActive = false;
+    this.step = 2;
+  }
+
+  obstaclesSettings(): void {
+    console.log('obstacles settings');
+    this.obstaclesSettingsActive = true;
+    this.boardSettingsActive = false;
+    this.robotSettingsActive = false;
+    this.trainModelActive = false;
+    this.step = 3;
+  }
+
+  trainModel(): void {
+    console.log('train model');
+    this.trainModelActive = true;
+    this.boardSettingsActive = false;
+    this.robotSettingsActive = false;
+    this.obstaclesSettingsActive = false;
+    this.step = 4;
   }
 }
