@@ -67,12 +67,9 @@ export class ConfigurationComponent {
   step = 0;
 
   // Variable for 'board settings' button
-  boardSettingsActive = false;
-  robotSettingsActive = false;
   chooseStartingPointActive = false;
   chooseFinishPointActive = false;
-  obstaclesSettingsActive = false;
-  trainModelActive = false;
+  afterChoosingStartingPoint = false;
 
   constructor(
     private http: HttpClient,
@@ -198,11 +195,14 @@ export class ConfigurationComponent {
       this.startPoint.y = event.offsetY;
       this.initialPosX = this.startPoint.x;
       this.initialPosY = this.startPoint.y;
+      this.afterChoosingStartingPoint = true;
     }
 
     if (this.chooseFinishPointActive) {
       this.finishPoint.x = event.offsetX;
       this.finishPoint.y = event.offsetY;
+      this.afterChoosingStartingPoint = false;
+      console.log(this.finishPoint);
     }
   }
 
@@ -223,10 +223,6 @@ export class ConfigurationComponent {
 
     // Update state for 'step' buttons
     this.step = 0;
-    this.boardSettingsActive = false;
-    this.robotSettingsActive = false;
-    this.obstaclesSettingsActive = false;
-    this.trainModelActive = false;
 
     // Add event
     if (this.recording) {
@@ -347,7 +343,7 @@ export class ConfigurationComponent {
   // Method to choose the starting position of the robot
   chooseStartingPoint(): void {
     this.chooseStartingPointActive = true;
-    this.chooseFinishPointActive = false;
+    // this.chooseFinishPointActive = false;
   }
 
   // Method to choose the finish position of the robot
@@ -358,37 +354,21 @@ export class ConfigurationComponent {
 
   // Method that reveal neccessary form-fields to customize board dimension
   boardSettings(): void {
-    this.boardSettingsActive = true;
-    this.robotSettingsActive = false;
-    this.obstaclesSettingsActive = false;
-    this.trainModelActive = false;
     this.step = 1;
   }
 
   // Method that reveal neccessary form-fields and buttons to customize robot dimension
   robotSettings(): void {
-    this.robotSettingsActive = true;
-    this.boardSettingsActive = false;
-    this.obstaclesSettingsActive = false;
-    this.trainModelActive = false;
     this.step = 2;
   }
 
   // Method that reveal neccessary form-fields to customize obstacle dimension
   obstaclesSettings(): void {
-    this.obstaclesSettingsActive = true;
-    this.boardSettingsActive = false;
-    this.robotSettingsActive = false;
-    this.trainModelActive = false;
     this.step = 3;
   }
 
   // Method that reveal neccessary buttons to train a new model
   trainModel(): void {
-    this.trainModelActive = true;
-    this.boardSettingsActive = false;
-    this.robotSettingsActive = false;
-    this.obstaclesSettingsActive = false;
     this.step = 4;
   }
 
@@ -399,5 +379,9 @@ export class ConfigurationComponent {
     this.obstacles = [];
     this.stopRecordButton = false;
     this.recreateActionsButton = false;
+  }
+
+  resetPositions(): void {
+    this.chooseFinishPointActive = true;
   }
 }

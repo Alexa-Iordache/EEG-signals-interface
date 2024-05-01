@@ -39,7 +39,7 @@
             [style.top.px]="startPoint.y"
           ></div>
           <div
-            *ngIf="chooseFinishPointActive"
+            *ngIf="finishPoint.x !== 0 && finishPoint.y !== 0"
             class="finish-point"
             [style.left.px]="finishPoint.x"
             [style.top.px]="finishPoint.y"
@@ -107,6 +107,7 @@
           *ngIf="step === 2"
           mat-raised-button
           class="form-field-button"
+          [disabled]="chooseFinishPointActive"
           (click)="chooseStartingPoint()"
         >
           Choose starting point for robot
@@ -115,6 +116,7 @@
           *ngIf="step === 2"
           mat-raised-button
           class="form-field-button"
+          [disabled]="!afterChoosingStartingPoint"
           (click)="chooseFinishPoint()"
         >
           Choose finish point for robot
@@ -179,23 +181,33 @@
         </button>
       </form>
 
-      <!-- BACK BUTTON -->
-      <button
-        *ngIf="step !== 0"
-        mat-raised-button
-        color="warn"
-        (click)="
-          applyChanges(
-            boardWidth,
-            boardHeight,
-            obstacleWidth,
-            obstacleHeight,
-            stepValue
-          )
-        "
-      >
-        Back to steps
-      </button>
+      <!-- OPTIONS BUTTONS -->
+      <div class="options-buttons">
+        <button
+          *ngIf="step !== 0"
+          mat-raised-button
+          color="warn"
+          (click)="
+            applyChanges(
+              boardWidth,
+              boardHeight,
+              obstacleWidth,
+              obstacleHeight,
+              stepValue
+            )
+          "
+        >
+          Back to steps
+        </button>
+        <button
+          *ngIf="step === 2"
+          mat-raised-button
+          color="warn"
+          (click)="resetPositions()"
+        >
+          Reset
+        </button>
+      </div>
     </div>
 
     <!-- STEP BUTTONS -->
@@ -204,9 +216,6 @@
         mat-raised-button
         color="accent"
         class="configuration_button"
-        [disabled]="
-          robotSettingsActive || obstaclesSettingsActive || trainModelActive
-        "
         (click)="boardSettings()"
       >
         STEP 1: Board settings
@@ -215,9 +224,6 @@
         mat-raised-button
         color="accent"
         class="configuration_button"
-        [disabled]="
-          boardSettingsActive || obstaclesSettingsActive || trainModelActive
-        "
         (click)="robotSettings()"
       >
         STEP 2: Robot settings
@@ -226,9 +232,6 @@
         mat-raised-button
         color="accent"
         class="configuration_button"
-        [disabled]="
-          boardSettingsActive || robotSettingsActive || trainModelActive
-        "
         (click)="obstaclesSettings()"
       >
         STEP 3: Obstacles settings
@@ -237,9 +240,6 @@
         mat-raised-button
         color="accent"
         class="configuration_button"
-        [disabled]="
-          boardSettingsActive || obstaclesSettingsActive || robotSettingsActive
-        "
         (click)="trainModel()"
       >
         STEP 4: Train model
