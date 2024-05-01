@@ -34,7 +34,8 @@
         ></div>
       </div>
     </div>
-    <div class="configuration-page_right-content">
+    <div *ngIf="step !== 0" class="configuration-page_right-content">
+      <!-- MESSAGES -->
       <div *ngIf="step === 1" class="right-container_text">
         STEP 1: Set board dimensions
       </div>
@@ -47,7 +48,10 @@
       <div *ngIf="step === 4" class="right-container_text">
         STEP 4: Train model
       </div>
-      <form class="inputs-and-buttons">
+
+      <!-- OPTIONS FOR EVERY STEP -->
+      <form class="form-container">
+        <!-- BOARD SETTINGS -->
         <mat-form-field *ngIf="step === 1" class="right-container_form-field">
           <mat-label>Board width (px)</mat-label>
           <input
@@ -67,6 +71,34 @@
           />
         </mat-form-field>
 
+        <!-- ROBOT SETTINGS -->
+        <mat-form-field *ngIf="step === 2" class="right-container_form-field">
+          <mat-label>Step used by the robot to move</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="stepValue"
+            name="stepValue"
+          />
+        </mat-form-field>
+        <button
+          *ngIf="step === 2"
+          mat-raised-button
+          class="form-field-button"
+          (click)="chooseStartingPoint()"
+        >
+          Choose starting point for robot
+        </button>
+        <button
+          *ngIf="step === 2"
+          mat-raised-button
+          class="form-field-button"
+          (click)="chooseStartingPoint()"
+        >
+          Choose finish point for robot
+        </button>
+
+        <!-- OBSTACLES SETTINGS -->
         <mat-form-field *ngIf="step === 3" class="right-container_form-field">
           <mat-label>Obstacle width (px)</mat-label>
           <input
@@ -85,65 +117,62 @@
             name="heightValue"
           />
         </mat-form-field>
-        <mat-form-field *ngIf="step === 2" class="right-container_form-field">
-          <mat-label>Step used by the robot to move</mat-label>
-          <input
-            matInput
-            type="text"
-            [(ngModel)]="stepValue"
-            name="stepValue"
-          />
-        </mat-form-field>
+
+        <!-- TRAIN MODEL BUTTONS -->
+        <button
+          *ngIf="step === 4"
+          mat-raised-button
+          class="form-field-button"
+          [disabled]="recreateActionsButton"
+          (click)="startRecord()"
+        >
+          Start record
+        </button>
+        <button
+          *ngIf="step === 4"
+          mat-raised-button
+          class="form-field-button"
+          [disabled]="recreateActionsButton || !startRecordButton"
+          (click)="stopRecord()"
+        >
+          Stop record
+        </button>
+        <button
+          *ngIf="step === 4"
+          mat-raised-button
+          [disabled]="!stopRecordButton"
+          class="form-field-button"
+          (click)="recreateActions()"
+        >
+          Recreate actions
+        </button>
       </form>
-      <button
-        *ngIf="step === 4"
-        mat-raised-button
-        class="configuration_button"
-        [disabled]="recreateActionsButton"
-        (click)="startRecord()"
-      >
-        Start record
-      </button>
-      <button
-        *ngIf="step === 4"
-        mat-raised-button
-        class="configuration_button"
-        [disabled]="recreateActionsButton || !startRecordButton"
-        (click)="stopRecord()"
-      >
-        Stop record
-      </button>
-      <button
-        *ngIf="step === 4"
-        mat-raised-button
-        class="configuration_button"
-        [disabled]="!stopRecordButton"
-        (click)="recreateActions()"
-      >
-        Recreate actions
-      </button>
 
-      <button
-        *ngIf="step === 2"
-        mat-raised-button
-        (click)="chooseStartingPoint()"
-      >
-        Choose starting point for robot
-      </button>
-      <button
-        *ngIf="step === 2"
-        mat-raised-button
-        (click)="chooseStartingPoint()"
-      >
-        Choose finish point for robot
-      </button>
+      <!-- OPTION BUTTON -->
+      <div class="option-buttons">
+        <button
+          *ngIf="step !== 0"
+          mat-raised-button
+          color="warn"
+          (click)="applyChanges(widthValue, heightValue, stepValue)"
+        >
+          Apply changes
+        </button>
 
-      <div *ngIf="step !== 0" style="color: white">
-        ----------------------------------------------------------------
+        <button
+          *ngIf="step !== 0"
+          mat-raised-button
+          color="basic"
+          (click)="backOption()"
+        >
+          Back
+        </button>
       </div>
+    </div>
 
+    <!-- STEP BUTTONS -->
+    <div *ngIf="step === 0" class="step-buttons">
       <button
-        *ngIf="step !== 1"
         mat-raised-button
         color="accent"
         class="configuration_button"
@@ -152,7 +181,7 @@
         "
         (click)="boardSettings()"
       >
-        BOARD settings
+        STEP 1: Board settings
       </button>
       <button
         mat-raised-button
@@ -163,7 +192,7 @@
         "
         (click)="robotSettings()"
       >
-        ROBOT settings
+        STEP 2: Robot settings
       </button>
       <button
         mat-raised-button
@@ -174,7 +203,7 @@
         "
         (click)="obstaclesSettings()"
       >
-        OBSTACLES settings
+        STEP 3: Obstacles settings
       </button>
       <button
         mat-raised-button
@@ -185,16 +214,7 @@
         "
         (click)="trainModel()"
       >
-        Train model
-      </button>
-      <button
-        mat-raised-button
-        color="warn"
-        class="configuration_button"
-        [disabled]="recreateActionsButton"
-        (click)="applyChanges(widthValue, heightValue, stepValue)"
-      >
-        Apply changes
+        STEP 4: Train model
       </button>
     </div>
   </div>

@@ -12,7 +12,7 @@
   }
 
   .configuration-page_content {
-    @include displayFormatWithDirection(flex, row, center, space-around);
+    @include displayFormatWithDirection(flex, row, center, space-evenly);
     width: 100%;
 
     .configuration-page_left-content {
@@ -53,23 +53,46 @@
     }
 
     .configuration-page_right-content {
-      @include displayFormatWithDirection(flex, column, center, space-around);
-      max-width: 30%;
-      height: 100%;
+      @include displayFormatWithDirection(flex, column, center, space-evenly);
+      max-width: 20%;
+      min-height: 80%;
 
       .right-container_text {
+        display: flex;
         font-size: 30px;
         color: white;
-      }
-
-      .right-container_form-field {
         width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 35px;
       }
 
-      .inputs-and-buttons {
+      .form-container {
         display: flex;
         flex-direction: column;
+        width: 100%;
+        // height: 100%;
+        // justify-content: space-between;
+
+        .right-container_form-field {
+          width: 100%;
+        }
+
+        .form-field-button {
+          margin-bottom: 20px;
+        }
       }
+
+      .option-buttons {
+        @include displayFormatWithDirection(flex, row, center, space-evenly);
+        width: 100%;
+      }
+    }
+
+    .step-buttons {
+      @include displayFormatWithDirection(flex, column, flex-start, center);
+      @include dimension(100%, 100%);
+      max-width: 20%;
 
       .configuration_button {
         width: 100%;
