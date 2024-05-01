@@ -23,8 +23,8 @@ export class ConfigurationComponent {
   obstacleInfo: any;
 
   // Variables from form-fields
-  widthValue = '20';
-  heightValue = '30';
+  obstacleWidth = '20';
+  obstacleHeight = '30';
   stepValue = '10';
   boardWidth = '800';
   boardHeight = '600';
@@ -58,14 +58,13 @@ export class ConfigurationComponent {
   obstaclesSettingsActive = false;
   trainModelActive = false;
 
-
   constructor(
     private http: HttpClient,
     private rpcService: RpcService,
     public dialog: MatDialog
   ) {
-    // this.widthValue = '10';
-    // this.heightValue = '10';
+    // this.obstacleWidth = '10';
+    // this.obstacleHeight = '10';
   }
 
   ngOnInit(): void {
@@ -151,8 +150,8 @@ export class ConfigurationComponent {
     const obstacle: Obstacle = {
       x: event.offsetX,
       y: event.offsetY,
-      width: parseFloat(this.widthValue),
-      height: parseFloat(this.heightValue),
+      width: parseFloat(this.obstacleWidth),
+      height: parseFloat(this.obstacleHeight),
     };
 
     this.obstacles.push(obstacle);
@@ -183,20 +182,38 @@ export class ConfigurationComponent {
   }
 
   // Method to customize an obstacle before adding it to the board
-  applyChanges(width: string, height: string, step: string) {
-    this.widthValue = width;
-    this.heightValue = height;
+  applyChanges(
+    boardWidth: string,
+    boardHeight: string,
+    obstacleWidth: string,
+    obstacleHeight: string,
+    step: string
+  ) {
+    // Update values from input fields
+    this.boardWidth = boardWidth;
+    this.boardHeight = boardHeight;
+    this.obstacleWidth = obstacleWidth;
+    this.obstacleHeight = obstacleHeight;
     this.stepValue = step;
+    console.log(
+      this.boardWidth,
+      this.boardHeight,
+      this.obstacleWidth,
+      this.obstacleHeight,
+      this.stepValue
+    );
 
+    // Update state for 'step' buttons
     this.step = 0;
     this.boardSettingsActive = false;
     this.robotSettingsActive = false;
     this.obstaclesSettingsActive = false;
     this.trainModelActive = false;
 
+    // Add event
     if (this.recording) {
       this.recordedEvents.push(
-        `Settings changed: width=${width}, height=${height}, step=${step}`
+        `Settings changed: width=${obstacleWidth}, height=${obstacleHeight}, step=${step}`
       );
     }
   }

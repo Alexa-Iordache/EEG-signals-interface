@@ -35,7 +35,7 @@
       }
 
       .board {
-        @include dimension(800px, 600px);
+        // @include dimension(800px, 600px);
         position: relative;
         background-color: white;
 
@@ -71,8 +71,6 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        // height: 100%;
-        // justify-content: space-between;
 
         .right-container_form-field {
           width: 100%;

@@ -21,7 +21,17 @@
       <div *ngIf="recreateActionsButton" class="direction-container">
         <span>Recreating the last record </span>
       </div>
-      <div class="board" tabindex="0" (click)="addObstacle($event)">
+      <div
+        class="board"
+        tabindex="0"
+        [style.width.px]="
+          ['0', '00', ''].includes(boardWidth) ? '800' : boardWidth
+        "
+        [style.height.px]="
+          ['0', '00', ''].includes(boardHeight) ? '600' : boardHeight
+        "
+        (click)="addObstacle($event)"
+      >
         <div class="robot" [style.left.px]="posX" [style.top.px]="posY"></div>
         <div
           *ngFor="let obstacle of obstacles"
@@ -104,8 +114,8 @@
           <input
             matInput
             type="text"
-            [(ngModel)]="widthValue"
-            name="widthValue"
+            [(ngModel)]="obstacleWidth"
+            name="obstacleWidth"
           />
         </mat-form-field>
         <mat-form-field *ngIf="step === 3" class="right-container_form-field">
@@ -113,8 +123,8 @@
           <input
             matInput
             type="text"
-            [(ngModel)]="heightValue"
-            name="heightValue"
+            [(ngModel)]="obstacleHeight"
+            name="obstacleHeight"
           />
         </mat-form-field>
 
@@ -154,7 +164,15 @@
           *ngIf="step !== 0"
           mat-raised-button
           color="warn"
-          (click)="applyChanges(widthValue, heightValue, stepValue)"
+          (click)="
+            applyChanges(
+              boardWidth,
+              boardHeight,
+              obstacleWidth,
+              obstacleHeight,
+              stepValue
+            )
+          "
         >
           Apply changes
         </button>
