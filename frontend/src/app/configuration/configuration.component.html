@@ -1,9 +1,9 @@
-<div class="board-page">
-  <div class="board-page_title">Train the new model here:</div>
+<div class="configuration-page">
+  <div class="configuration-page_title">Train the new model here:</div>
 
-  <div class="board-page_content">
-    <div class="board-page_left-content">
-      <div *ngIf="!recreateActionsButton" class="board-page_direction">
+  <div class="configuration-page_content">
+    <div class="configuration-page_left-content">
+      <div *ngIf="!recreateActionsButton" class="configuration-page_direction">
         <span>Direction: </span>
         <mat-icon *ngIf="lastKeyPressed === 'ArrowLeft'" class="direction-icon"
           >arrow_back</mat-icon
@@ -18,18 +18,18 @@
           >arrow_downward</mat-icon
         >
       </div>
-      <div *ngIf="recreateActionsButton" class="board-page_direction">
+      <div *ngIf="recreateActionsButton" class="configuration-page_direction">
         <span>Recreating the last record </span>
       </div>
-      <div class="board-page_board" tabindex="0" (click)="addObstacle($event)">
+      <div class="configuration-page_board" tabindex="0" (click)="addObstacle($event)">
         <div
-          class="board-page_avatar"
+          class="configuration-page_avatar"
           [style.left.px]="posX"
           [style.top.px]="posY"
         ></div>
         <div
           *ngFor="let obstacle of obstacles"
-          class="board-page_obstacle"
+          class="configuration-page_obstacle"
           [style.left.px]="obstacle.x"
           [style.top.px]="obstacle.y"
           [style.width.px]="obstacle.width"
@@ -38,9 +38,9 @@
         ></div>
       </div>
     </div>
-    <div class="board-page_right-content">
+    <div class="configuration-page_right-content">
       <div class="right-container_text">Settings:</div>
-      <form class="board-page_inputs-and-buttons">
+      <form class="configuration-page_inputs-and-buttons">
         <mat-form-field class="right-container_form-field">
           <mat-label>Width (px)</mat-label>
           <input
@@ -116,7 +116,7 @@
         <button
           mat-raised-button
           color="accent"
-          class="board_button"
+          class="configuration_button"
           [disabled]="recreateActionsButton"
           (click)="startRecord()"
         >
@@ -125,7 +125,7 @@
         <button
           mat-raised-button
           color="accent"
-          class="board_button"
+          class="configuration_button"
           [disabled]="recreateActionsButton || !startRecordButton"
           (click)="stopRecord()"
         >
@@ -134,7 +134,7 @@
         <button
           mat-raised-button
           color="accent"
-          class="board_button"
+          class="configuration_button"
           [disabled]="!stopRecordButton"
           (click)="recreateActions()"
         >

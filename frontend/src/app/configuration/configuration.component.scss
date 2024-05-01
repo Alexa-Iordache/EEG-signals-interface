@@ -1,25 +1,25 @@
 @import "../../general/mixins.scss";
 
-.board-page {
+.configuration-page {
   @include displayFormatWithDirection(flex, column, flex-start, space-around);
   height: 100%;
   background: linear-gradient(to right, black, #3533cd);
 
-  .board-page_title {
+  .configuration-page_title {
     font-size: 40px;
     color: white;
     margin-left: 100px;
   }
 
-  .board-page_content {
+  .configuration-page_content {
     @include displayFormatWithDirection(flex, row, center, space-around);
     width: 100%;
 
-    .board-page_left-content {
+    .configuration-page_left-content {
       display: flex;
       flex-direction: column;
 
-      .board-page_direction {
+      .configuration-page_direction {
         display: flex;
         align-items: center;
         font-size: 30px;
@@ -34,25 +34,25 @@
         }
       }
 
-      .board-page_board {
+      .configuration-page_board {
         @include dimension(800px, 600px);
         position: relative;
         background-color: white;
 
-        .board-page_avatar {
+        .configuration-page_avatar {
           @include dimension(20px, 20px);
           position: absolute;
           background-color: red;
         }
 
-        .board-page_obstacle {
+        .configuration-page_obstacle {
           position: absolute;
           background-color: blue;
         }
       }
     }
 
-    .board-page_right-content {
+    .configuration-page_right-content {
       @include displayFormatWithDirection(flex, column, center, space-around);
       max-width: 20%;
       height: 100%;
@@ -66,12 +66,12 @@
         color: white;
       }
 
-      .board-page_inputs-and-buttons {
+      .configuration-page_inputs-and-buttons {
         display: flex;
         flex-direction: column;
       }
 
-      .board_button {
+      .configuration_button {
         margin-top: 10px;
       }
     }

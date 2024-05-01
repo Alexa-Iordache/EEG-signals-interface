@@ -12,11 +12,11 @@ export interface Obstacle {
 }
 
 @Component({
-  selector: 'app-board',
-  templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss'],
+  selector: 'app-configuration',
+  templateUrl: './configuration.component.html',
+  styleUrls: ['./configuration.component.scss'],
 })
-export class BoardComponent {
+export class ConfigurationComponent {
   posX = 0;
   posY = 0;
   obstacles: Obstacle[] = [];

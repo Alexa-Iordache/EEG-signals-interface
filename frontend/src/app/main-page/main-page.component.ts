@@ -9,6 +9,11 @@ import { Router } from '@angular/router';
 export class MainPageComponent {
   constructor(private router: Router) {}
 
+  configuration(): void {
+    console.log('Configuration mode');
+    this.router.navigate(['/configuration']);
+  }
+
   trainModel(): void {
     console.log('Train new model');
     this.router.navigate(['/train-model']);

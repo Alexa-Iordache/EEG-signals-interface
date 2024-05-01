@@ -17,20 +17,22 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
-import { BoardComponent } from './board/board.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { DeleteObstacleModalComponent } from './delete-obstacle-modal/delete-obstacle-modal.component';
 import { SaveRecrdingModalComponent } from './stop-recording-modal/stop-recording-modal.component';
+import { TrainModelComponent } from './train-model/train-model.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     MainPageComponent,
-    BoardComponent,
+    ConfigurationComponent,
     ProfilePageComponent,
     DeleteObstacleModalComponent,
-    SaveRecrdingModalComponent
+    SaveRecrdingModalComponent,
+    TrainModelComponent
   ],
   imports: [
     BrowserModule,

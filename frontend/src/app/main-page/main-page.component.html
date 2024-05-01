@@ -21,6 +21,14 @@
           mat-raised-button
           color="accent"
           class="menu-button"
+          (click)="configuration()"
+        >
+          Configuration
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="menu-button"
           (click)="trainModel()"
         >
           Train new model

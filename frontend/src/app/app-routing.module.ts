@@ -2,14 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { BoardComponent } from './board/board.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { TrainModelComponent } from './train-model/train-model.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent},
   { path: 'main-page', component: MainPageComponent},
-  { path: 'train-model', component: BoardComponent},
+  { path: 'configuration', component: ConfigurationComponent},
   { path: 'profile-page', component: ProfilePageComponent},
+  { path: 'train-model', component: TrainModelComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
