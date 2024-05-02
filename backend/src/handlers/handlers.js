@@ -1,5 +1,6 @@
 module.exports = {
   auth: require("./auth"),
   obstacles: require("./obstacles"),
-  recordings: require("./recordings")
+  recordings: require("./recordings"),
+  actions: require("./actions")
 };

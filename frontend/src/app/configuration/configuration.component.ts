@@ -72,7 +72,7 @@ export class ConfigurationComponent {
 
   // Variables for recording process
   isRecording = false;
-  recordedEvents: string[] = [];
+  recordedEvents: Position[] = [];
 
   // Variable for the last key that was pressed
   lastKeyPressed: string = '';
@@ -142,7 +142,10 @@ export class ConfigurationComponent {
       this.currentPosition.y = newY;
 
       if (this.isRecording) {
-        this.recordedEvents.push(`Moved to (${newX}, ${newY})`);
+        this.recordedEvents.push({
+          x: this.currentPosition.x,
+          y: this.currentPosition.y,
+        });
       }
     }
   }
@@ -192,13 +195,6 @@ export class ConfigurationComponent {
 
     // Update state for 'step' buttons
     this.step = 0;
-
-    // Add event
-    if (this.isRecording) {
-      this.recordedEvents.push(
-        `Settings changed: width=${obstacleWidth}, height=${obstacleHeight}, step=${step}`
-      );
-    }
   }
 
   // Method to handle obstacle click event
@@ -242,26 +238,6 @@ export class ConfigurationComponent {
         this.obstacles.splice(index, 1);
       }
 
-      // Delete obstacle from database
-      // let paramsDeleteObstacle = {
-      //   width: this.obstacleToDelete.width,
-      //   height: this.obstacleToDelete.height,
-      //   xPos: this.obstacleToDelete.x,
-      //   yPos: this.obstacleToDelete.y,
-      // };
-
-      // this.rpcService.callRPC(
-      //   'obstacles.deleteObstacle',
-      //   paramsDeleteObstacle,
-      //   (error: any, res: any) => {
-      //     if (error) {
-      //       console.log(error);
-      //       return;
-      //     }
-      //     // this.getObstacles();
-      //   }
-      // );
-
       // Reset variables
       this.obstacleToDelete = null;
       this.showDeleteConfirmation = false;
@@ -279,7 +255,6 @@ export class ConfigurationComponent {
   // Method to stop the record
   stopRecord(): void {
     this.isRecording = false;
-    // console.log('Recorded Events:', this.recordedEvents);
     this.dialog.open(SaveRecrdingModalComponent);
     this.recreateActionsButton = true;
     this.stopRecordButton = false;
@@ -301,13 +276,14 @@ export class ConfigurationComponent {
         if (error) {
           console.log(error);
           return;
-        }
-        else {
+        } else {
           this.addAllObstaclesToDatabase(this.obstacles, recordingId);
+          this.recordedEvents.forEach((action) => {
+            this.addAllActionsToDatabase(action, recordingId);
+          });
         }
       }
     );
-
   }
 
   // Method to recreate actions from the last record
@@ -319,14 +295,6 @@ export class ConfigurationComponent {
 
     this.recordedEvents.forEach((event, index) => {
       setTimeout(() => {
-        if (event.startsWith('Moved to')) {
-          // Extract coordinates from the log string
-          const match = /Moved to \((\d+), (\d+)\)/.exec(event);
-          if (match) {
-            this.currentPosition.x = parseInt(match[1], 10);
-            this.currentPosition.y = parseInt(match[2], 10);
-          }
-        }
         console.log(`Recreating: ${event}`);
       }, 1000 * index); // Delay each action to visually distinguish them
     });
@@ -395,5 +363,25 @@ export class ConfigurationComponent {
         }
       );
     });
+  }
+
+  // Method to add all obstacles with the given recording ID to the database
+  addAllActionsToDatabase(action: Position, recordingId: string): void {
+    let paramsAddObstacle = {
+      recordingId: recordingId,
+      xPos: action.x,
+      yPos: action.y,
+    };
+
+    this.rpcService.callRPC(
+      'actions.addActions',
+      paramsAddObstacle,
+      (error: any, res: any) => {
+        if (error) {
+          console.log(error);
+          return;
+        }
+      }
+    );
   }
 }
