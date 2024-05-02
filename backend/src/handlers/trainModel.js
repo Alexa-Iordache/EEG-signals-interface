@@ -8,14 +8,16 @@ let obstacles = {
   },
 
   addObstacle(req, res, next) {
-    let xPos = req.body.params.xPos;
-    let yPos = req.body.params.yPos;
     let width = req.body.params.width;
     let height = req.body.params.height;
+    let xPos = req.body.params.xPos;
+    let yPos = req.body.params.yPos;
 
+    // insert into Obstacles (recording_id, obstacle_width, obstacle_height, obstacle_x, obstacle_y)
+    // values ((select last_insert_id()), 50, 30, 10, 25);
     mysql.query(
-      `INSERT INTO Obstacles (xPos, yPos, width, height) 
-        VALUES ('${xPos}', '${yPos}', '${width}', '${height}');`,
+      `INSERT INTO Obstacles (recording_id, obstacle_width, obstacle_height, obstacle_x, obstacle_y) 
+        VALUES ((SELECT LAST_INSERT_ID()), '${width}', '${height}', '${xPos}', '${yPos}');`,
       (error, result) => {
         if (error) {
           throw err;
@@ -31,8 +33,8 @@ let obstacles = {
     let yPos = req.body.params.yPos;
 
     mysql.query(
-      `DELETE FROM Obstacles WHERE (xPos = '${xPos}' and yPos = '${yPos}' and
-        width = '${width}' and height = '${height}');`,
+      `DELETE FROM Obstacles WHERE (obstacle_width = '${width}' and obstacle_height = '${height}' and
+        obstacle_x = '${xPos}' and obstacle_y = '${yPos}');`,
       (err, result) => {
         if (err) {
           throw err;

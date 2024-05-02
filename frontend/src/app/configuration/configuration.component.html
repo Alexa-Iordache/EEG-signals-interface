@@ -12,23 +12,23 @@
           class="board"
           tabindex="0"
           [style.width.px]="
-            ['0', '00', ''].includes(boardWidth) ? '800' : boardWidth
+            ['0', '00', ''].includes(recording.width.toString()) ? 800 : recording.width
           "
           [style.height.px]="
-            ['0', '00', ''].includes(boardHeight) ? '600' : boardHeight
+            ['0', '00', ''].includes(recording.height.toString()) ? 600 : recording.height
           "
           (click)="customizeBoard($event)"
         >
           <div
             class="robot"
-            [style.left.px]="startPoint.x"
-            [style.top.px]="startPoint.y"
+            [style.left.px]="recording.start.x"
+            [style.top.px]="recording.start.y"
           ></div>
           <div
-            *ngIf="finishPoint.x !== 0 && finishPoint.y !== 0"
+            *ngIf="recording.finish.x !== 0 && recording.finish.y !== 0"
             class="finish-point"
-            [style.left.px]="finishPoint.x"
-            [style.top.px]="finishPoint.y"
+            [style.left.px]="recording.finish.x"
+            [style.top.px]="recording.finish.y"
           ></div>
           <div
             *ngFor="let obstacle of obstacles"
@@ -54,7 +54,7 @@
           <input
             matInput
             type="text"
-            [(ngModel)]="boardWidth"
+            [(ngModel)]="recording.width"
             name="boardWidth"
           />
         </mat-form-field>
@@ -63,7 +63,7 @@
           <input
             matInput
             type="text"
-            [(ngModel)]="boardHeight"
+            [(ngModel)]="recording.height"
             name="boardHeight"
           />
         </mat-form-field>
@@ -74,7 +74,7 @@
           <input
             matInput
             type="text"
-            [(ngModel)]="stepValue"
+            [(ngModel)]="recording.step"
             name="stepValue"
           />
         </mat-form-field>
@@ -161,11 +161,11 @@
         color="warn"
         (click)="
           applyChanges(
-            boardWidth,
-            boardHeight,
+            recording.width,
+            recording.height,
             obstacleWidth,
             obstacleHeight,
-            stepValue
+            recording.step
           )
         "
       >
