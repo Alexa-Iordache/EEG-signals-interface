@@ -3,24 +3,10 @@
 
   <div class="configuration-page_content">
     <div class="configuration-page_left-content">
-      <div *ngIf="!recreateActionsButton" class="direction-container">
-        <span>Direction: </span>
-        <mat-icon *ngIf="lastKeyPressed === 'ArrowLeft'" class="direction-icon"
-          >arrow_back</mat-icon
-        >
-        <mat-icon *ngIf="lastKeyPressed === 'ArrowRight'" class="direction-icon"
-          >arrow_forward</mat-icon
-        >
-        <mat-icon *ngIf="lastKeyPressed === 'ArrowUp'" class="direction-icon"
-          >arrow_upward</mat-icon
-        >
-        <mat-icon *ngIf="lastKeyPressed === 'ArrowDown'" class="direction-icon"
-          >arrow_downward</mat-icon
-        >
-      </div>
-      <div *ngIf="recreateActionsButton" class="direction-container">
-        <span>Recreating the last record </span>
-      </div>
+      <app-direction
+        [recreateActionsButton]="recreateActionsButton"
+        [lastKeyPressed]="lastKeyPressed"
+      ></app-direction>
       <div class="board-container">
         <div
           class="board"
@@ -58,18 +44,7 @@
     </div>
     <div *ngIf="step !== 0" class="configuration-page_right-content">
       <!-- MESSAGES -->
-      <div *ngIf="step === 1" class="right-container_text">
-        STEP 1: Set board dimensions
-      </div>
-      <div *ngIf="step === 2" class="right-container_text">
-        STEP 2: Set robot
-      </div>
-      <div *ngIf="step === 3" class="right-container_text">
-        STEP 3: Set obstacles
-      </div>
-      <div *ngIf="step === 4" class="right-container_text">
-        STEP 4: Train model
-      </div>
+      <app-step-messages [step]="step"></app-step-messages>
 
       <!-- OPTIONS FOR EVERY STEP -->
       <form class="form-container">

@@ -22,6 +22,8 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { DeleteObstacleModalComponent } from './delete-obstacle-modal/delete-obstacle-modal.component';
 import { SaveRecrdingModalComponent } from './stop-recording-modal/stop-recording-modal.component';
 import { TrainModelComponent } from './train-model/train-model.component';
+import { DirectionComponent } from './reusable-components/direction/direction.component';
+import { StepMessagesComponent } from './reusable-components/step-messages/step-messages.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { TrainModelComponent } from './train-model/train-model.component';
     ProfilePageComponent,
     DeleteObstacleModalComponent,
     SaveRecrdingModalComponent,
-    TrainModelComponent
+    TrainModelComponent,
+    DirectionComponent,
+    StepMessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +57,10 @@ import { TrainModelComponent } from './train-model/train-model.component';
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    DirectionComponent,
+    StepMessagesComponent
+  ]
 })
 export class AppModule { }

@@ -1,0 +1,15 @@
+.direction-container {
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  color: white;
+  margin-bottom: 20px;
+
+  .direction-icon {
+    margin-left: 10px;
+    .mat-icon {
+      color: white;
+      font-size: 30px;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<div *ngIf="!recreateActionsButton" class="direction-container">
+  <span>Direction: </span>
+  <mat-icon *ngIf="lastKeyPressed === 'ArrowLeft'" class="direction-icon"
+    >arrow_back</mat-icon
+  >
+  <mat-icon *ngIf="lastKeyPressed === 'ArrowRight'" class="direction-icon"
+    >arrow_forward</mat-icon
+  >
+  <mat-icon *ngIf="lastKeyPressed === 'ArrowUp'" class="direction-icon"
+    >arrow_upward</mat-icon
+  >
+  <mat-icon *ngIf="lastKeyPressed === 'ArrowDown'" class="direction-icon"
+    >arrow_downward</mat-icon
+  >
+</div>
+<div *ngIf="recreateActionsButton" class="direction-container">
+  <span>Recreating the last record </span>
+</div>
