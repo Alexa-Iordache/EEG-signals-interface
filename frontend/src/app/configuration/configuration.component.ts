@@ -18,8 +18,7 @@ export interface Recording {
 export interface Obstacle {
   width: number;
   height: number;
-  x: number;
-  y: number;
+  pos: Position;
 }
 
 // ACTION object
@@ -130,10 +129,10 @@ export class ConfigurationComponent {
     // Check if the new position intersects with any obstacle
     const intersects = this.obstacles.some((obstacle) => {
       return (
-        newX < obstacle.x + obstacle.width &&
-        newX + step > obstacle.x &&
-        newY < obstacle.y + obstacle.height &&
-        newY + step > obstacle.y
+        newX < obstacle.pos.x + obstacle.width &&
+        newX + step > obstacle.pos.x &&
+        newY < obstacle.pos.y + obstacle.height &&
+        newY + step > obstacle.pos.y
       );
     });
 
@@ -152,32 +151,15 @@ export class ConfigurationComponent {
   customizeBoard(event: MouseEvent) {
     if (this.step === 3) {
       const obstacle: Obstacle = {
-        x: event.offsetX,
-        y: event.offsetY,
         width: parseFloat(this.obstacleWidth),
         height: parseFloat(this.obstacleHeight),
+        pos: {
+          x: event.offsetX,
+          y: event.offsetY,
+        },
       };
 
       this.obstacles.push(obstacle);
-
-      // let paramsAddObstacle = {
-      //   width: obstacle.width,
-      //   height: obstacle.height,
-      //   xPos: obstacle.x,
-      //   yPos: obstacle.y,
-      // };
-
-      // this.rpcService.callRPC(
-      //   'obstacles.addObstacle',
-      //   paramsAddObstacle,
-      //   (error: any, res: any) => {
-      //     if (error) {
-      //       console.log(error);
-      //       return;
-      //     }
-      //     // this.getObstacles();
-      //   }
-      // );
     }
 
     if (this.step === 2 && this.chooseStartingPointActive) {
@@ -302,7 +284,6 @@ export class ConfigurationComponent {
     this.recreateActionsButton = true;
     this.stopRecordButton = false;
 
-    console.log(this.recording);
     let paramsAddRecording = {
       width: this.recording.board_width,
       height: this.recording.board_height,
@@ -312,19 +293,21 @@ export class ConfigurationComponent {
       finish_x: this.recording.robot_finish.x,
       finish_y: this.recording.robot_finish.y,
     };
-    console.log(paramsAddRecording);
 
     this.rpcService.callRPC(
       'recordings.addRecording',
       paramsAddRecording,
-      (error: any, res: any) => {
+      (error: any, recordingId: any) => {
         if (error) {
           console.log(error);
           return;
         }
-        // this.getObstacles();
+        else {
+          this.addAllObstaclesToDatabase(this.obstacles, recordingId);
+        }
       }
     );
+
   }
 
   // Method to recreate actions from the last record
@@ -388,5 +371,29 @@ export class ConfigurationComponent {
     this.obstacles = [];
     this.stopRecordButton = false;
     this.recreateActionsButton = false;
+  }
+
+  // Method to add all obstacles with the given recording ID to the database
+  addAllObstaclesToDatabase(obstacles: Obstacle[], recordingId: string): void {
+    obstacles.forEach((obstacle) => {
+      let paramsAddObstacle = {
+        recordingId: recordingId,
+        width: obstacle.width,
+        height: obstacle.height,
+        xPos: obstacle.pos.x,
+        yPos: obstacle.pos.y,
+      };
+
+      this.rpcService.callRPC(
+        'obstacles.addObstacle',
+        paramsAddObstacle,
+        (error: any, res: any) => {
+          if (error) {
+            console.log(error);
+            return;
+          }
+        }
+      );
+    });
   }
 }

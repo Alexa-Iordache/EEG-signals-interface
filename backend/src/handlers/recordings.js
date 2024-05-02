@@ -1,11 +1,11 @@
 const mysql = require("../mysql");
 
 let recordings = {
-//   getRecordings(req, res, next) {
-//     mysql.query(`SELECT * FROM Recordings;`, (error, result) => {
-//       res.json({ id: 1, error: null, result: result });
-//     });
-//   },
+  //   getRecordings(req, res, next) {
+  //     mysql.query(`SELECT * FROM Recordings;`, (error, result) => {
+  //       res.json({ id: 1, error: null, result: result });
+  //     });
+  //   },
 
   addRecording(req, res, next) {
     let width = req.body.params.width;
@@ -24,6 +24,10 @@ let recordings = {
         if (error) {
           throw err;
         }
+
+        // Send the recording ID back in the response
+        const recordingId = result.insertId;
+        res.send(recordingId.toString());
       }
     );
   },

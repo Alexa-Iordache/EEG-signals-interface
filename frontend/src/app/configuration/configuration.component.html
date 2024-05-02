@@ -39,8 +39,8 @@
           <div
             *ngFor="let obstacle of obstacles"
             class="obstacle"
-            [style.left.px]="obstacle.x"
-            [style.top.px]="obstacle.y"
+            [style.left.px]="obstacle.pos.x"
+            [style.top.px]="obstacle.pos.y"
             [style.width.px]="obstacle.width"
             [style.height.px]="obstacle.height"
             (click)="handleObstacleClick($event, obstacle)"
