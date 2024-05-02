@@ -1,4 +1,5 @@
 module.exports = {
   auth: require("./auth"),
-  obstacles: require("./trainModel")
+  obstacles: require("./obstacles"),
+  recordings: require("./recordings")
 };

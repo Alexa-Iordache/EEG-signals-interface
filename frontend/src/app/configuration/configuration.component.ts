@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RpcService } from '../services/rpc.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteObstacleModalComponent } from '../delete-obstacle-modal/delete-obstacle-modal.component';
@@ -211,13 +211,6 @@ export class ConfigurationComponent {
     // Update state for 'step' buttons
     this.step = 0;
 
-    // let paramsAddRecording = {
-    //   width: board.width,
-    //   height: obstacle.height,
-    //   xPos: obstacle.x,
-    //   yPos: obstacle.y,
-    // };
-
     // Add event
     if (this.isRecording) {
       this.recordedEvents.push(
@@ -305,10 +298,33 @@ export class ConfigurationComponent {
   stopRecord(): void {
     this.isRecording = false;
     // console.log('Recorded Events:', this.recordedEvents);
-    console.log(this.recording);
     this.dialog.open(SaveRecrdingModalComponent);
     this.recreateActionsButton = true;
     this.stopRecordButton = false;
+
+    console.log(this.recording);
+    let paramsAddRecording = {
+      width: this.recording.board_width,
+      height: this.recording.board_height,
+      step: this.recording.robot_step,
+      start_x: this.recording.robot_start.x,
+      start_y: this.recording.robot_start.y,
+      finish_x: this.recording.robot_finish.x,
+      finish_y: this.recording.robot_finish.y,
+    };
+    console.log(paramsAddRecording);
+
+    this.rpcService.callRPC(
+      'recordings.addRecording',
+      paramsAddRecording,
+      (error: any, res: any) => {
+        if (error) {
+          console.log(error);
+          return;
+        }
+        // this.getObstacles();
+      }
+    );
   }
 
   // Method to recreate actions from the last record
