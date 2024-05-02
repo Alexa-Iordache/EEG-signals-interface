@@ -12,23 +12,29 @@
           class="board"
           tabindex="0"
           [style.width.px]="
-            ['0', '00', ''].includes(recording.width.toString()) ? 800 : recording.width
+            ['0', '00', ''].includes(recording.board_width.toString())
+              ? 800
+              : recording.board_width
           "
           [style.height.px]="
-            ['0', '00', ''].includes(recording.height.toString()) ? 600 : recording.height
+            ['0', '00', ''].includes(recording.board_height.toString())
+              ? 600
+              : recording.board_height
           "
           (click)="customizeBoard($event)"
         >
           <div
             class="robot"
-            [style.left.px]="recording.start.x"
-            [style.top.px]="recording.start.y"
+            [style.left.px]="currentPosition.x"
+            [style.top.px]="currentPosition.y"
           ></div>
           <div
-            *ngIf="recording.finish.x !== 0 && recording.finish.y !== 0"
+            *ngIf="
+              recording.robot_finish.x !== 0 && recording.robot_finish.y !== 0
+            "
             class="finish-point"
-            [style.left.px]="recording.finish.x"
-            [style.top.px]="recording.finish.y"
+            [style.left.px]="recording.robot_finish.x"
+            [style.top.px]="recording.robot_finish.y"
           ></div>
           <div
             *ngFor="let obstacle of obstacles"
@@ -54,7 +60,7 @@
           <input
             matInput
             type="text"
-            [(ngModel)]="recording.width"
+            [(ngModel)]="recording.board_width"
             name="boardWidth"
           />
         </mat-form-field>
@@ -63,7 +69,7 @@
           <input
             matInput
             type="text"
-            [(ngModel)]="recording.height"
+            [(ngModel)]="recording.board_height"
             name="boardHeight"
           />
         </mat-form-field>
@@ -74,7 +80,7 @@
           <input
             matInput
             type="text"
-            [(ngModel)]="recording.step"
+            [(ngModel)]="recording.robot_step"
             name="stepValue"
           />
         </mat-form-field>
@@ -161,11 +167,11 @@
         color="warn"
         (click)="
           applyChanges(
-            recording.width,
-            recording.height,
+            recording.board_width,
+            recording.board_height,
             obstacleWidth,
             obstacleHeight,
-            recording.step
+            recording.robot_step
           )
         "
       >

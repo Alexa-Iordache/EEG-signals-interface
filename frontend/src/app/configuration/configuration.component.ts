@@ -5,24 +5,32 @@ import { DeleteObstacleModalComponent } from '../delete-obstacle-modal/delete-ob
 import { HttpClient } from '@angular/common/http';
 import { SaveRecrdingModalComponent } from '../stop-recording-modal/stop-recording-modal.component';
 
-export interface Obstacle {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+// RECORDING object
+export interface Recording {
+  board_width: number;
+  board_height: number;
+  robot_step: number;
+  robot_start: Position;
+  robot_finish: Position;
 }
 
+// OBSTACLE object
+export interface Obstacle {
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+}
+
+// ACTION object
+export interface Action {
+  newPosition: Position;
+}
+
+// POSITION object
 export interface Position {
   x: number;
   y: number;
-}
-
-export interface Recording {
-  width: number;
-  height: number;
-  step: number;
-  start: Position;
-  finish: Position;
 }
 
 @Component({
@@ -31,38 +39,29 @@ export interface Recording {
   styleUrls: ['./configuration.component.scss'],
 })
 export class ConfigurationComponent {
-  initialPosX = 0;
-  initialPosY = 0;
   obstacles: Obstacle[] = [];
   obstacleInfo: any;
   recording: Recording = {
-    width: 800,
-    height: 600,
-    step: 50,
-    start: {
+    board_width: 800,
+    board_height: 600,
+    robot_step: 50,
+    robot_start: {
       x: 0,
-      y: 0
+      y: 0,
     },
-    finish: {
+    robot_finish: {
       x: 0,
-      y: 0
+      y: 0,
     },
   };
-  // startPoint: Position = {
-  //   x: 0,
-  //   y: 0,
-  // };
-  // finishPoint: Position = {
-  //   x: 0,
-  //   y: 0,
-  // };
+  currentPosition: Position = {
+    x: 0,
+    y: 0,
+  };
 
-  // Variables from form-fields
+  // Variables from form-fields inputs
   obstacleWidth = '20';
   obstacleHeight = '30';
-  // stepValue = '50';
-  // boardWidth = '800';
-  // boardHeight = '600';
 
   // Variables from delete-obstacle modal
   yesBtn = '';
@@ -79,17 +78,15 @@ export class ConfigurationComponent {
   // Variable for the last key that was pressed
   lastKeyPressed: string = '';
 
-  // Variables to illustrate which buttons have been clicked on
-  recreateActionsButton = false;
-  startRecordButton = false;
-  stopRecordButton = false;
-
   // Step number for configuration
   step = 0;
 
-  // Variable for 'board settings' button
+  // Variables to illustrate which buttons have been clicked on
   chooseStartingPointActive = false;
   chooseFinishPointActive = false;
+  recreateActionsButton = false;
+  startRecordButton = false;
+  stopRecordButton = false;
 
   constructor(
     private http: HttpClient,
@@ -110,11 +107,11 @@ export class ConfigurationComponent {
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     this.lastKeyPressed = event.key;
-    const step = this.recording.step;
+    const step = this.recording.robot_step;
 
     // Calculate the potential new position of the point
-    let newX = this.recording.start.x;
-    let newY = this.recording.start.y;
+    let newX = this.currentPosition.x;
+    let newY = this.currentPosition.y;
     switch (event.key) {
       case 'ArrowUp':
         newY -= step;
@@ -142,8 +139,8 @@ export class ConfigurationComponent {
 
     // If the new position does not intersect with any obstacle, update the position
     if (!intersects) {
-      this.recording.start.x = newX;
-      this.recording.start.y = newY;
+      this.currentPosition.x = newX;
+      this.currentPosition.y = newY;
 
       if (this.isRecording) {
         this.recordedEvents.push(`Moved to (${newX}, ${newY})`);
@@ -184,16 +181,15 @@ export class ConfigurationComponent {
     }
 
     if (this.step === 2 && this.chooseStartingPointActive) {
-      this.recording.start.x = event.offsetX;
-      this.recording.start.y = event.offsetY;
-      this.initialPosX = this.recording.start.x;
-      this.initialPosY = this.recording.start.y;
-      console.log(this.recording.start.x, this.recording.start.y);
+      this.currentPosition.x = event.offsetX;
+      this.currentPosition.y = event.offsetY;
+      this.recording.robot_start.x = this.currentPosition.x;
+      this.recording.robot_start.y = this.currentPosition.y;
     }
 
     if (this.step === 2 && this.chooseFinishPointActive) {
-      this.recording.finish.x = event.offsetX;
-      this.recording.finish.y = event.offsetY;
+      this.recording.robot_finish.x = event.offsetX;
+      this.recording.robot_finish.y = event.offsetY;
     }
   }
 
@@ -205,13 +201,12 @@ export class ConfigurationComponent {
     obstacleHeight: string,
     step: number
   ) {
-
     // Update values from input fields
-    this.recording.width = boardWidth;
-    this.recording.height = boardHeight;
+    this.recording.board_width = boardWidth;
+    this.recording.board_height = boardHeight;
     this.obstacleWidth = obstacleWidth;
     this.obstacleHeight = obstacleHeight;
-    this.recording.step = step;
+    this.recording.robot_step = step;
 
     // Update state for 'step' buttons
     this.step = 0;
@@ -233,11 +228,9 @@ export class ConfigurationComponent {
 
   // Method to handle obstacle click event
   handleObstacleClick(event: MouseEvent, obstacle: Obstacle) {
-    event.stopPropagation(); // This stops the event from propagating further
-
+    event.stopPropagation();
     this.obstacleToDelete = obstacle;
 
-    // Open the dialog modal
     const dialogRef = this.dialog.open(DeleteObstacleModalComponent, {
       data: {
         noBtn: this.noBtn,
@@ -311,7 +304,8 @@ export class ConfigurationComponent {
   // Method to stop the record
   stopRecord(): void {
     this.isRecording = false;
-    console.log('Recorded Events:', this.recordedEvents);
+    // console.log('Recorded Events:', this.recordedEvents);
+    console.log(this.recording);
     this.dialog.open(SaveRecrdingModalComponent);
     this.recreateActionsButton = true;
     this.stopRecordButton = false;
@@ -321,8 +315,8 @@ export class ConfigurationComponent {
   recreateActions(): void {
     this.recreateActionsButton = true;
     // Reset to initial conditions or a specific start point
-    this.recording.start.x = this.initialPosX;
-    this.recording.start.y = this.initialPosY;
+    this.currentPosition.x = this.recording.robot_start.x;
+    this.currentPosition.y = this.recording.robot_start.y;
 
     this.recordedEvents.forEach((event, index) => {
       setTimeout(() => {
@@ -330,8 +324,8 @@ export class ConfigurationComponent {
           // Extract coordinates from the log string
           const match = /Moved to \((\d+), (\d+)\)/.exec(event);
           if (match) {
-            this.recording.start.x = parseInt(match[1], 10);
-            this.recording.start.y = parseInt(match[2], 10);
+            this.currentPosition.x = parseInt(match[1], 10);
+            this.currentPosition.y = parseInt(match[2], 10);
           }
         }
         console.log(`Recreating: ${event}`);
@@ -373,8 +367,8 @@ export class ConfigurationComponent {
 
   // The board and robot are reinitialised
   tryAgain(): void {
-    this.recording.start.x = this.initialPosX;
-    this.recording.start.y = this.initialPosY;
+    this.currentPosition.x = this.recording.robot_start.x;
+    this.currentPosition.y = this.recording.robot_start.y;
     this.obstacles = [];
     this.stopRecordButton = false;
     this.recreateActionsButton = false;
