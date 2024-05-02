@@ -69,7 +69,6 @@ export class ConfigurationComponent {
   // Variable for 'board settings' button
   chooseStartingPointActive = false;
   chooseFinishPointActive = false;
-  afterChoosingStartingPoint = false;
 
   constructor(
     private http: HttpClient,
@@ -132,31 +131,31 @@ export class ConfigurationComponent {
   }
 
   // Method to get all the existing obstacles from database
-  getObstacles(): void {
-    let params = {
-      username: 'admin',
-    };
+  // getObstacles(): void {
+  //   let params = {
+  //     username: 'admin',
+  //   };
 
-    this.rpcService.callRPC(
-      'obstacles.getObstacles',
-      params,
-      (err: any, res: any) => {
-        if (err || res.error) {
-          console.log('the obstacles could not be displayed');
-          return;
-        }
-        this.obstacleInfo = res.result;
+  //   this.rpcService.callRPC(
+  //     'obstacles.getObstacles',
+  //     params,
+  //     (err: any, res: any) => {
+  //       if (err || res.error) {
+  //         console.log('the obstacles could not be displayed');
+  //         return;
+  //       }
+  //       this.obstacleInfo = res.result;
 
-        // Display the existing obstacles from database
-        this.obstacles = this.obstacleInfo.map((obstacle: any) => ({
-          x: obstacle.xPos,
-          y: obstacle.yPos,
-          width: obstacle.width,
-          height: obstacle.height,
-        }));
-      }
-    );
-  }
+  //       // Display the existing obstacles from database
+  //       this.obstacles = this.obstacleInfo.map((obstacle: any) => ({
+  //         x: obstacle.xPos,
+  //         y: obstacle.yPos,
+  //         width: obstacle.width,
+  //         height: obstacle.height,
+  //       }));
+  //     }
+  //   );
+  // }
 
   // Method to add a new obstacle (on the board and in database)
   customizeBoard(event: MouseEvent) {
@@ -170,39 +169,36 @@ export class ConfigurationComponent {
 
       this.obstacles.push(obstacle);
 
-      let paramsAddObstacle = {
-        xPos: obstacle.x,
-        yPos: obstacle.y,
-        width: obstacle.width,
-        height: obstacle.height,
-      };
+      // let paramsAddObstacle = {
+      //   xPos: obstacle.x,
+      //   yPos: obstacle.y,
+      //   width: obstacle.width,
+      //   height: obstacle.height,
+      // };
 
-      this.rpcService.callRPC(
-        'obstacles.addObstacle',
-        paramsAddObstacle,
-        (error: any, res: any) => {
-          if (error) {
-            console.log(error);
-            return;
-          }
-          this.getObstacles();
-        }
-      );
+      // this.rpcService.callRPC(
+      //   'obstacles.addObstacle',
+      //   paramsAddObstacle,
+      //   (error: any, res: any) => {
+      //     if (error) {
+      //       console.log(error);
+      //       return;
+      //     }
+      //     this.getObstacles();
+      //   }
+      // );
     }
 
-    if (this.chooseStartingPointActive) {
+    if (this.step === 2 && this.chooseStartingPointActive) {
       this.startPoint.x = event.offsetX;
       this.startPoint.y = event.offsetY;
       this.initialPosX = this.startPoint.x;
       this.initialPosY = this.startPoint.y;
-      this.afterChoosingStartingPoint = true;
     }
 
-    if (this.chooseFinishPointActive) {
+    if (this.step === 2 && this.chooseFinishPointActive) {
       this.finishPoint.x = event.offsetX;
       this.finishPoint.y = event.offsetY;
-      this.afterChoosingStartingPoint = false;
-      console.log(this.finishPoint);
     }
   }
 
@@ -276,24 +272,24 @@ export class ConfigurationComponent {
       }
 
       // Delete obstacle from database
-      let paramsDeleteObstacle = {
-        width: this.obstacleToDelete.width,
-        height: this.obstacleToDelete.height,
-        xPos: this.obstacleToDelete.x,
-        yPos: this.obstacleToDelete.y,
-      };
+      // let paramsDeleteObstacle = {
+      //   width: this.obstacleToDelete.width,
+      //   height: this.obstacleToDelete.height,
+      //   xPos: this.obstacleToDelete.x,
+      //   yPos: this.obstacleToDelete.y,
+      // };
 
-      this.rpcService.callRPC(
-        'obstacles.deleteObstacle',
-        paramsDeleteObstacle,
-        (error: any, res: any) => {
-          if (error) {
-            console.log(error);
-            return;
-          }
-          this.getObstacles();
-        }
-      );
+      // this.rpcService.callRPC(
+      //   'obstacles.deleteObstacle',
+      //   paramsDeleteObstacle,
+      //   (error: any, res: any) => {
+      //     if (error) {
+      //       console.log(error);
+      //       return;
+      //     }
+      //     this.getObstacles();
+      //   }
+      // );
 
       // Reset variables
       this.obstacleToDelete = null;
@@ -343,7 +339,7 @@ export class ConfigurationComponent {
   // Method to choose the starting position of the robot
   chooseStartingPoint(): void {
     this.chooseStartingPointActive = true;
-    // this.chooseFinishPointActive = false;
+    this.chooseFinishPointActive = false;
   }
 
   // Method to choose the finish position of the robot
@@ -374,14 +370,10 @@ export class ConfigurationComponent {
 
   // The board and robot are reinitialised
   tryAgain(): void {
-    this.startPoint.x = 0;
-    this.startPoint.y = 0;
+    this.startPoint.x = this.initialPosX;
+    this.startPoint.y = this.initialPosY;
     this.obstacles = [];
     this.stopRecordButton = false;
     this.recreateActionsButton = false;
-  }
-
-  resetPositions(): void {
-    this.chooseFinishPointActive = true;
   }
 }

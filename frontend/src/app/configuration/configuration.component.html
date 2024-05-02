@@ -82,7 +82,6 @@
           *ngIf="step === 2"
           mat-raised-button
           class="form-field-button"
-          [disabled]="chooseFinishPointActive"
           (click)="chooseStartingPoint()"
         >
           Choose starting point for robot
@@ -91,7 +90,6 @@
           *ngIf="step === 2"
           mat-raised-button
           class="form-field-button"
-          [disabled]="!afterChoosingStartingPoint"
           (click)="chooseFinishPoint()"
         >
           Choose finish point for robot
@@ -157,32 +155,22 @@
       </form>
 
       <!-- OPTIONS BUTTONS -->
-      <div class="options-buttons">
-        <button
-          *ngIf="step !== 0"
-          mat-raised-button
-          color="warn"
-          (click)="
-            applyChanges(
-              boardWidth,
-              boardHeight,
-              obstacleWidth,
-              obstacleHeight,
-              stepValue
-            )
-          "
-        >
-          Back to steps
-        </button>
-        <button
-          *ngIf="step === 2"
-          mat-raised-button
-          color="warn"
-          (click)="resetPositions()"
-        >
-          Reset
-        </button>
-      </div>
+      <button
+        *ngIf="step !== 0"
+        mat-raised-button
+        color="warn"
+        (click)="
+          applyChanges(
+            boardWidth,
+            boardHeight,
+            obstacleWidth,
+            obstacleHeight,
+            stepValue
+          )
+        "
+      >
+        Back to steps
+      </button>
     </div>
 
     <!-- STEP BUTTONS -->
