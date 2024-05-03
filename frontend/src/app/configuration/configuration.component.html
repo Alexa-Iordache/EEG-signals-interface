@@ -1,10 +1,10 @@
 <div class="configuration-page">
-  <div class="configuration-page_title">Train the new model here:</div>
+  <div class="configuration-page_title">Make your model configuration: </div>
 
   <div class="configuration-page_content">
     <div class="configuration-page_left-content">
       <app-direction
-        [recreateActionsButton]="recreateActionsButton"
+        [recreateActionsButton]="clickedRecreateActionsButton"
         [lastKeyPressed]="lastKeyPressed"
       ></app-direction>
       <div class="board-container">
@@ -152,7 +152,7 @@
         <button
           *ngIf="step === 4"
           mat-raised-button
-          [disabled]="!recreateActionsButton"
+          [disabled]="!recreatedActionsDone"
           class="form-field-button"
           (click)="tryAgain()"
         >

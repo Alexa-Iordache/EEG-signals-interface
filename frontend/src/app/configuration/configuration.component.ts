@@ -62,7 +62,7 @@ export class ConfigurationComponent {
   obstacleWidth = '20';
   obstacleHeight = '30';
   confTime = '3'; // 3 seconds between recording 2 sequences
-  performance = '80' // 80% performance
+  performance = '80'; // 80% performance
 
   // Variables from delete-obstacle modal
   yesBtn = '';
@@ -75,6 +75,7 @@ export class ConfigurationComponent {
   // Variables for recording process
   isRecording = false;
   recordedEvents: Position[] = [];
+  recreatedActionsDone = false;
 
   // Variable for the last key that was pressed
   lastKeyPressed: string = '';
@@ -86,6 +87,7 @@ export class ConfigurationComponent {
   chooseStartingPointActive = false;
   chooseFinishPointActive = false;
   recreateActionsButton = false;
+  clickedRecreateActionsButton = false;
   startRecordButton = false;
   stopRecordButton = false;
 
@@ -102,6 +104,7 @@ export class ConfigurationComponent {
     this.recreateActionsButton = false;
     this.startRecordButton = false;
     this.stopRecordButton = false;
+    this.clickedRecreateActionsButton = false;
   }
 
   // the point can be moved on the board using the 4 arrow keys
@@ -252,6 +255,7 @@ export class ConfigurationComponent {
     this.recordedEvents = [];
     this.startRecordButton = true;
     this.stopRecordButton = true;
+    this.recreatedActionsDone = false;
   }
 
   // Method to stop the record
@@ -298,7 +302,7 @@ export class ConfigurationComponent {
 
   // Method to recreate actions from the last record
   recreateActions(): void {
-    this.recreateActionsButton = true;
+    this.clickedRecreateActionsButton = true;
     // Reset to initial conditions or a specific start point
     this.currentPosition.x = this.recording.robot_start.x;
     this.currentPosition.y = this.recording.robot_start.y;
@@ -312,6 +316,10 @@ export class ConfigurationComponent {
 
           this.currentPosition.x = xPos;
           this.currentPosition.y = yPos;
+
+          if (index === this.recordedEvents.length - 1) {
+            this.recreatedActionsDone = true;
+          }
         } else {
           console.log(event);
         }
@@ -404,7 +412,7 @@ export class ConfigurationComponent {
     this.recreateActionsButton = false;
   }
 
-   // Method that reveal neccessary form-fields to customize recording performance
+  // Method that reveal neccessary form-fields to customize recording performance
   configurationSettings(): void {
     console.log('Configuration time: ', this.confTime);
     console.log('Performance: ', this.performance);
