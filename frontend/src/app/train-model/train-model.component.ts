@@ -46,12 +46,16 @@ export class TrainModelComponent {
   // Variable illustrating whether a certain button was clicked on or not.
   trainModelButton = false;
   chooseFinishPointActive = false;
+  clickedRecreateActionsButton = false;
 
   // Array with the possible directions
   directions: string[] = ['right', 'down', 'left', 'up'];
 
   // Variable for the current direction. Initial direction: right
   currentDirectionIndex: number = 0;
+
+  // Variable for the last direction to be displayed.
+  lastDirection: string = '';
 
   constructor(
     private configurationService: ConfigurationService,
@@ -101,8 +105,9 @@ export class TrainModelComponent {
     this.currentPosition.x = this.initialPostion.x;
     this.currentPosition.y = this.initialPostion.y;
     this.currentDirectionIndex = 0;
-
     this.processInstructions(this.actions);
+
+    this.clickedRecreateActionsButton = true;
   }
 
   // Method to re-initialise the board
@@ -124,15 +129,19 @@ export class TrainModelComponent {
     switch (currentDirection) {
       case 'right':
         this.currentPosition.x += step;
+        this.lastDirection = 'ArrowRight';
         break;
       case 'down':
         this.currentPosition.y += step;
+        this.lastDirection = 'ArrowDown';
         break;
       case 'left':
         this.currentPosition.x -= step;
+        this.lastDirection = 'ArrowLeft';
         break;
       case 'up':
         this.currentPosition.y -= step;
+        this.lastDirection = 'ArrowUp';
         break;
     }
   }
