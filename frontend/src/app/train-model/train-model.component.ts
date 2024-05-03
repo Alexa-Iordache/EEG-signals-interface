@@ -46,7 +46,10 @@ export class TrainModelComponent {
   // Variable illustrating whether a certain button was clicked on or not.
   trainModelButton = false;
   chooseFinishPointActive = false;
-  clickedRecreateActionsButton = false;
+  startRecordEnabled = false;
+  stopRecordEnabled = false;
+  recreateActionsEnabled = false;
+  tryAgainEnabled = false;
 
   // Array with the possible directions
   directions: string[] = ['right', 'down', 'left', 'up'];
@@ -77,11 +80,13 @@ export class TrainModelComponent {
   // Method that reveal neccessary buttons to train a new model
   trainModel(): void {
     this.trainModelButton = true;
+    this.startRecordEnabled = true;
   }
 
   // Method to go back to main options buttons
   backButton(): void {
     this.trainModelButton = false;
+    this.resetButtonStates();
   }
 
   // Method to start recording the actions
@@ -90,6 +95,9 @@ export class TrainModelComponent {
     //   '[100, 100, 100, 110, 110, 110, 100, 100, 100, 100, 100, 100, 100, 110, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 000]';
     this.actions = '[100, 110, 110, 110, 100, 100, 000]';
     this.processInstructions(this.actions);
+
+    this.startRecordEnabled = false;
+    this.stopRecordEnabled = true;
   }
 
   // Method to stop the recording and add the neccessary information into database
@@ -98,6 +106,10 @@ export class TrainModelComponent {
     console.log('RECORDING: ', this.recording);
     console.log('OBSTACLES: ', this.obstacles);
     console.log('ACTIONS: ', this.actions);
+
+    this.stopRecordEnabled = false;
+    this.recreateActionsEnabled = true;
+    this.tryAgainEnabled = true;
   }
 
   // Method to recreate the actions
@@ -107,13 +119,28 @@ export class TrainModelComponent {
     this.currentDirectionIndex = 0;
     this.processInstructions(this.actions);
 
-    this.clickedRecreateActionsButton = true;
+    this.recreateActionsEnabled = false;
   }
 
   // Method to re-initialise the board
   tryAgain(): void {
     this.currentPosition.x = this.initialPostion.x;
     this.currentPosition.y = this.initialPostion.y;
+    this.currentDirectionIndex = 0;
+    console.log(this.currentPosition, this.currentDirectionIndex);
+
+    this.tryAgainEnabled = false;
+    this.startRecordEnabled = true;
+    this.stopRecordEnabled = false;
+    this.recreateActionsEnabled = false;
+  }
+
+  // Method to reset the state for all buttons
+  resetButtonStates(): void {
+    this.startRecordEnabled = false;
+    this.stopRecordEnabled = false;
+    this.recreateActionsEnabled = false;
+    this.tryAgainEnabled = false;
   }
 
   // MEthod to go back to configuration mode
@@ -165,6 +192,7 @@ export class TrainModelComponent {
 
     let currentIndex = 0;
     const executeNextMove = () => {
+
       const pair = pairs[currentIndex];
       switch (pair) {
         case '100':

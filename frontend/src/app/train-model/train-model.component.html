@@ -4,7 +4,7 @@
   <div class="train-model-page_content">
     <div class="train-model-page_left-content">
       <app-direction
-        [recreateActionsButton]="clickedRecreateActionsButton"
+        [recreateActionsButton]="recreateActionsEnabled"
         [lastKeyPressed]="lastDirection"
       ></app-direction>
       <div class="board-container">
@@ -40,11 +40,12 @@
         </div>
       </div>
     </div>
-    <div  *ngIf="trainModelButton" class="train-model-page_right-content">
+    <div *ngIf="trainModelButton" class="train-model-page_right-content">
       <div class="train-model_buttons-container">
         <button
           mat-raised-button
           class="train-model_button"
+          [disabled]="!startRecordEnabled"
           (click)="startRecord()"
         >
           Start record
@@ -52,6 +53,7 @@
         <button
           mat-raised-button
           class="train-model_button"
+          [disabled]="!stopRecordEnabled"
           (click)="stopRecord()"
         >
           Stop record
@@ -59,6 +61,7 @@
         <button
           mat-raised-button
           class="train-model_button"
+          [disabled]="!recreateActionsEnabled"
           (click)="recreateActions()"
         >
           Recreate actions
@@ -66,6 +69,7 @@
         <button
           mat-raised-button
           class="train-model_button"
+          [disabled]="!tryAgainEnabled"
           (click)="tryAgain()"
         >
           Try again
