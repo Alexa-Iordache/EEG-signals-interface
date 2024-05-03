@@ -1,1 +1,114 @@
-<p>Train new mode works!</p>
+<div class="train-model-page">
+  <div class="train-model-page_title">Train your model here:</div>
+
+  <div class="train-model-page_content">
+    <div class="train-model-page_left-content">
+      <!-- <app-direction
+        [recreateActionsButton]="clickedRecreateActionsButton"
+        [lastKeyPressed]="lastKeyPressed"
+      ></app-direction> -->
+      <div class="board-container">
+        <div
+          class="board"
+          tabindex="0"
+          [style.width.px]="
+            recording?.board_width === null ? 800 : recording?.board_width
+          "
+          [style.height.px]="
+            recording?.board_height === null ? 600 : recording?.board_height
+          "
+        >
+          <div
+            *ngIf="
+              recording?.robot_start?.x !== null &&
+              recording?.robot_start?.y !== null
+            "
+            class="robot"
+            [style.left.px]="recording?.robot_start?.x"
+            [style.top.px]="recording?.robot_start?.y"
+          ></div>
+          <div
+            *ngIf="
+              recording?.robot_finish?.x !== null &&
+              recording?.robot_finish?.y !== null
+            "
+            class="finish-point"
+            [style.left.px]="recording?.robot_finish?.x"
+            [style.top.px]="recording?.robot_finish?.y"
+          ></div>
+          <div
+            *ngFor="let obstacle of obstacles"
+            class="obstacle"
+            [style.left.px]="obstacle.pos.x"
+            [style.top.px]="obstacle.pos.y"
+            [style.width.px]="obstacle.width"
+            [style.height.px]="obstacle.height"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div class="train-model-page_right-content">
+      <div *ngIf="trainModelButton" class="train-model_buttons-container">
+        <button
+          mat-raised-button
+          class="train-model_button"
+          (click)="startRecord()"
+        >
+          Start record
+        </button>
+        <button
+          mat-raised-button
+          class="train-model_button"
+          (click)="stopRecord()"
+        >
+          Stop record
+        </button>
+        <button
+          mat-raised-button
+          class="train-model_button"
+          (click)="recreateActions()"
+        >
+          Recreate actions
+        </button>
+        <button
+          mat-raised-button
+          class="train-model_button"
+          (click)="tryAgain()"
+        >
+          Try again
+        </button>
+      </div>
+
+      <!-- BACK BUTTON -->
+      <button
+        *ngIf="trainModelButton"
+        mat-raised-button
+        color="warn"
+        (click)="backButton()"
+      >
+        Back
+      </button>
+    </div>
+
+    <!-- TRAIN MODEL BUTTON -->
+    <div *ngIf="!trainModelButton" class="step-buttons">
+      <button
+        mat-raised-button
+        color="accent"
+        class="train-model_button"
+        [disabled]="recording === null"
+        (click)="trainModel()"
+      >
+        Train model
+      </button>
+      <button
+        mat-raised-button
+        color="accent"
+        class="train-model_button"
+        (click)="backToConfiguration()"
+      >
+        Back to configuration mode
+      </button>
+    </div>
+  </div>
+</div>

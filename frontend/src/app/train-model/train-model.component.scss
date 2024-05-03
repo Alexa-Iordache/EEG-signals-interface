@@ -1,0 +1,78 @@
+@import "../../general/mixins.scss";
+
+.train-model-page {
+  @include displayFormatWithDirection(flex, column, flex-start, space-around);
+  height: 100%;
+  background: linear-gradient(to right, black, #3533cd);
+
+  .train-model-page_title {
+    font-size: 40px;
+    color: white;
+    margin-left: 100px;
+  }
+
+  .train-model-page_content {
+    @include displayFormatWithDirection(flex, row, center, space-evenly);
+    width: 100%;
+
+    .train-model-page_left-content {
+      display: flex;
+      flex-direction: column;
+
+      .board-container {
+        display: flex;
+        align-items: center;
+        min-height: 650px;
+
+        .board {
+          position: relative;
+          background-color: white;
+
+          .robot {
+            @include dimension(30px, 30px);
+            position: absolute;
+            background-color: red;
+          }
+
+          .finish-point {
+            @include dimension(60px, 30px);
+            position: absolute;
+            background-color: green;
+          }
+
+          .obstacle {
+            position: absolute;
+            background-color: blue;
+          }
+        }
+      }
+    }
+
+    .train-model-page_right-content {
+      @include displayFormatWithDirection(flex, column, center, space-evenly);
+      max-width: 20%;
+      min-height: 80%;
+
+      .train-model_buttons-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .train-model_button {
+          margin-bottom: 20px;
+        }
+      }
+    }
+
+    .step-buttons {
+      @include displayFormatWithDirection(flex, column, flex-start, center);
+      @include dimension(100%, 100%);
+      max-width: 20%;
+
+      .train-model_button {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+  }
+}

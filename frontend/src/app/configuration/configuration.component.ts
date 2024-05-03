@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteObstacleModalComponent } from '../delete-obstacle-modal/delete-obstacle-modal.component';
 import { HttpClient } from '@angular/common/http';
 import { SaveRecrdingModalComponent } from '../stop-recording-modal/stop-recording-modal.component';
+import { ConfigurationService } from './configuration.service';
+import { Router } from '@angular/router';
 
 // RECORDING object
 export interface Recording {
@@ -94,7 +96,9 @@ export class ConfigurationComponent {
   constructor(
     private http: HttpClient,
     private rpcService: RpcService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private configurationService: ConfigurationService,
+    private router: Router
   ) {
     // this.obstacleWidth = '10';
     // this.obstacleHeight = '10';
@@ -417,5 +421,12 @@ export class ConfigurationComponent {
     console.log('Configuration time: ', this.confTime);
     console.log('Performance: ', this.performance);
     this.step = 5;
+  }
+
+  // Method that switches page to train-model mode
+  goTrainModel(): void {
+    this.configurationService.setRecording(this.recording);
+    this.configurationService.setObstacles(this.obstacles);
+    this.router.navigate(['/train-model']);
   }
 }

@@ -1,5 +1,5 @@
 <div class="configuration-page">
-  <div class="configuration-page_title">Make your model configuration: </div>
+  <div class="configuration-page_title">Make your model configuration:</div>
 
   <div class="configuration-page_content">
     <div class="configuration-page_left-content">
@@ -162,12 +162,7 @@
         <!-- RECORDING CONFIGURATION -->
         <mat-form-field *ngIf="step === 5" class="right-container_form-field">
           <mat-label>Configuration time</mat-label>
-          <input
-            matInput
-            type="text"
-            [(ngModel)]="confTime"
-            name="confTime"
-          />
+          <input matInput type="text" [(ngModel)]="confTime" name="confTime" />
         </mat-form-field>
         <mat-form-field *ngIf="step === 5" class="right-container_form-field">
           <mat-label>Performance percentage</mat-label>
@@ -231,7 +226,7 @@
         class="configuration_button"
         (click)="trainModel()"
       >
-        STEP 4: Train model
+        STEP 4: Simulation
       </button>
       <button
         mat-raised-button
@@ -240,6 +235,14 @@
         (click)="configurationSettings()"
       >
         STEP 5: Recording configuration
+      </button>
+      <button
+        mat-raised-button
+        color="accent"
+        class="configuration_button"
+        (click)="goTrainModel()"
+      >
+        STEP 6: Go train model
       </button>
     </div>
   </div>
