@@ -191,7 +191,7 @@ export class ConfigurationComponent {
     }
   }
 
-  // Method to customize an obstacle before adding it to the board
+  // Method to customize the board, an obstacle or the step of the robot
   applyChanges(
     boardWidth: number,
     boardHeight: number,
@@ -445,8 +445,6 @@ export class ConfigurationComponent {
 
   // Method that reveal neccessary form-fields to customize recording performance
   configurationSettings(): void {
-    console.log('Configuration time: ', this.confTime);
-    console.log('Performance: ', this.performance);
     this.step = 5;
   }
 

@@ -62,14 +62,12 @@ export class TrainModelComponent {
     // Retrieve recording and obstacles data
     this.recording = this.configurationService.getRecording();
     this.obstacles = this.configurationService.getObstacles();
-    this.chooseFinishPointActive = this.configurationService.getFinishPointActive();
-    console.log(this.chooseFinishPointActive);
+    this.chooseFinishPointActive =
+      this.configurationService.getFinishPointActive();
     if (this.recording?.robot_start.x)
       this.initialPostion.x = this.recording?.robot_start.x;
     if (this.recording?.robot_start.y)
       this.initialPostion.y = this.recording?.robot_start.y;
-
-      console.log('Finish point: ', this.recording?.robot_finish);
   }
 
   // Method that reveal neccessary buttons to train a new model
@@ -77,69 +75,64 @@ export class TrainModelComponent {
     this.trainModelButton = true;
   }
 
+  // Method to go back to main options buttons
   backButton(): void {
     this.trainModelButton = false;
   }
 
+  // Method to start recording the actions
   startRecord(): void {
-    console.log('start record');
-    // Call the function with your input string
-    this.actions =
-      '[100, 100, 100, 110, 110, 110, 100, 100, 100, 100, 100, 100, 100, 110, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 000]';
+    // this.actions =
+    //   '[100, 100, 100, 110, 110, 110, 100, 100, 100, 100, 100, 100, 100, 110, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 000]';
+    this.actions = '[100, 110, 110, 110, 100, 100, 000]';
     this.processInstructions(this.actions);
   }
 
+  // Method to stop the recording and add the neccessary information into database
   stopRecord(): void {
     // TO DO: save into database
-    console.log('stop record');
-    console.log(this.recording);
-    console.log(this.obstacles);
-    console.log(this.actions);
+    console.log('RECORDING: ', this.recording);
+    console.log('OBSTACLES: ', this.obstacles);
+    console.log('ACTIONS: ', this.actions);
   }
 
+  // Method to recreate the actions
   recreateActions(): void {
-    console.log('recreate actions');
-    // Reset to initial conditions or a specific start point
-    if (this.initialPostion.x) this.currentPosition.x = this.initialPostion.x;
-    if (this.initialPostion.y) this.currentPosition.y = this.initialPostion.y;
-
-    console.log(this.initialPostion);
+    this.currentPosition.x = this.initialPostion.x;
+    this.currentPosition.y = this.initialPostion.y;
+    this.currentDirectionIndex = 0;
 
     this.processInstructions(this.actions);
   }
 
+  // Method to re-initialise the board
   tryAgain(): void {
-    console.log('try again');
-    if (this.initialPostion.x) this.currentPosition.x = this.initialPostion.x;
-    if (this.initialPostion.y) this.currentPosition.y = this.initialPostion.y;
+    this.currentPosition.x = this.initialPostion.x;
+    this.currentPosition.y = this.initialPostion.y;
   }
 
+  // MEthod to go back to configuration mode
   backToConfiguration(): void {
     this.router.navigate(['/configuration']);
   }
 
   // Method to move forward when '100' appears in the sequence
   moveForward() {
-    const robotElement = document.querySelector('.robot') as HTMLElement;
-    if (!robotElement) return;
-
+    const step = this.recording?.robot_step || 50;
     const currentDirection = this.directions[this.currentDirectionIndex];
+
     switch (currentDirection) {
       case 'right':
-        const currentLeft = parseInt(robotElement.style.left || '0');
-        robotElement.style.left = `${currentLeft + 50}px`;
+        this.currentPosition.x += step;
         break;
       case 'down':
-        const currentTop = parseInt(robotElement.style.top || '0');
-        robotElement.style.top = `${currentTop + 50}px`;
+        this.currentPosition.y += step;
         break;
       case 'left':
-        const currentLeft2 = parseInt(robotElement.style.left || '0');
-        robotElement.style.left = `${currentLeft2 - 50}px`;
+        this.currentPosition.x -= step;
         break;
       case 'up':
-        const currentTop2 = parseInt(robotElement.style.top || '0');
-        robotElement.style.top = `${currentTop2 - 50}px`;
+        this.currentPosition.y -= step;
         break;
     }
   }
@@ -147,7 +140,6 @@ export class TrainModelComponent {
   // Method to rotate with 90 degrees when '110' appears in the sequence
   rotateLeft() {
     this.currentDirectionIndex--;
-    console.log(this.currentDirectionIndex);
     if (this.currentDirectionIndex < 0) {
       this.currentDirectionIndex = this.directions.length - 1;
     }
