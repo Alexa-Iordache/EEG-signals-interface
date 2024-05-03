@@ -3,7 +3,6 @@ import { RpcService } from '../services/rpc.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteObstacleModalComponent } from '../delete-obstacle-modal/delete-obstacle-modal.component';
 import { HttpClient } from '@angular/common/http';
-import { SaveRecrdingModalComponent } from '../stop-recording-modal/stop-recording-modal.component';
 import { ConfigurationService } from './configuration.service';
 import { Router } from '@angular/router';
 
@@ -77,7 +76,7 @@ export class ConfigurationComponent {
   // Variables for recording process
   isRecording = false;
   recordedEvents: Position[] = [];
-  recreatedActionsDone = false;
+  recreatedSimulationDone = false;
 
   // Variable for the last key that was pressed
   lastKeyPressed: string = '';
@@ -263,7 +262,7 @@ export class ConfigurationComponent {
     this.recordedEvents = [];
     this.startSimulationButton = true;
     this.stopSimulationButton = true;
-    this.recreatedActionsDone = false;
+    this.recreatedSimulationDone = false;
   }
 
   // Method to stop the record
@@ -326,7 +325,7 @@ export class ConfigurationComponent {
           this.currentPosition.y = yPos;
 
           if (index === this.recordedEvents.length - 1) {
-            this.recreatedActionsDone = true;
+            this.recreatedSimulationDone = true;
           }
         } else {
           console.log(event);
