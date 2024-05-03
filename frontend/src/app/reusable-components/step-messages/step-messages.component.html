@@ -4,3 +4,21 @@
 <div *ngIf="step === 2" class="right-container_text">STEP 2: Set robot</div>
 <div *ngIf="step === 3" class="right-container_text">STEP 3: Set obstacles</div>
 <div *ngIf="step === 4" class="right-container_text">STEP 4: Train model</div>
+<div *ngIf="step === 5" class="right-container_text">
+  STEP 5: Recording configuration
+</div>
+<div *ngIf="step === 5" class="right-container_extra-info">
+  <span class="bold_text">Configuration time </span>
+  <span
+    >represents the time measured in seconds between two consecutive
+    orders.</span
+  >
+</div>
+
+<div *ngIf="step === 5" class="right-container_extra-info">
+  <span class="bold_text">Performance percentage </span>
+  <span
+    >represents the similarity percentage between the real data and the
+    processed data.</span
+  >
+</div>

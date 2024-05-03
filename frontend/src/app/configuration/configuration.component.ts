@@ -61,6 +61,8 @@ export class ConfigurationComponent {
   // Variables from form-fields inputs
   obstacleWidth = '20';
   obstacleHeight = '30';
+  confTime = '3'; // 3 seconds between recording 2 sequences
+  performance = '80' // 80% performance
 
   // Variables from delete-obstacle modal
   yesBtn = '';
@@ -259,31 +261,39 @@ export class ConfigurationComponent {
     this.recreateActionsButton = true;
     this.stopRecordButton = false;
 
-    let paramsAddRecording = {
-      width: this.recording.board_width,
-      height: this.recording.board_height,
-      step: this.recording.robot_step,
-      start_x: this.recording.robot_start.x,
-      start_y: this.recording.robot_start.y,
-      finish_x: this.recording.robot_finish.x,
-      finish_y: this.recording.robot_finish.y,
-    };
+    // ADD NEW RECORDING INTO DATABASE (OBSTACLES + ACTIONS)
 
-    this.rpcService.callRPC(
-      'recordings.addRecording',
-      paramsAddRecording,
-      (error: any, recordingId: any) => {
-        if (error) {
-          console.log(error);
-          return;
-        } else {
-          this.addAllObstaclesToDatabase(this.obstacles, recordingId);
-          this.recordedEvents.forEach((action) => {
-            this.addAllActionsToDatabase(action, recordingId);
-          });
-        }
-      }
-    );
+    // let paramsAddRecording = {
+    //   width: this.recording.board_width,
+    //   height: this.recording.board_height,
+    //   step: this.recording.robot_step,
+    //   start_x: this.recording.robot_start.x,
+    //   start_y: this.recording.robot_start.y,
+    //   finish_x: this.recording.robot_finish.x,
+    //   finish_y: this.recording.robot_finish.y,
+    // };
+
+    // this.rpcService.callRPC(
+    //   'recordings.addRecording',
+    //   paramsAddRecording,
+    //   (error: any, recordingId: any) => {
+    //     if (error) {
+    //       console.log(error);
+    //       return;
+    //     } else {
+    //       this.addAllObstaclesToDatabase(this.obstacles, recordingId);
+
+    //       for (let i = 0; i < this.recordedEvents.length; i++) {
+    //         setTimeout(() => {
+    //           this.addAllActionsToDatabase(this.recordedEvents[i], recordingId);
+    //           console.log(
+    //             `Actions added in db: (${this.recordedEvents[i].x}, ${this.recordedEvents[i].y})`
+    //           );
+    //         }, 1000 * i); // Delay each action to visually distinguish them
+    //       }
+    //     }
+    //   }
+    // );
   }
 
   // Method to recreate actions from the last record
@@ -295,50 +305,18 @@ export class ConfigurationComponent {
 
     this.recordedEvents.forEach((event, index) => {
       setTimeout(() => {
-        console.log(`Recreating: ${event}`);
+        if (event.hasOwnProperty('x') && event.hasOwnProperty('y')) {
+          const xPos = event.x;
+          const yPos = event.y;
+          console.log(`Moved to (${xPos}, ${yPos})`);
+
+          this.currentPosition.x = xPos;
+          this.currentPosition.y = yPos;
+        } else {
+          console.log(event);
+        }
       }, 1000 * index); // Delay each action to visually distinguish them
     });
-  }
-
-  // Method to choose the starting position of the robot
-  chooseStartingPoint(): void {
-    this.chooseStartingPointActive = true;
-    this.chooseFinishPointActive = false;
-  }
-
-  // Method to choose the finish position of the robot
-  chooseFinishPoint(): void {
-    this.chooseFinishPointActive = true;
-    this.chooseStartingPointActive = false;
-  }
-
-  // Method that reveal neccessary form-fields to customize board dimension
-  boardSettings(): void {
-    this.step = 1;
-  }
-
-  // Method that reveal neccessary form-fields and buttons to customize robot dimension
-  robotSettings(): void {
-    this.step = 2;
-  }
-
-  // Method that reveal neccessary form-fields to customize obstacle dimension
-  obstaclesSettings(): void {
-    this.step = 3;
-  }
-
-  // Method that reveal neccessary buttons to train a new model
-  trainModel(): void {
-    this.step = 4;
-  }
-
-  // The board and robot are reinitialised
-  tryAgain(): void {
-    this.currentPosition.x = this.recording.robot_start.x;
-    this.currentPosition.y = this.recording.robot_start.y;
-    this.obstacles = [];
-    this.stopRecordButton = false;
-    this.recreateActionsButton = false;
   }
 
   // Method to add all obstacles with the given recording ID to the database
@@ -383,5 +361,53 @@ export class ConfigurationComponent {
         }
       }
     );
+  }
+
+  // Method to choose the starting position of the robot
+  chooseStartingPoint(): void {
+    this.chooseStartingPointActive = true;
+    this.chooseFinishPointActive = false;
+  }
+
+  // Method to choose the finish position of the robot
+  chooseFinishPoint(): void {
+    this.chooseFinishPointActive = true;
+    this.chooseStartingPointActive = false;
+  }
+
+  // Method that reveal neccessary form-fields to customize board dimension
+  boardSettings(): void {
+    this.step = 1;
+  }
+
+  // Method that reveal neccessary form-fields and buttons to customize robot dimension
+  robotSettings(): void {
+    this.step = 2;
+  }
+
+  // Method that reveal neccessary form-fields to customize obstacle dimension
+  obstaclesSettings(): void {
+    this.step = 3;
+  }
+
+  // Method that reveal neccessary buttons to train a new model
+  trainModel(): void {
+    this.step = 4;
+  }
+
+  // The board and robot are reinitialised
+  tryAgain(): void {
+    this.currentPosition.x = this.recording.robot_start.x;
+    this.currentPosition.y = this.recording.robot_start.y;
+    this.obstacles = [];
+    this.stopRecordButton = false;
+    this.recreateActionsButton = false;
+  }
+
+   // Method that reveal neccessary form-fields to customize recording performance
+  configurationSettings(): void {
+    console.log('Configuration time: ', this.confTime);
+    console.log('Performance: ', this.performance);
+    this.step = 5;
   }
 }

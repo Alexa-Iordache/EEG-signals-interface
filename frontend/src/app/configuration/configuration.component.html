@@ -158,6 +158,26 @@
         >
           Try again
         </button>
+
+        <!-- RECORDING CONFIGURATION -->
+        <mat-form-field *ngIf="step === 5" class="right-container_form-field">
+          <mat-label>Configuration time</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="confTime"
+            name="confTime"
+          />
+        </mat-form-field>
+        <mat-form-field *ngIf="step === 5" class="right-container_form-field">
+          <mat-label>Performance percentage</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="performance"
+            name="performance"
+          />
+        </mat-form-field>
       </form>
 
       <!-- OPTIONS BUTTONS -->
@@ -212,6 +232,14 @@
         (click)="trainModel()"
       >
         STEP 4: Train model
+      </button>
+      <button
+        mat-raised-button
+        color="accent"
+        class="configuration_button"
+        (click)="configurationSettings()"
+      >
+        STEP 5: Recording configuration
       </button>
     </div>
   </div>

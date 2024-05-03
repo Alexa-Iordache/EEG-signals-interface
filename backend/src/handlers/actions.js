@@ -6,7 +6,6 @@ let actions = {
     let xPos = req.body.params.xPos;
     let yPos = req.body.params.yPos;
 
-    // insert into Actions (recording_id, action_x, action_y) values (recording_id, 10, 10);
     mysql.query(
       `INSERT INTO Actions (recording_id, action_x, action_y)
       VALUES ('${recordingId}', '${xPos}', '${yPos}');`,
