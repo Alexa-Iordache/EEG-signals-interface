@@ -109,6 +109,10 @@ export class ConfigurationComponent {
     this.startRecordButton = false;
     this.stopRecordButton = false;
     this.clickedRecreateActionsButton = false;
+
+    // Data will not be lost while switching pages
+    this.recording = this.configurationService.getRecording() || this.recording;
+    this.obstacles = this.configurationService.getObstacles();
   }
 
   // the point can be moved on the board using the 4 arrow keys
@@ -409,6 +413,7 @@ export class ConfigurationComponent {
 
   // The board and robot are reinitialised
   tryAgain(): void {
+    this.configurationService.resetData();
     this.currentPosition.x = this.recording.robot_start.x;
     this.currentPosition.y = this.recording.robot_start.y;
     this.obstacles = [];

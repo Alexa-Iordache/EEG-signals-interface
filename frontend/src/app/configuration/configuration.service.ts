@@ -30,4 +30,10 @@ export class ConfigurationService {
   getObstacles(): Obstacle[] {
     return this.obstacles;
   }
+
+  // Method to reset data
+  resetData(): void {
+    this.recording = null;
+    this.obstacles = [];
+  }
 }
