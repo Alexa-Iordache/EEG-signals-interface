@@ -4,7 +4,7 @@
   <div class="configuration-page_content">
     <div class="configuration-page_left-content">
       <app-direction
-        [recreateActionsButton]="clickedRecreateActionsButton"
+        [recreateActionsButton]="clickedRecreateSimulationButton"
         [lastKeyPressed]="lastKeyPressed"
       ></app-direction>
       <div class="board-container">
@@ -126,28 +126,28 @@
           *ngIf="step === 4"
           mat-raised-button
           class="form-field-button"
-          [disabled]="recreateActionsButton"
-          (click)="startRecord()"
+          [disabled]="recreateSimulationButton"
+          (click)="startSimulation()"
         >
-          Start record
+          Start simulation
         </button>
         <button
           *ngIf="step === 4"
           mat-raised-button
           class="form-field-button"
-          [disabled]="!stopRecordButton"
-          (click)="stopRecord()"
+          [disabled]="!stopSimulationButton"
+          (click)="stopSimulation()"
         >
-          Stop record
+          Stop simulation
         </button>
         <button
           *ngIf="step === 4"
           mat-raised-button
-          [disabled]="!recreateActionsButton"
+          [disabled]="!recreateSimulationButton"
           class="form-field-button"
-          (click)="recreateActions()"
+          (click)="recreateSimulation()"
         >
-          Recreate actions
+          Recreate simulation
         </button>
         <button
           *ngIf="step === 4"
@@ -224,7 +224,7 @@
         mat-raised-button
         color="accent"
         class="configuration_button"
-        (click)="trainModel()"
+        (click)="simulation()"
       >
         STEP 4: Simulation
       </button>

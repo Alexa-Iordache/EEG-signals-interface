@@ -88,10 +88,10 @@ export class ConfigurationComponent {
   // Variables to illustrate which buttons have been clicked on
   chooseStartingPointActive = false;
   chooseFinishPointActive = false;
-  recreateActionsButton = false;
-  clickedRecreateActionsButton = false;
-  startRecordButton = false;
-  stopRecordButton = false;
+  recreateSimulationButton = false;
+  clickedRecreateSimulationButton = false;
+  startSimulationButton = false;
+  stopSimulationButton = false;
 
   constructor(
     private http: HttpClient,
@@ -105,10 +105,10 @@ export class ConfigurationComponent {
   }
 
   ngOnInit(): void {
-    this.recreateActionsButton = false;
-    this.startRecordButton = false;
-    this.stopRecordButton = false;
-    this.clickedRecreateActionsButton = false;
+    this.recreateSimulationButton = false;
+    this.startSimulationButton = false;
+    this.stopSimulationButton = false;
+    this.clickedRecreateSimulationButton = false;
 
     // Data will not be lost while switching pages
     this.recording = this.configurationService.getRecording() || this.recording;
@@ -258,20 +258,20 @@ export class ConfigurationComponent {
   }
 
   // Method to start a new record
-  startRecord(): void {
+  startSimulation(): void {
     this.isRecording = true;
     this.recordedEvents = [];
-    this.startRecordButton = true;
-    this.stopRecordButton = true;
+    this.startSimulationButton = true;
+    this.stopSimulationButton = true;
     this.recreatedActionsDone = false;
   }
 
   // Method to stop the record
-  stopRecord(): void {
+  stopSimulation(): void {
     this.isRecording = false;
-    this.dialog.open(SaveRecrdingModalComponent);
-    this.recreateActionsButton = true;
-    this.stopRecordButton = false;
+    // this.dialog.open(SaveRecrdingModalComponent);
+    this.recreateSimulationButton = true;
+    this.stopSimulationButton = false;
 
     // ADD NEW RECORDING INTO DATABASE (OBSTACLES + ACTIONS)
 
@@ -309,8 +309,8 @@ export class ConfigurationComponent {
   }
 
   // Method to recreate actions from the last record
-  recreateActions(): void {
-    this.clickedRecreateActionsButton = true;
+  recreateSimulation(): void {
+    this.clickedRecreateSimulationButton = true;
     // Reset to initial conditions or a specific start point
     this.currentPosition.x = this.recording.robot_start.x;
     this.currentPosition.y = this.recording.robot_start.y;
@@ -407,7 +407,7 @@ export class ConfigurationComponent {
   }
 
   // Method that reveal neccessary buttons to train a new model
-  trainModel(): void {
+  simulation(): void {
     this.step = 4;
   }
 
@@ -417,8 +417,8 @@ export class ConfigurationComponent {
     this.currentPosition.x = this.recording.robot_start.x;
     this.currentPosition.y = this.recording.robot_start.y;
     this.obstacles = [];
-    this.stopRecordButton = false;
-    this.recreateActionsButton = false;
+    this.stopSimulationButton = false;
+    this.recreateSimulationButton = false;
   }
 
   // Method that reveal neccessary form-fields to customize recording performance
