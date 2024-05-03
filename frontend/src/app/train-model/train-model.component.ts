@@ -45,8 +45,7 @@ export class TrainModelComponent {
 
   // Variable illustrating whether a certain button was clicked on or not.
   trainModelButton = false;
-  recreateActionsButton = false;
-  stopRecordingButton = false;
+  chooseFinishPointActive = false;
 
   // Array with the possible directions
   directions: string[] = ['right', 'down', 'left', 'up'];
@@ -63,14 +62,14 @@ export class TrainModelComponent {
     // Retrieve recording and obstacles data
     this.recording = this.configurationService.getRecording();
     this.obstacles = this.configurationService.getObstacles();
+    this.chooseFinishPointActive = this.configurationService.getFinishPointActive();
+    console.log(this.chooseFinishPointActive);
     if (this.recording?.robot_start.x)
       this.initialPostion.x = this.recording?.robot_start.x;
     if (this.recording?.robot_start.y)
       this.initialPostion.y = this.recording?.robot_start.y;
 
-    // Initialise state of buttons
-    this.recreateActionsButton = false;
-    this.stopRecordingButton = false;
+      console.log('Finish point: ', this.recording?.robot_finish);
   }
 
   // Method that reveal neccessary buttons to train a new model
@@ -88,8 +87,6 @@ export class TrainModelComponent {
     this.actions =
       '[100, 100, 100, 110, 110, 110, 100, 100, 100, 100, 100, 100, 100, 110, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 000]';
     this.processInstructions(this.actions);
-
-    this.stopRecordingButton = true;
   }
 
   stopRecord(): void {
@@ -98,9 +95,6 @@ export class TrainModelComponent {
     console.log(this.recording);
     console.log(this.obstacles);
     console.log(this.actions);
-
-    this.recreateActionsButton = true;
-    this.stopRecordingButton = false;
   }
 
   recreateActions(): void {
@@ -109,6 +103,8 @@ export class TrainModelComponent {
     if (this.initialPostion.x) this.currentPosition.x = this.initialPostion.x;
     if (this.initialPostion.y) this.currentPosition.y = this.initialPostion.y;
 
+    console.log(this.initialPostion);
+
     this.processInstructions(this.actions);
   }
 
@@ -116,9 +112,6 @@ export class TrainModelComponent {
     console.log('try again');
     if (this.initialPostion.x) this.currentPosition.x = this.initialPostion.x;
     if (this.initialPostion.y) this.currentPosition.y = this.initialPostion.y;
-
-    this.recreateActionsButton = false;
-    this.stopRecordingButton = false;
   }
 
   backToConfiguration(): void {

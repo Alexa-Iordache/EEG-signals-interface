@@ -91,6 +91,7 @@ export class ConfigurationComponent {
   clickedRecreateSimulationButton = false;
   startSimulationButton = false;
   stopSimulationButton = false;
+  handleFinishPointClickButton = false;
 
   constructor(
     private http: HttpClient,
@@ -235,6 +236,19 @@ export class ConfigurationComponent {
     });
   }
 
+  handleFinishPointClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.handleFinishPointClickButton = true;
+
+    let obstacleToDelete = {
+      width: 60,
+      height: 30,
+      pos: this.recording.robot_finish,
+    };
+
+    this.handleObstacleClick(event, obstacleToDelete);
+  }
+
   // Method to cancel obstacle deletion
   cancelDelete() {
     this.obstacleToDelete = null;
@@ -244,6 +258,15 @@ export class ConfigurationComponent {
   // Method to confirm obstacle deletion
   confirmDelete() {
     if (this.obstacleToDelete) {
+      // Remove the finish point, without deleting other object
+      if (this.handleFinishPointClickButton) {
+        this.recording.robot_finish = {
+          x: 0,
+          y: 0,
+        };
+        this.handleFinishPointClickButton = false;
+        return;
+      }
       // Remove obstacle from obstacles array
       const index = this.obstacles.indexOf(this.obstacleToDelete);
       if (index !== -1) {
@@ -431,6 +454,9 @@ export class ConfigurationComponent {
   goTrainModel(): void {
     this.configurationService.setRecording(this.recording);
     this.configurationService.setObstacles(this.obstacles);
+    this.configurationService.setFinishPointActive(
+      this.chooseFinishPointActive
+    );
     this.router.navigate(['/train-model']);
   }
 }

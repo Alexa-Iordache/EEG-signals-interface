@@ -11,6 +11,9 @@ export class ConfigurationService {
   // Obstacles from configuration mode
   obstacles: Obstacle[] = [];
 
+  // Whether the finish point was seletected in configuration mode or not
+  chooseFinishPointActive: boolean = false;
+
   // Method to set recording data
   setRecording(recording: Recording): void {
     this.recording = recording;
@@ -29,6 +32,16 @@ export class ConfigurationService {
   // Method to get obstacles data
   getObstacles(): Obstacle[] {
     return this.obstacles;
+  }
+
+  // Method to set recording data
+  setFinishPointActive(chooseFinishPointActive: boolean): void {
+    this.chooseFinishPointActive = chooseFinishPointActive;
+  }
+
+  // Method to set recording data
+  getFinishPointActive(): boolean {
+    return this.chooseFinishPointActive;
   }
 
   // Method to reset data

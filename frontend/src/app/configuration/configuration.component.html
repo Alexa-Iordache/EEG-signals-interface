@@ -35,6 +35,7 @@
             class="finish-point"
             [style.left.px]="recording.robot_finish.x"
             [style.top.px]="recording.robot_finish.y"
+            (click)="handleFinishPointClick($event)"
           ></div>
           <div
             *ngFor="let obstacle of obstacles"

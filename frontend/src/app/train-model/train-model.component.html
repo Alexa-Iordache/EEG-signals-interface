@@ -19,19 +19,12 @@
           "
         >
           <div
-            *ngIf="
-              recording?.robot_start?.x !== null &&
-              recording?.robot_start?.y !== null
-            "
             class="robot"
-            [style.left.px]="recording?.robot_start?.x"
-            [style.top.px]="recording?.robot_start?.y"
+            [style.left.px]="currentPosition.x"
+            [style.top.px]="currentPosition.y"
           ></div>
           <div
-            *ngIf="
-              recording?.robot_finish?.x !== null &&
-              recording?.robot_finish?.y !== null
-            "
+            *ngIf="chooseFinishPointActive"
             class="finish-point"
             [style.left.px]="recording?.robot_finish?.x"
             [style.top.px]="recording?.robot_finish?.y"
@@ -59,7 +52,6 @@
         <button
           mat-raised-button
           class="train-model_button"
-          [disabled]="!stopRecordingButton"
           (click)="stopRecord()"
         >
           Stop record
