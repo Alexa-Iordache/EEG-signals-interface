@@ -21,6 +21,7 @@ export class MainPageComponent {
 
   useModel(): void {
     console.log('Use existing model');
+    this.router.navigate(['/use-existing-model']);
   }
 
   showProfile(): void {

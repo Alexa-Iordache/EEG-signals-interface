@@ -5,6 +5,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { TrainModelComponent } from './train-model/train-model.component';
+import { ExistingModelComponent } from './existing-model/existing-model.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'configuration', component: ConfigurationComponent},
   { path: 'profile-page', component: ProfilePageComponent},
   { path: 'train-model', component: TrainModelComponent},
+  { path: 'use-existing-model', component: ExistingModelComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 

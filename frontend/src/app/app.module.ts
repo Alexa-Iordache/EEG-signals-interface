@@ -24,6 +24,9 @@ import { TrainModelComponent } from './train-model/train-model.component';
 import { DirectionComponent } from './reusable-components/direction/direction.component';
 import { StepMessagesComponent } from './reusable-components/step-messages/step-messages.component';
 import { SaveRecordingModalComponent } from './modals/save-recording-modal/save-recording-modal.component';
+import { ExistingModelComponent } from './existing-model/existing-model.component';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { SaveRecordingModalComponent } from './modals/save-recording-modal/save-
     TrainModelComponent,
     DirectionComponent,
     StepMessagesComponent,
-    SaveRecordingModalComponent
+    SaveRecordingModalComponent,
+    ExistingModelComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,13 +58,16 @@ import { SaveRecordingModalComponent } from './modals/save-recording-modal/save-
     MatSelectModule,
     MatDialogModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [
-    DirectionComponent,
-    StepMessagesComponent
-  ]
+  exports: [DirectionComponent, StepMessagesComponent],
 })
-export class AppModule { }
+export class AppModule {}

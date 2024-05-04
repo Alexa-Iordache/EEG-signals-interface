@@ -1,0 +1,37 @@
+@import "../../general/mixins.scss";
+
+.existing-model-page {
+  @include displayFormatWithDirection(flex, column, flex-start, space-around);
+  height: 100%;
+  background: linear-gradient(to right, black, #3533cd);
+
+  .existing-model-title {
+    font-size: 40px;
+    color: white;
+    margin-left: 100px;
+  }
+
+  .existing-model-subtitle {
+    font-size: 30px;
+    color: white;
+    margin-left: 100px;
+  }
+
+  .existing-model-table-container {
+    width: 80%;
+    margin-left: 100px;
+
+    table {
+      width: 100%;
+    }
+
+    .mat-mdc-form-field {
+      font-size: 14px;
+      width: 100%;
+    }
+
+    td, th {
+      width: 25%;
+    }
+  }
+}
