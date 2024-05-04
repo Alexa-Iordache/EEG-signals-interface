@@ -1,6 +1,7 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ConfigurationService } from '../configuration/configuration.service';
 import { Router } from '@angular/router';
+import { RpcService } from '../services/rpc.service';
 
 // RECORDING object
 export interface Recording {
@@ -9,6 +10,8 @@ export interface Recording {
   robot_step: number;
   robot_start: Position;
   robot_finish: Position;
+  configuration_time: number;
+  performance: number;
 }
 
 // OBSTACLE object
@@ -37,11 +40,11 @@ export class TrainModelComponent {
     x: 0,
     y: 0,
   };
-  recordedEvents: Position[] = [];
   initialPostion: Position = {
     x: 0,
     y: 0,
   };
+  recordedEvents: Position[] = [];
 
   // Variable illustrating whether a certain button was clicked on or not.
   trainModelButton = false;
@@ -65,7 +68,8 @@ export class TrainModelComponent {
 
   constructor(
     private configurationService: ConfigurationService,
-    private router: Router
+    private router: Router,
+    private rpcService: RpcService
   ) {}
 
   ngOnInit(): void {
@@ -94,8 +98,7 @@ export class TrainModelComponent {
 
   // Method to start recording the actions
   startRecord(): void {
-    // this.actions =
-    //   '[100, 100, 100, 110, 110, 110, 100, 100, 100, 100, 100, 100, 100, 110, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 000]';
+    // TO DO: take the string from python scrip
     this.actions = '[100, 110, 110, 110, 100, 100, 000]';
     this.processInstructions(this.actions);
 
@@ -113,6 +116,34 @@ export class TrainModelComponent {
     this.stopRecordEnabled = false;
     this.recreateActionsEnabled = true;
     this.tryAgainEnabled = true;
+
+    // ADD NEW RECORDING INTO DATABASE (OBSTACLES + ACTIONS)
+
+    let paramsAddRecording = {
+      width: this.recording?.board_width,
+      height: this.recording?.board_height,
+      step: this.recording?.robot_step,
+      start_x: this.recording?.robot_start.x,
+      start_y: this.recording?.robot_start.y,
+      finish_x: this.recording?.robot_finish.x,
+      finish_y: this.recording?.robot_finish.y,
+      configuration_time: this.recording?.configuration_time,
+      performance: this.recording?.performance,
+      actions: this.actions,
+    };
+
+    this.rpcService.callRPC(
+      'recordings.addRecording',
+      paramsAddRecording,
+      (error: any, recordingId: any) => {
+        if (error) {
+          console.log(error);
+          return;
+        } else {
+          this.addAllObstaclesToDatabase(this.obstacles, recordingId);
+        }
+      }
+    );
   }
 
   // Method to recreate the actions
@@ -220,5 +251,28 @@ export class TrainModelComponent {
     };
     // Add a delay before the first move
     setTimeout(executeNextMove, delay);
+  }
+
+  addAllObstaclesToDatabase(obstacles: Obstacle[], recordingId: string): void {
+    obstacles.forEach((obstacle) => {
+      let paramsAddObstacle = {
+        recordingId: recordingId,
+        width: obstacle.width,
+        height: obstacle.height,
+        xPos: obstacle.pos.x,
+        yPos: obstacle.pos.y,
+      };
+
+      this.rpcService.callRPC(
+        'obstacles.addObstacle',
+        paramsAddObstacle,
+        (error: any, res: any) => {
+          if (error) {
+            console.log(error);
+            return;
+          }
+        }
+      );
+    });
   }
 }

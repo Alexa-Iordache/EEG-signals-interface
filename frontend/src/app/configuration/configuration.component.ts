@@ -13,6 +13,8 @@ export interface Recording {
   robot_step: number;
   robot_start: Position;
   robot_finish: Position;
+  configuration_time: number;
+  performance: number;
 }
 
 // OBSTACLE object
@@ -53,6 +55,8 @@ export class ConfigurationComponent {
       x: 0,
       y: 0,
     },
+    configuration_time: 3,
+    performance: 90,
   };
   currentPosition: Position = {
     x: 0,
@@ -218,7 +222,7 @@ export class ConfigurationComponent {
     const dialogRef = this.dialog.open(DeleteObstacleModalComponent, {
       data: {
         noBtn: this.noBtn,
-        yesBtn: this.yesBtn,
+        yesBtn: this.yesBtn
       },
     });
 
@@ -294,40 +298,6 @@ export class ConfigurationComponent {
     // this.dialog.open(SaveRecrdingModalComponent);
     this.recreateSimulationButton = true;
     this.stopSimulationButton = false;
-
-    // ADD NEW RECORDING INTO DATABASE (OBSTACLES + ACTIONS)
-
-    // let paramsAddRecording = {
-    //   width: this.recording.board_width,
-    //   height: this.recording.board_height,
-    //   step: this.recording.robot_step,
-    //   start_x: this.recording.robot_start.x,
-    //   start_y: this.recording.robot_start.y,
-    //   finish_x: this.recording.robot_finish.x,
-    //   finish_y: this.recording.robot_finish.y,
-    // };
-
-    // this.rpcService.callRPC(
-    //   'recordings.addRecording',
-    //   paramsAddRecording,
-    //   (error: any, recordingId: any) => {
-    //     if (error) {
-    //       console.log(error);
-    //       return;
-    //     } else {
-    //       this.addAllObstaclesToDatabase(this.obstacles, recordingId);
-
-    //       for (let i = 0; i < this.recordedEvents.length; i++) {
-    //         setTimeout(() => {
-    //           this.addAllActionsToDatabase(this.recordedEvents[i], recordingId);
-    //           console.log(
-    //             `Actions added in db: (${this.recordedEvents[i].x}, ${this.recordedEvents[i].y})`
-    //           );
-    //         }, 1000 * i); // Delay each action to visually distinguish them
-    //       }
-    //     }
-    //   }
-    // );
   }
 
   // Method to recreate actions from the last record
@@ -355,50 +325,6 @@ export class ConfigurationComponent {
         }
       }, 1000 * index); // Delay each action to visually distinguish them
     });
-  }
-
-  // Method to add all obstacles with the given recording ID to the database
-  addAllObstaclesToDatabase(obstacles: Obstacle[], recordingId: string): void {
-    obstacles.forEach((obstacle) => {
-      let paramsAddObstacle = {
-        recordingId: recordingId,
-        width: obstacle.width,
-        height: obstacle.height,
-        xPos: obstacle.pos.x,
-        yPos: obstacle.pos.y,
-      };
-
-      this.rpcService.callRPC(
-        'obstacles.addObstacle',
-        paramsAddObstacle,
-        (error: any, res: any) => {
-          if (error) {
-            console.log(error);
-            return;
-          }
-        }
-      );
-    });
-  }
-
-  // Method to add all obstacles with the given recording ID to the database
-  addAllActionsToDatabase(action: Position, recordingId: string): void {
-    let paramsAddObstacle = {
-      recordingId: recordingId,
-      xPos: action.x,
-      yPos: action.y,
-    };
-
-    this.rpcService.callRPC(
-      'actions.addActions',
-      paramsAddObstacle,
-      (error: any, res: any) => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-      }
-    );
   }
 
   // Method to choose the starting position of the robot
@@ -446,6 +372,8 @@ export class ConfigurationComponent {
   // Method that reveal neccessary form-fields to customize recording performance
   configurationSettings(): void {
     this.step = 5;
+    this.recording.configuration_time = parseInt(this.confTime);
+    this.recording.performance = parseInt(this.performance);
   }
 
   // Method that switches page to train-model mode
