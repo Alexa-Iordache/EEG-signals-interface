@@ -290,7 +290,6 @@ export class ConfigurationComponent {
   // Method to stop the record
   stopSimulation(): void {
     this.isRecording = false;
-    // this.dialog.open(SaveRecrdingModalComponent);
     this.recreateSimulationButton = true;
     this.stopSimulationButton = false;
   }
