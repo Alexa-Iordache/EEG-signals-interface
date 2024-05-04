@@ -78,7 +78,6 @@ export class ConfigurationComponent {
   // Variables for recording process
   isRecording = false;
   recordedEvents: Position[] = [];
-  recreatedSimulationDone = false;
 
   // Variable for the last key that was pressed
   lastKeyPressed: string = '';
@@ -86,13 +85,16 @@ export class ConfigurationComponent {
   // Step number for configuration
   step = 0;
 
+  // Variable to control the state of the "Try again" button
+  recreatingSimulation: boolean = false;
+
   // Variables to illustrate which buttons have been clicked on
   chooseStartingPointActive = false;
   chooseFinishPointActive = false;
   recreateSimulationButton = false;
-  clickedRecreateSimulationButton = false;
   startSimulationButton = false;
   stopSimulationButton = false;
+  tryAgainButton = false;
   handleFinishPointClickButton = false;
 
   constructor(
@@ -107,11 +109,6 @@ export class ConfigurationComponent {
   }
 
   ngOnInit(): void {
-    this.recreateSimulationButton = false;
-    this.startSimulationButton = false;
-    this.stopSimulationButton = false;
-    this.clickedRecreateSimulationButton = false;
-
     // Data will not be lost while switching pages
     this.recording = this.configurationService.getRecording() || this.recording;
     this.obstacles = this.configurationService.getObstacles();
@@ -212,6 +209,7 @@ export class ConfigurationComponent {
 
     // Update state for 'step' buttons
     this.step = 0;
+    this.resetButtonStates();
   }
 
   // Method to handle obstacle click event
@@ -284,7 +282,6 @@ export class ConfigurationComponent {
     this.recordedEvents = [];
     this.startSimulationButton = true;
     this.stopSimulationButton = true;
-    this.recreatedSimulationDone = false;
   }
 
   // Method to stop the record
@@ -292,33 +289,36 @@ export class ConfigurationComponent {
     this.isRecording = false;
     this.recreateSimulationButton = true;
     this.stopSimulationButton = false;
+    this.tryAgainButton = true;
   }
 
   // Method to recreate actions from the last record
   recreateSimulation(): void {
-    this.clickedRecreateSimulationButton = true;
+    this.recreateSimulationButton = true;
+    this.recreatingSimulation = true;
     // Reset to initial conditions or a specific start point
     this.currentPosition.x = this.recording.robot_start.x;
     this.currentPosition.y = this.recording.robot_start.y;
 
-    this.recordedEvents.forEach((event, index) => {
-      setTimeout(() => {
-        if (event.hasOwnProperty('x') && event.hasOwnProperty('y')) {
-          const xPos = event.x;
-          const yPos = event.y;
-          console.log(`Moved to (${xPos}, ${yPos})`);
+    // Add a delay before the first action
+    setTimeout(() => {
+      this.recordedEvents.forEach((event, index) => {
+        setTimeout(() => {
+          if (event.hasOwnProperty('x') && event.hasOwnProperty('y')) {
+            const xPos = event.x;
+            const yPos = event.y;
+            console.log(`Moved to (${xPos}, ${yPos})`);
 
-          this.currentPosition.x = xPos;
-          this.currentPosition.y = yPos;
+            this.currentPosition.x = xPos;
+            this.currentPosition.y = yPos;
 
-          if (index === this.recordedEvents.length - 1) {
-            this.recreatedSimulationDone = true;
+            if (index === this.recordedEvents.length - 1) this.recreatingSimulation = false;
+          } else {
+            console.log(event);
           }
-        } else {
-          console.log(event);
-        }
-      }, 1000 * index); // Delay each action to visually distinguish them
-    });
+        }, 1000 * index); // Delay each action to visually distinguish them
+      });
+    }, 1000); // Delay before the first action
   }
 
   // Method to choose the starting position of the robot
@@ -359,8 +359,12 @@ export class ConfigurationComponent {
     this.currentPosition.x = this.recording.robot_start.x;
     this.currentPosition.y = this.recording.robot_start.y;
     this.obstacles = [];
+    this.lastKeyPressed = '';
+
+    // Reset buttons state
     this.stopSimulationButton = false;
     this.recreateSimulationButton = false;
+    this.tryAgainButton = false;
   }
 
   // Method that reveal neccessary form-fields to customize recording performance
@@ -378,5 +382,13 @@ export class ConfigurationComponent {
       this.chooseFinishPointActive
     );
     this.router.navigate(['/train-model']);
+  }
+
+   // Method to reset the state for all buttons
+   resetButtonStates(): void {
+    this.startSimulationButton = false;
+    this.stopSimulationButton = false;
+    this.recreateSimulationButton = false;
+    this.tryAgainButton = false;
   }
 }
