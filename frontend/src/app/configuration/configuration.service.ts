@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Recording, Obstacle } from './configuration.component';
+import { Obstacle, Recording } from '../reusable-components/interfaces';
 
 @Injectable({
   providedIn: 'root',

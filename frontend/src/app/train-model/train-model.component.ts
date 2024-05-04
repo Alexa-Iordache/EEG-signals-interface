@@ -4,32 +4,11 @@ import { Router } from '@angular/router';
 import { RpcService } from '../services/rpc.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SaveRecordingModalComponent } from '../modals/save-recording-modal/save-recording-modal.component';
-
-// RECORDING object
-export interface Recording {
-  board_width: number;
-  board_height: number;
-  robot_step: number;
-  robot_start: Position;
-  robot_finish: Position;
-  configuration_time: number;
-  performance: number;
-  room_name: string;
-  description: string;
-}
-
-// OBSTACLE object
-export interface Obstacle {
-  width: number;
-  height: number;
-  pos: Position;
-}
-
-// POSITION object
-export interface Position {
-  x: number;
-  y: number;
-}
+import {
+  Recording,
+  Obstacle,
+  Position,
+} from '../reusable-components/interfaces';
 
 @Component({
   selector: 'app-train-model',

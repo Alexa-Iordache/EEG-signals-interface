@@ -5,37 +5,11 @@ import { DeleteObstacleModalComponent } from '../modals/delete-obstacle-modal/de
 import { HttpClient } from '@angular/common/http';
 import { ConfigurationService } from './configuration.service';
 import { Router } from '@angular/router';
-
-// RECORDING object
-export interface Recording {
-  board_width: number;
-  board_height: number;
-  robot_step: number;
-  robot_start: Position;
-  robot_finish: Position;
-  configuration_time: number;
-  performance: number;
-  room_name: string;
-  description: string;
-}
-
-// OBSTACLE object
-export interface Obstacle {
-  width: number;
-  height: number;
-  pos: Position;
-}
-
-// ACTION object
-export interface Action {
-  newPosition: Position;
-}
-
-// POSITION object
-export interface Position {
-  x: number;
-  y: number;
-}
+import {
+  Obstacle,
+  Position,
+  Recording,
+} from '../reusable-components/interfaces';
 
 @Component({
   selector: 'app-configuration',
@@ -314,7 +288,8 @@ export class ConfigurationComponent {
             this.currentPosition.x = xPos;
             this.currentPosition.y = yPos;
 
-            if (index === this.recordedEvents.length - 1) this.recreatingSimulation = false;
+            if (index === this.recordedEvents.length - 1)
+              this.recreatingSimulation = false;
           } else {
             console.log(event);
           }
@@ -386,8 +361,8 @@ export class ConfigurationComponent {
     this.router.navigate(['/train-model']);
   }
 
-   // Method to reset the state for all buttons
-   resetButtonStates(): void {
+  // Method to reset the state for all buttons
+  resetButtonStates(): void {
     this.startSimulationButton = false;
     this.stopSimulationButton = false;
     this.recreateSimulationButton = false;

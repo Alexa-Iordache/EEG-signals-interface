@@ -1,11 +1,11 @@
 const mysql = require("../mysql");
 
 let obstacles = {
-  // getObstacles(req, res, next) {
-  //   mysql.query(`SELECT * FROM Obstacles;`, (error, result) => {
-  //     res.json({ id: 1, error: null, result: result });
-  //   });
-  // },
+  getObstacles(req, res, next) {
+    mysql.query(`SELECT * FROM Obstacles;`, (error, result) => {
+      res.json({ id: 1, error: null, result: result });
+    });
+  },
 
   addObstacle(req, res, next) {
     let recordingId = req.body.params.recordingId;

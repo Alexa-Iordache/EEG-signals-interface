@@ -2,58 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
-export interface rowData {
-  name: string;
-  description: string;
-}
-
-const rows: rowData[] = [
-  {
-    name: 'Maia',
-    description: 'description1',
-  },
-  {
-    name: 'Asher',
-    description: 'description1',
-  },
-  {
-    name: 'Olivia',
-    description: 'description1',
-  },
-  {
-    name: 'Atticus',
-    description: 'description1',
-  },
-  {
-    name: 'Amelia',
-    description: 'description1',
-  },
-  {
-    name: 'Jack',
-    description: 'description1',
-  },
-  {
-    name: 'Charlotte',
-    description: 'description1',
-  },
-  {
-    name: 'Theodore',
-    description: 'description1',
-  },
-  {
-    name: 'Isla',
-    description: 'description1',
-  },
-  {
-    name: 'Oliver',
-    description: 'description1',
-  },
-  {
-    name: 'Oliver',
-    description: 'description1',
-  },
-];
+import { RpcService } from '../services/rpc.service';
+import {
+  Obstacle,
+  Recording,
+  rowData,
+} from '../reusable-components/interfaces';
 
 @Component({
   selector: 'app-existing-model',
@@ -61,34 +15,85 @@ const rows: rowData[] = [
   styleUrls: ['./existing-model.component.scss'],
 })
 export class ExistingModelComponent {
-  displayedColumns: string[] = ['id', 'name', 'description'];
+  displayedColumns: string[] = ['name', 'description'];
   dataSource: MatTableDataSource<any>;
+  obstaclesInfo: Obstacle[] = [];
+  recordingsInfo: Recording[] = [];
+  displayedInfo: rowData[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
-  constructor() {
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(
-      rows.map((row, index) => ({
-        id: index + 1,
-        name: row.name,
-        description: row.description,
-      }))
-    );
+  constructor(private rpcService: RpcService) {
+    this.dataSource = new MatTableDataSource();
   }
 
-  ngAfterViewInit() {
+  ngOnInit(): void {
+    // this.getObstaclesFromDB();
+    this.getRecordingsFromDB();
+  }
+
+  ngAfterViewInit(): void {
     if (this.paginator) this.dataSource.paginator = this.paginator;
     if (this.sort) this.dataSource.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
+  // Method to apply filter
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  // Method to get all the obstacles from database
+  getObstaclesFromDB(): void {
+    let params = {
+      username: 'admin',
+    };
+
+    this.rpcService.callRPC(
+      'obstacles.getObstacles',
+      params,
+      (err: any, res: any) => {
+        if (err || res.error) {
+          console.log('nu s au putut afisa obstacolele');
+          return;
+        }
+        this.obstaclesInfo = res.result;
+        console.log(this.obstaclesInfo);
+      }
+    );
+  }
+
+  // Method to get all the recordings from database
+  getRecordingsFromDB(): void {
+    let params = {
+      username: 'admin',
+    };
+
+    this.rpcService.callRPC(
+      'recordings.getRecordings',
+      params,
+      (err: any, res: any) => {
+        if (err || res.error) {
+          console.log('nu s au putut afisa inregistrarile');
+          return;
+        }
+        this.recordingsInfo = res.result;
+        this.recordingsInfo.forEach((recording) => {
+          this.displayedInfo.push({
+            name: recording.room_name,
+            description: recording.description,
+          });
+        });
+        this.dataSource = new MatTableDataSource(this.displayedInfo);
+
+        if (this.paginator) this.dataSource.paginator = this.paginator;
+        if (this.sort) this.dataSource.sort = this.sort;
+      }
+    );
   }
 }
