@@ -14,6 +14,7 @@ export interface Recording {
   robot_finish: Position;
   configuration_time: number;
   performance: number;
+  room_name: string;
   description: string;
 }
 
@@ -125,7 +126,10 @@ export class TrainModelComponent {
 
       if (result.saved === true) {
         // ADD NEW RECORDING INTO DATABASE (OBSTACLES + ACTIONS)
-        if (this.recording) this.recording.description = result.description;
+        if (this.recording) {
+          this.recording.room_name = result.roomName;
+          this.recording.description = result.description;
+        }
         this.addRecordingToDatabase();
         console.log('RECORDING: ', this.recording);
         console.log('OBSTACLES: ', this.obstacles);
@@ -152,7 +156,11 @@ export class TrainModelComponent {
     this.currentPosition.x = this.initialPostion.x;
     this.currentPosition.y = this.initialPostion.y;
     this.currentDirectionIndex = 0;
+
+    // Reset buttons state
     this.startRecordEnabled = true;
+    this.tryAgainEnabled = false;
+    this.recreateActionsEnabled = false;
   }
 
   // Method to reset the state for all buttons
@@ -258,6 +266,7 @@ export class TrainModelComponent {
       performance: this.recording?.performance,
       actions: this.actions,
       description: this.recording?.description,
+      room_name: this.recording?.room_name,
     };
 
     this.rpcService.callRPC(

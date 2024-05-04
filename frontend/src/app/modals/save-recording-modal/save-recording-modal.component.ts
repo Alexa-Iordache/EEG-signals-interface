@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 export interface SaveRecordingDialogData {
   saved: boolean;
+  roomName: string;
   description: string;
 }
 
@@ -18,10 +19,12 @@ export class SaveRecordingModalComponent {
 
   // The text from input field
   descriptionText = '';
+  roomNameText = '';
 
   // The object that is sent to train-model dashboard
   dataSent: SaveRecordingDialogData = {
     saved: false,
+    roomName: '',
     description: '',
   };
 
@@ -31,12 +34,14 @@ export class SaveRecordingModalComponent {
   onNoClick(): void {
     this.dataSent.saved = false;
     this.dialogRef.close(this.dataSent);
+    console.log(this.roomNameText);
   }
 
   // Method for 'save' case
   onYesClick(): void {
     this.dataSent.saved = true;
     this.dataSent.description = this.descriptionText;
+    this.dataSent.roomName = this.roomNameText;
     this.dialogRef.close(this.dataSent);
   }
 }

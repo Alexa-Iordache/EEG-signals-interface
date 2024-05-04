@@ -13,13 +13,14 @@ let recordings = {
     let performance = req.body.params.performance;
     let actions = req.body.params.actions;
     let description = req.body.params.description;
+    let room_name = req.body.params.room_name;
 
     mysql.query(
       `INSERT INTO Recordings (board_width, board_height, robot_step, robot_start_x, robot_start_y, 
-        robot_finish_x, robot_finish_y, configuration_time, performance, actions, description) 
+        robot_finish_x, robot_finish_y, configuration_time, performance, actions, description, room_name) 
         VALUES ('${width}', '${height}', '${step}', '${start_x}',
         '${start_y}', '${finish_x}', '${finish_y}', '${configuration_time}', '${performance}', 
-        '${actions}', '${description}');`,
+        '${actions}', '${description}', '${room_name}');`,
       (error, result) => {
         if (error) {
           throw err;

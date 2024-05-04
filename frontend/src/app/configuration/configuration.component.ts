@@ -15,6 +15,7 @@ export interface Recording {
   robot_finish: Position;
   configuration_time: number;
   performance: number;
+  room_name: string;
   description: string;
 }
 
@@ -58,6 +59,7 @@ export class ConfigurationComponent {
     },
     configuration_time: 3,
     performance: 90,
+    room_name: '',
     description: '',
   };
   currentPosition: Position = {
