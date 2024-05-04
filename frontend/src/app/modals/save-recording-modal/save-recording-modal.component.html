@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Save recording</h1>
+<!-- <div mat-dialog-content>Do you want to save this recording?</div> -->
+<div mat-dialog-content class="save-recording-modal-content">
+  Give a description for this board:
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <input
+      matInput
+      type="text"
+      [(ngModel)]="descriptionText"
+      name="descriptionText"
+    />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close mcdkFocusInitial (click)="onNoClick()">
+    Don't save
+  </button>
+  <button
+    mat-button
+    mat-dialog-close
+    [disabled]="descriptionText === ''"
+    (click)="onYesClick()"
+  >
+    Save
+  </button>
+</div>

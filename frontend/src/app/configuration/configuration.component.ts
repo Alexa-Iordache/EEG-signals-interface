@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { RpcService } from '../services/rpc.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteObstacleModalComponent } from '../delete-obstacle-modal/delete-obstacle-modal.component';
+import { DeleteObstacleModalComponent } from '../modals/delete-obstacle-modal/delete-obstacle-modal.component';
 import { HttpClient } from '@angular/common/http';
 import { ConfigurationService } from './configuration.service';
 import { Router } from '@angular/router';
@@ -15,6 +15,7 @@ export interface Recording {
   robot_finish: Position;
   configuration_time: number;
   performance: number;
+  description: string;
 }
 
 // OBSTACLE object
@@ -57,6 +58,7 @@ export class ConfigurationComponent {
     },
     configuration_time: 3,
     performance: 90,
+    description: '',
   };
   currentPosition: Position = {
     x: 0,
@@ -64,14 +66,10 @@ export class ConfigurationComponent {
   };
 
   // Variables from form-fields inputs
-  obstacleWidth = '20';
+  obstacleWidth = '70';
   obstacleHeight = '30';
   confTime = '3'; // 3 seconds between recording 2 sequences
   performance = '80'; // 80% performance
-
-  // Variables from delete-obstacle modal
-  yesBtn = '';
-  noBtn = '';
 
   // Variables for delete confirmation popup
   showDeleteConfirmation = false;
@@ -204,11 +202,13 @@ export class ConfigurationComponent {
     step: number
   ) {
     // Update values from input fields
-    this.recording.board_width = boardWidth;
-    this.recording.board_height = boardHeight;
+    if (typeof boardWidth === 'string')
+      this.recording.board_width = parseInt(boardWidth);
+    if (typeof boardHeight === 'string')
+      this.recording.board_height = parseInt(boardHeight);
     this.obstacleWidth = obstacleWidth;
     this.obstacleHeight = obstacleHeight;
-    this.recording.robot_step = step;
+    if (typeof step === 'string') this.recording.robot_step = parseInt(step);
 
     // Update state for 'step' buttons
     this.step = 0;
@@ -219,12 +219,7 @@ export class ConfigurationComponent {
     event.stopPropagation();
     this.obstacleToDelete = obstacle;
 
-    const dialogRef = this.dialog.open(DeleteObstacleModalComponent, {
-      data: {
-        noBtn: this.noBtn,
-        yesBtn: this.yesBtn
-      },
-    });
+    const dialogRef = this.dialog.open(DeleteObstacleModalComponent);
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (!result) {

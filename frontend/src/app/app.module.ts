@@ -19,11 +19,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
-import { DeleteObstacleModalComponent } from './delete-obstacle-modal/delete-obstacle-modal.component';
+import { DeleteObstacleModalComponent } from './modals/delete-obstacle-modal/delete-obstacle-modal.component';
 import { SaveRecrdingModalComponent } from './stop-recording-modal/stop-recording-modal.component';
 import { TrainModelComponent } from './train-model/train-model.component';
 import { DirectionComponent } from './reusable-components/direction/direction.component';
 import { StepMessagesComponent } from './reusable-components/step-messages/step-messages.component';
+import { SaveRecordingModalComponent } from './modals/save-recording-modal/save-recording-modal.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { StepMessagesComponent } from './reusable-components/step-messages/step-
     SaveRecrdingModalComponent,
     TrainModelComponent,
     DirectionComponent,
-    StepMessagesComponent
+    StepMessagesComponent,
+    SaveRecordingModalComponent
   ],
   imports: [
     BrowserModule,

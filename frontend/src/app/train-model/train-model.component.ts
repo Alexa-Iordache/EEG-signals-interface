@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ConfigurationService } from '../configuration/configuration.service';
 import { Router } from '@angular/router';
 import { RpcService } from '../services/rpc.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SaveRecordingModalComponent } from '../modals/save-recording-modal/save-recording-modal.component';
 
 // RECORDING object
 export interface Recording {
@@ -12,6 +14,7 @@ export interface Recording {
   robot_finish: Position;
   configuration_time: number;
   performance: number;
+  description: string;
 }
 
 // OBSTACLE object
@@ -44,7 +47,6 @@ export class TrainModelComponent {
     x: 0,
     y: 0,
   };
-  recordedEvents: Position[] = [];
 
   // Variable illustrating whether a certain button was clicked on or not.
   trainModelButton = false;
@@ -69,7 +71,8 @@ export class TrainModelComponent {
   constructor(
     private configurationService: ConfigurationService,
     private router: Router,
-    private rpcService: RpcService
+    private rpcService: RpcService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -99,51 +102,38 @@ export class TrainModelComponent {
   // Method to start recording the actions
   startRecord(): void {
     // TO DO: take the string from python scrip
-    this.actions = '[100, 110, 110, 110, 100, 100, 000]';
+    // this.actions = '[100, 110, 110, 110, 100, 100, 000]';
+    this.actions = '[100, 100, 000]';
     this.processInstructions(this.actions);
 
     this.startRecordEnabled = false;
-    this.stopRecordEnabled = true;
   }
 
   // Method to stop the recording and add the neccessary information into database
   stopRecord(): void {
-    // TO DO: save into database
-    console.log('RECORDING: ', this.recording);
-    console.log('OBSTACLES: ', this.obstacles);
-    console.log('ACTIONS: ', this.actions);
-
     this.stopRecordEnabled = false;
     this.recreateActionsEnabled = true;
     this.tryAgainEnabled = true;
 
-    // ADD NEW RECORDING INTO DATABASE (OBSTACLES + ACTIONS)
+    const dialogRef = this.dialog.open(SaveRecordingModalComponent);
 
-    let paramsAddRecording = {
-      width: this.recording?.board_width,
-      height: this.recording?.board_height,
-      step: this.recording?.robot_step,
-      start_x: this.recording?.robot_start.x,
-      start_y: this.recording?.robot_start.y,
-      finish_x: this.recording?.robot_finish.x,
-      finish_y: this.recording?.robot_finish.y,
-      configuration_time: this.recording?.configuration_time,
-      performance: this.recording?.performance,
-      actions: this.actions,
-    };
-
-    this.rpcService.callRPC(
-      'recordings.addRecording',
-      paramsAddRecording,
-      (error: any, recordingId: any) => {
-        if (error) {
-          console.log(error);
-          return;
-        } else {
-          this.addAllObstaclesToDatabase(this.obstacles, recordingId);
-        }
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (!result) {
+        console.log('nothing');
+        return;
       }
-    );
+
+      if (result.saved === true) {
+        // ADD NEW RECORDING INTO DATABASE (OBSTACLES + ACTIONS)
+        if (this.recording) this.recording.description = result.description;
+        this.addRecordingToDatabase();
+        console.log('RECORDING: ', this.recording);
+        console.log('OBSTACLES: ', this.obstacles);
+        console.log('ACTIONS: ', this.actions);
+      } else {
+        console.log('record was not saved');
+      }
+    });
   }
 
   // Method to recreate the actions
@@ -180,7 +170,7 @@ export class TrainModelComponent {
 
   // Method to move forward when '100' appears in the sequence
   moveForward() {
-    const step = this.recording?.robot_step || 50;
+    const step = this.recording!.robot_step || 50;
     const currentDirection = this.directions[this.currentDirectionIndex];
 
     switch (currentDirection) {
@@ -233,6 +223,7 @@ export class TrainModelComponent {
         case '000':
           console.log('Array is done');
           this.recreatingActions = false;
+          this.stopRecordEnabled = true;
           break;
         default:
           console.log('Invalid instruction');
@@ -253,6 +244,37 @@ export class TrainModelComponent {
     setTimeout(executeNextMove, delay);
   }
 
+  // Method to add a new recording to database (+ obstacles + actions)
+  addRecordingToDatabase(): void {
+    let paramsAddRecording = {
+      width: this.recording?.board_width,
+      height: this.recording?.board_height,
+      step: this.recording?.robot_step,
+      start_x: this.recording?.robot_start.x,
+      start_y: this.recording?.robot_start.y,
+      finish_x: this.recording?.robot_finish.x,
+      finish_y: this.recording?.robot_finish.y,
+      configuration_time: this.recording?.configuration_time,
+      performance: this.recording?.performance,
+      actions: this.actions,
+      description: this.recording?.description,
+    };
+
+    this.rpcService.callRPC(
+      'recordings.addRecording',
+      paramsAddRecording,
+      (error: any, recordingId: any) => {
+        if (error) {
+          console.log(error);
+          return;
+        } else {
+          this.addAllObstaclesToDatabase(this.obstacles, recordingId);
+        }
+      }
+    );
+  }
+
+  // Methos to add all obstacles to the database
   addAllObstaclesToDatabase(obstacles: Obstacle[], recordingId: string): void {
     obstacles.forEach((obstacle) => {
       let paramsAddObstacle = {
