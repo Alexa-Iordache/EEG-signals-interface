@@ -51,6 +51,9 @@ export class TrainModelComponent {
   recreateActionsEnabled = false;
   tryAgainEnabled = false;
 
+  // Variable to control the state of the "Try again" button
+  recreatingActions: boolean = false;
+
   // Array with the possible directions
   directions: string[] = ['right', 'down', 'left', 'up'];
 
@@ -120,6 +123,7 @@ export class TrainModelComponent {
     this.processInstructions(this.actions);
 
     this.recreateActionsEnabled = false;
+    this.recreatingActions = true;
   }
 
   // Method to re-initialise the board
@@ -127,12 +131,7 @@ export class TrainModelComponent {
     this.currentPosition.x = this.initialPostion.x;
     this.currentPosition.y = this.initialPostion.y;
     this.currentDirectionIndex = 0;
-    console.log(this.currentPosition, this.currentDirectionIndex);
-
-    this.tryAgainEnabled = false;
     this.startRecordEnabled = true;
-    this.stopRecordEnabled = false;
-    this.recreateActionsEnabled = false;
   }
 
   // Method to reset the state for all buttons
@@ -192,7 +191,6 @@ export class TrainModelComponent {
 
     let currentIndex = 0;
     const executeNextMove = () => {
-
       const pair = pairs[currentIndex];
       switch (pair) {
         case '100':
@@ -203,6 +201,7 @@ export class TrainModelComponent {
           break;
         case '000':
           console.log('Array is done');
+          this.recreatingActions = false;
           break;
         default:
           console.log('Invalid instruction');
@@ -211,7 +210,12 @@ export class TrainModelComponent {
 
       currentIndex++;
       if (currentIndex < pairs.length) {
-        setTimeout(executeNextMove, delay);
+        // Not using delay when the action is to rotate the robot
+        if (pairs[currentIndex] === '110') {
+          executeNextMove();
+        } else {
+          setTimeout(executeNextMove, delay);
+        }
       }
     };
     // Add a delay before the first move

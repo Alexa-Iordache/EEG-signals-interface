@@ -4,7 +4,7 @@
   <div class="train-model-page_content">
     <div class="train-model-page_left-content">
       <app-direction
-        [recreateActionsButton]="recreateActionsEnabled"
+        [recreateActionsButton]="recreatingActions"
         [lastKeyPressed]="lastDirection"
       ></app-direction>
       <div class="board-container">
@@ -69,7 +69,7 @@
         <button
           mat-raised-button
           class="train-model_button"
-          [disabled]="!tryAgainEnabled"
+          [disabled]="!tryAgainEnabled || recreatingActions"
           (click)="tryAgain()"
         >
           Try again
