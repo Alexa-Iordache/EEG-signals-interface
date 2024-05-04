@@ -1,7 +1,13 @@
 <div class="existing-model-page">
   <div class="existing-model-title">Use a model you created before</div>
-  <div class="existing-model-subtitle">Choose your model:</div>
-  <div class="existing-model-table-container">
+  <div *ngIf="!selectButtonClicked" class="existing-model-subtitle">
+    Choose your model:
+  </div>
+  <div *ngIf="selectButtonClicked" class="existing-model-subtitle">
+    Recording:
+    {{ displayedRecording?.room_name ? displayedRecording?.room_name : "-" }}
+  </div>
+  <div *ngIf="!selectButtonClicked" class="existing-model-table-container">
     <mat-form-field>
       <mat-label>Filter</mat-label>
       <input
@@ -36,6 +42,20 @@
           </td>
         </ng-container>
 
+        <!-- Action description Column -->
+        <ng-container matColumnDef="button">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let recording">
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="buttonClicked(recording)"
+            >
+              Select model
+            </button>
+          </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
@@ -51,6 +71,51 @@
         [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page of users"
       ></mat-paginator>
+    </div>
+  </div>
+
+  <div class="board-container">
+    <div *ngIf="selectButtonClicked" class="board">
+      <div
+        class="board"
+        tabindex="0"
+        [style.width.px]="displayedRecording?.board_width"
+        [style.height.px]="displayedRecording?.board_height"
+      >
+        <div
+          class="robot"
+          [style.left.px]="displayedRecording?.robot_start_x"
+          [style.top.px]="displayedRecording?.robot_start_y"
+        ></div>
+        <div
+          *ngIf="
+            displayedRecording?.robot_finish_x !== 0 &&
+            displayedRecording?.robot_finish_y !== 0
+          "
+          class="finish-point"
+          [style.left.px]="displayedRecording?.robot_finish_x"
+          [style.top.px]="displayedRecording?.robot_finish_y"
+        ></div>
+        <div
+          *ngFor="let obstacle of displayedObstacles"
+          class="obstacle"
+          [style.left.px]="obstacle?.obstacle_x"
+          [style.top.px]="obstacle?.obstacle_y"
+          [style.width.px]="obstacle?.obstacle_width"
+          [style.height.px]="obstacle?.obstacle_height"
+        ></div>
+      </div>
+    </div>
+
+    <div class="buttons-container">
+      <button
+        *ngIf="selectButtonClicked"
+        mat-raised-button
+        class="train-model_button"
+        (click)="startModel()"
+      >
+        Start model
+      </button>
     </div>
   </div>
 </div>

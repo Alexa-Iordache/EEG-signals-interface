@@ -31,6 +31,7 @@ export interface Position {
 
 // object to be displayed in the table
 export interface rowData {
+  recordingID: number;
   name: string;
   description: string;
 }

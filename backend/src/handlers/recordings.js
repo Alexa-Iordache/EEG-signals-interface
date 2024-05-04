@@ -38,6 +38,27 @@ let recordings = {
       }
     );
   },
+
+  getOneRecording(req, res, next) {
+    let recordingID = req.body.params.recordingID;
+    
+    mysql.query(
+      `SELECT * FROM Recordings WHERE id = '${recordingID}';`,
+      (error, result) => {
+        if (error) {
+          throw err;
+        }
+        if (result.length == 0) {
+          res.json({
+            id: 1,
+            error: "does not exist any recordings",
+            result: null,
+          });
+        }
+        res.json({ id: 1, error: null, result: result });
+      }
+    );
+  },
 };
 
 module.exports = recordings;

@@ -15,11 +15,23 @@ import {
   styleUrls: ['./existing-model.component.scss'],
 })
 export class ExistingModelComponent {
-  displayedColumns: string[] = ['name', 'description'];
+  // Columns to be displayed
+  displayedColumns: string[] = ['name', 'description', 'button'];
+
+  // Data for table
   dataSource: MatTableDataSource<any>;
+  displayedInfo: rowData[] = [];
+
+  // Recordings and obstacles info from database
   obstaclesInfo: Obstacle[] = [];
   recordingsInfo: Recording[] = [];
-  displayedInfo: rowData[] = [];
+
+  // Info about a recording displayed after clickin on button
+  displayedRecording: any;
+  displayedObstacles: any;
+
+  // Variable illustrating if one select button from table was clicked on
+  selectButtonClicked = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
@@ -30,7 +42,7 @@ export class ExistingModelComponent {
 
   ngOnInit(): void {
     // this.getObstaclesFromDB();
-    this.getRecordingsFromDB();
+    this.getAllRecordingsFromDB();
   }
 
   ngAfterViewInit(): void {
@@ -69,7 +81,7 @@ export class ExistingModelComponent {
   }
 
   // Method to get all the recordings from database
-  getRecordingsFromDB(): void {
+  getAllRecordingsFromDB(): void {
     let params = {
       username: 'admin',
     };
@@ -83,8 +95,9 @@ export class ExistingModelComponent {
           return;
         }
         this.recordingsInfo = res.result;
-        this.recordingsInfo.forEach((recording) => {
+        res.result.forEach((recording: any) => {
           this.displayedInfo.push({
+            recordingID: recording.id,
             name: recording.room_name,
             description: recording.description,
           });
@@ -95,5 +108,43 @@ export class ExistingModelComponent {
         if (this.sort) this.dataSource.sort = this.sort;
       }
     );
+  }
+
+  // One select button is clicked on
+  buttonClicked(recording: any): void {
+    this.selectButtonClicked = true;
+    let params = {
+      recordingID: recording.recordingID,
+    };
+    this.rpcService.callRPC(
+      'recordings.getOneRecording',
+      params,
+      (error: any, res: any) => {
+        if (error) {
+          console.log('nu s a putut afisa inregistrarea');
+          return;
+        }
+        this.displayedRecording = res.result[0];
+        console.log(this.displayedRecording);
+      }
+    );
+
+    this.rpcService.callRPC(
+      'obstacles.getObstaclesForOneRecording',
+      params,
+      (error: any, res: any) => {
+        if (error) {
+          console.log('nu s au putut afisa obstacolele');
+          return;
+        }
+        this.displayedObstacles = res.result;
+        console.log(this.displayedObstacles);
+      }
+    );
+  }
+
+  // Method to recreat the actions for the selected recording
+  startModel(): void {
+    console.log('start model button waas clicked');
   }
 }

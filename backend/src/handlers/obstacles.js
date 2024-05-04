@@ -25,22 +25,24 @@ let obstacles = {
     );
   },
 
-  // deleteObstacle(req, res, next) {
-  //   let width = req.body.params.width;
-  //   let height = req.body.params.height;
-  //   let xPos = req.body.params.xPos;
-  //   let yPos = req.body.params.yPos;
+  getObstaclesForOneRecording(req, res, next) {
+    let recordingID = req.body.params.recordingID;
 
-  //   mysql.query(
-  //     `DELETE FROM Obstacles WHERE (obstacle_width = '${width}' and obstacle_height = '${height}' and
-  //       obstacle_x = '${xPos}' and obstacle_y = '${yPos}');`,
-  //     (err, result) => {
-  //       if (err) {
-  //         throw err;
-  //       }
-  //     }
-  //   );
-  // },
+    mysql.query(
+      `SELECT * FROM Obstacles WHERE recording_id = '${recordingID}';`,
+
+      (error, result) => {
+        if (result.length == 0) {
+          res.json({
+            id: 1,
+            error: "does not exist any obstacles for this recording",
+            result: null,
+          });
+        }
+        res.json({ id: 1, error: null, result: result });
+      }
+    );
+  }
 };
 
 module.exports = obstacles;
