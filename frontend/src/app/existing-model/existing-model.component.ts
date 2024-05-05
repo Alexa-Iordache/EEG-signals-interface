@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { RpcService } from '../services/rpc.service';
 import {
   Obstacle,
+  Position,
   Recording,
   rowData,
 } from '../reusable-components/interfaces';
@@ -32,6 +33,27 @@ export class ExistingModelComponent {
 
   // Variable illustrating if one select button from table was clicked on
   selectButtonClicked = false;
+
+  // Array with the possible directions
+  directions: string[] = ['right', 'down', 'left', 'up'];
+
+  // Variable for the current direction. Initial direction: right
+  currentDirectionIndex: number = 0;
+
+  // Variable for the last direction to be displayed.
+  lastDirection: string = '';
+
+  // Current position for robot
+  currentPosition: Position = {
+    x: 0,
+    y: 0,
+  };
+
+  // Variable to control the state of the "Try again" button
+  recreatingActions: boolean = false;
+
+  // Variable to track if the model is paused
+  // isModelPaused: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
@@ -125,6 +147,8 @@ export class ExistingModelComponent {
           return;
         }
         this.displayedRecording = res.result[0];
+        this.currentPosition.x = this.displayedRecording.robot_start_x;
+        this.currentPosition.y = this.displayedRecording.robot_start_y;
         console.log(this.displayedRecording);
       }
     );
@@ -146,5 +170,107 @@ export class ExistingModelComponent {
   // Method to recreat the actions for the selected recording
   startModel(): void {
     console.log('start model button waas clicked');
+    this.currentPosition.x = this.displayedRecording.robot_start_x;
+    this.currentPosition.y = this.displayedRecording.robot_start_y;
+    this.currentDirectionIndex = 0;
+    this.processInstructions(this.displayedRecording.actions);
+    this.recreatingActions = true;
   }
+
+  // Method to move forward when '100' appears in the sequence
+  moveForward() {
+    const step = this.displayedRecording.robot_step || 50;
+    const currentDirection = this.directions[this.currentDirectionIndex];
+
+    switch (currentDirection) {
+      case 'right':
+        this.currentPosition.x += step;
+        this.lastDirection = 'ArrowRight';
+        break;
+      case 'down':
+        this.currentPosition.y += step;
+        this.lastDirection = 'ArrowDown';
+        break;
+      case 'left':
+        this.currentPosition.x -= step;
+        this.lastDirection = 'ArrowLeft';
+        break;
+      case 'up':
+        this.currentPosition.y -= step;
+        this.lastDirection = 'ArrowUp';
+        break;
+    }
+  }
+
+  // Method to rotate with 90 degrees when '110' appears in the sequence
+  rotateLeft() {
+    this.currentDirectionIndex--;
+    if (this.currentDirectionIndex < 0) {
+      this.currentDirectionIndex = this.directions.length - 1;
+    }
+  }
+
+  // Method to process the instructions from the array
+  processInstructions(instructions: string) {
+    // Stop execution if the model is paused
+    // if (this.isModelPaused) return;
+
+    // Separeta each pair of 3 digitals
+    const pairs = instructions.match(/\d{3}/g);
+    if (!pairs) return;
+
+    // Delay time (in milliseconds) between each move
+    const delay = 1000;
+
+    let currentIndex = 0;
+    const executeNextMove = () => {
+      const pair = pairs[currentIndex];
+      switch (pair) {
+        case '100':
+          this.moveForward();
+          break;
+        case '110':
+          this.rotateLeft();
+          break;
+        case '000':
+          console.log('Array is done');
+          this.recreatingActions = false;
+          break;
+        default:
+          console.log('Invalid instruction');
+          break;
+      }
+
+      currentIndex++;
+      if (currentIndex < pairs.length) {
+        // Not using delay when the action is to rotate the robot
+        if (pairs[currentIndex] === '110') {
+          executeNextMove();
+        } else {
+          setTimeout(executeNextMove, delay);
+        }
+      }
+    };
+    // Add a delay before the first move
+    setTimeout(executeNextMove, delay);
+  }
+
+  backToTable(): void {
+    this.selectButtonClicked = false;
+    console.log('back to table');
+  }
+
+  //  // Method to pause the model
+  //  pauseModel(): void {
+  //   console.log('Model paused');
+  //   this.isModelPaused = true;
+  // }
+
+  // // Method to restart the model
+  // restartModel(): void {
+  //   console.log('Model restarted');
+  //   this.isModelPaused = false;
+  //   // Continue recreating actions from where it was paused
+  //   this.processInstructions(this.displayedRecording.actions);
+  // }
 }

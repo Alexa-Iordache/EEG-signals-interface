@@ -84,8 +84,8 @@
       >
         <div
           class="robot"
-          [style.left.px]="displayedRecording?.robot_start_x"
-          [style.top.px]="displayedRecording?.robot_start_y"
+          [style.left.px]="currentPosition.x"
+          [style.top.px]="currentPosition.y"
         ></div>
         <div
           *ngIf="
@@ -107,15 +107,39 @@
       </div>
     </div>
 
-    <div class="buttons-container">
+    <div *ngIf="selectButtonClicked" class="buttons-container">
       <button
-        *ngIf="selectButtonClicked"
         mat-raised-button
-        class="train-model_button"
+        class="model-button"
+        [disabled]="recreatingActions"
         (click)="startModel()"
       >
         Start model
       </button>
+      <button
+        mat-raised-button
+        class="model-button"
+        [disabled]="recreatingActions"
+        (click)="backToTable()"
+      >
+        Back to table
+      </button>
+      <!-- <button
+        *ngIf="selectButtonClicked"
+        mat-raised-button
+        class="model-button"
+        (click)="pauseModel()"
+      >
+        Puase model
+      </button>
+      <button
+        *ngIf="selectButtonClicked"
+        mat-raised-button
+        class="model-button"
+        (click)="restartModel()"
+      >
+        Restart model
+      </button> -->
     </div>
   </div>
 </div>
