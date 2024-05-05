@@ -53,7 +53,7 @@ export class ExistingModelComponent {
   recreatingActions: boolean = false;
 
   // Variable to track if the model is paused
-  // isModelPaused: boolean = false;
+  isModelPaused: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
@@ -97,7 +97,6 @@ export class ExistingModelComponent {
           return;
         }
         this.obstaclesInfo = res.result;
-        console.log(this.obstaclesInfo);
       }
     );
   }
@@ -149,7 +148,6 @@ export class ExistingModelComponent {
         this.displayedRecording = res.result[0];
         this.currentPosition.x = this.displayedRecording.robot_start_x;
         this.currentPosition.y = this.displayedRecording.robot_start_y;
-        console.log(this.displayedRecording);
       }
     );
 
@@ -162,19 +160,19 @@ export class ExistingModelComponent {
           return;
         }
         this.displayedObstacles = res.result;
-        console.log(this.displayedObstacles);
       }
     );
   }
 
   // Method to recreat the actions for the selected recording
   startModel(): void {
-    console.log('start model button waas clicked');
     this.currentPosition.x = this.displayedRecording.robot_start_x;
     this.currentPosition.y = this.displayedRecording.robot_start_y;
     this.currentDirectionIndex = 0;
     this.processInstructions(this.displayedRecording.actions);
+    this.isModelPaused = false;
     this.recreatingActions = true;
+    console.log(this.displayedRecording.actions);
   }
 
   // Method to move forward when '100' appears in the sequence
@@ -212,9 +210,6 @@ export class ExistingModelComponent {
 
   // Method to process the instructions from the array
   processInstructions(instructions: string) {
-    // Stop execution if the model is paused
-    // if (this.isModelPaused) return;
-
     // Separeta each pair of 3 digitals
     const pairs = instructions.match(/\d{3}/g);
     if (!pairs) return;
@@ -222,8 +217,10 @@ export class ExistingModelComponent {
     // Delay time (in milliseconds) between each move
     const delay = 1000;
 
-    let currentIndex = 0;
+    let currentIndex = this.currentDirectionIndex;
     const executeNextMove = () => {
+      if (this.isModelPaused) return; // Stop execution if the model is paused
+
       const pair = pairs[currentIndex];
       switch (pair) {
         case '100':
@@ -255,22 +252,38 @@ export class ExistingModelComponent {
     setTimeout(executeNextMove, delay);
   }
 
+  // Method to go back to table
   backToTable(): void {
     this.selectButtonClicked = false;
-    console.log('back to table');
   }
 
-  //  // Method to pause the model
-  //  pauseModel(): void {
-  //   console.log('Model paused');
+  // Method to pause the model
+  // pauseModel(): void {
   //   this.isModelPaused = true;
+  //   this.test.x = this.currentPosition.x;
+  //   this.test.y = this.currentPosition.y;
   // }
 
-  // // Method to restart the model
+  // Method to restart the model
   // restartModel(): void {
-  //   console.log('Model restarted');
   //   this.isModelPaused = false;
-  //   // Continue recreating actions from where it was paused
-  //   this.processInstructions(this.displayedRecording.actions);
+  //   this.currentPosition.x = this.test.x;
+  //   this.currentPosition.y = this.test.y;
+  //   this.recreatingActions = true;
+
+  //   // Calculate the starting index for instructions processing
+  //   let startIndex = Math.floor((this.currentDirectionIndex + 1) / 3) * 3;
+
+  //   // If the next instruction is a rotation, increment the startIndex
+  //   if (this.displayedRecording.actions.charAt(startIndex) === '1') {
+  //     startIndex += 3;
+  //   }
+
+  //   // Extract the remaining instructions from the action sequence
+  //   const remainingInstructions =
+  //     this.displayedRecording.actions.substring(startIndex);
+
+  //   // Process the remaining instructions
+  //   this.processInstructions(remainingInstructions);
   // }
 }
