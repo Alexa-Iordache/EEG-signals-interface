@@ -229,11 +229,12 @@ export class ExistingModelComponent {
     const delay = 1000;
 
     let currentIndex = this.currentDirectionIndex;
+    this.pauseActionIndex = currentIndex;
+
     const executeNextMove = () => {
       if (this.isModelPaused) return; // Stop execution if the model is paused
 
       const pair = pairs[currentIndex];
-      this.pauseActionIndex = currentIndex;
       switch (pair) {
         case '100':
           this.moveForward();
@@ -244,6 +245,8 @@ export class ExistingModelComponent {
         case '000':
           console.log('Array is done');
           this.recreatingActions = false;
+          this.pauseButtonClicked = false;
+          this.restartButtonClicked = false;
           break;
         default:
           console.log('Invalid instruction');
@@ -251,6 +254,8 @@ export class ExistingModelComponent {
       }
 
       currentIndex++;
+      this.pauseActionIndex = currentIndex;
+      // this.pauseActionIndex++;
       if (currentIndex < pairs.length) {
         // Not using delay when the action is to rotate the robot
         if (pairs[currentIndex] === '110') {
@@ -288,8 +293,7 @@ export class ExistingModelComponent {
     this.recreatingActions = true;
 
     const actionsArray = this.displayedRecording.actions.split(', ');
-    let remainingActions = actionsArray.slice(this.pauseActionIndex);
-    remainingActions = remainingActions.join(', ');
+    let remainingActions = actionsArray.slice(this.pauseActionIndex-1).join(', ');
     this.processInstructions(remainingActions);
   }
 }
