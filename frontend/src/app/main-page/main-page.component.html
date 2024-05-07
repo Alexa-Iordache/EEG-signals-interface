@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="main-page_top-part">
-      <div class="main-page_menu-container">
+      <div class="button-and-text">
         <button
           mat-raised-button
           color="accent"
@@ -25,6 +25,18 @@
         >
           Configuration
         </button>
+        <div class="menu-text">
+          The "Configuration" dashboard is designed for technical personnel.
+          Here, users can customize recording settings such as room dimensions,
+          robot start and end points, and the robot's movement steps. Obstacles
+          within the room can be added and customized, and incorrect additions
+          can be easily removed. Additionally, users can define recording
+          parameters like duration and performance metrics. Within this
+          dashboard, technical users can simulate the path using arrow keys on
+          the keyboard.
+        </div>
+      </div>
+      <div class="button-and-text">
         <button
           mat-raised-button
           color="accent"
@@ -33,6 +45,17 @@
         >
           Train new model
         </button>
+        <div class="menu-text">
+          A "Go Train Model" button within this dashboard transports users to
+          the "Train Model" dashboard. Here, the configured room from the
+          previous dashboard is displayed. Users are presented with two buttons:
+          "Train Model" initiates the recording simulation, allowing users to
+          record multiple sessions before saving the correct recording. Upon
+          saving, users must provide a room name and description of the recorded
+          action.
+        </div>
+      </div>
+      <div class="button-and-text">
         <button
           mat-raised-button
           color="accent"
@@ -41,9 +64,15 @@
         >
           Use existing model
         </button>
+        <div class="menu-text">
+          The "Use Existing Model" dashboard presents a table of saved
+          recordings. Selecting a model displays the corresponding room setup,
+          including dimensions, obstacles, and robot settings. Users can
+          initiate the model, directing the robot to perform trained actions,
+          and have the ability to pause and resume robot actions with specific
+          buttons.
+        </div>
       </div>
     </div>
-
-    <div class="main-page_bottom-part"></div>
   </div>
 </div>

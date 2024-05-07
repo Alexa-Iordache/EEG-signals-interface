@@ -1,33 +1,5 @@
 @import "../../general/mixins.scss";
 
-@mixin photo($borderWidth, $borderStyle, $borderColor, $width, $marginLeft) {
-  border-width: $borderWidth;
-  border-style: $borderStyle;
-  border-color: $borderColor;
-  width: $width;
-  margin-left: $marginLeft;
-}
-
-@mixin topContainers(
-  $display,
-  $flexDirection,
-  $justifyContent,
-  $width,
-  $height,
-  $marginLeft,
-  $marginRight,
-  $paddingTop
-) {
-  display: $display;
-  flex-direction: $flexDirection;
-  justify-content: $justifyContent;
-  width: $width;
-  height: $height;
-  margin-left: $marginLeft;
-  margin-right: $marginRight;
-  padding-top: $paddingTop;
-}
-
 .main-page {
   @include displayFormat(flex, center, center);
   height: 100%;
@@ -81,24 +53,27 @@
   }
 
   .main-page_top-part {
-    display: flex;
-    flex-direction: row;
+    @include displayFormatWithDirection(flex, column, center, none);
+    padding: 50px;
+    height: 100%;
 
-    .main-page_menu-container {
-      @include topContainers(
-        flex,
-        column,
-        space-between,
-        250px,
-        auto,
-        50px,
-        0,
-        50px
-      );
+    .button-and-text {
+      @include displayFormatWithDirection(flex, row, center, center);
+      margin-bottom: 30px;
 
       .menu-button {
-        height: 60px;
-        margin-top: 10px;
+        @include dimension(100%, 60px);
+        display: flex;
+        max-width: 25%;
+        background-color: #2a29a1;
+        color: white;
+      }
+
+      .menu-text {
+        @include dimension(100%, 100%);
+        display: flex;
+        text-align: justify;
+        padding-left: 50px;
       }
     }
   }
