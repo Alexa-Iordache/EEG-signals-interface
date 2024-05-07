@@ -27,6 +27,7 @@ import { SaveRecordingModalComponent } from './modals/save-recording-modal/save-
 import { ExistingModelComponent } from './existing-model/existing-model.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { SidebardComponent } from './reusable-components/sidebard/sidebard.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     StepMessagesComponent,
     SaveRecordingModalComponent,
     ExistingModelComponent,
+    SidebardComponent,
   ],
   imports: [
     BrowserModule,
