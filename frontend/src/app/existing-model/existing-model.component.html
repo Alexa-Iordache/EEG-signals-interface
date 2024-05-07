@@ -124,10 +124,11 @@
       >
         Back to table
       </button>
-      <!-- <button
+      <button
         *ngIf="selectButtonClicked"
         mat-raised-button
         class="model-button"
+        [disabled]="!pauseButtonClicked"
         (click)="pauseModel()"
       >
         Pause model
@@ -136,10 +137,11 @@
         *ngIf="selectButtonClicked"
         mat-raised-button
         class="model-button"
+        [disabled]="!restartButtonClicked"
         (click)="restartModel()"
       >
         Restart model
-      </button> -->
+      </button>
     </div>
   </div>
 </div>

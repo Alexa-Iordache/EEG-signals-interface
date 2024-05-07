@@ -33,6 +33,8 @@ export class ExistingModelComponent {
 
   // Variable illustrating if one select button from table was clicked on
   selectButtonClicked = false;
+  pauseButtonClicked = false;
+  restartButtonClicked = false;
 
   // Array with the possible directions
   directions: string[] = ['right', 'down', 'left', 'up'];
@@ -54,6 +56,13 @@ export class ExistingModelComponent {
 
   // Variable to track if the model is paused
   isModelPaused: boolean = false;
+
+  // Variable used to monitor the position and index of actions when the pause button is activated
+  pausePosition: Position = {
+    x: 0,
+    y: 0,
+  };
+  pauseActionIndex = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
@@ -134,6 +143,7 @@ export class ExistingModelComponent {
   // One select button is clicked on
   buttonClicked(recording: any): void {
     this.selectButtonClicked = true;
+
     let params = {
       recordingID: recording.recordingID,
     };
@@ -172,7 +182,8 @@ export class ExistingModelComponent {
     this.processInstructions(this.displayedRecording.actions);
     this.isModelPaused = false;
     this.recreatingActions = true;
-    console.log(this.displayedRecording.actions);
+    this.pauseButtonClicked = true;
+    this.restartButtonClicked = false;
   }
 
   // Method to move forward when '100' appears in the sequence
@@ -222,6 +233,7 @@ export class ExistingModelComponent {
       if (this.isModelPaused) return; // Stop execution if the model is paused
 
       const pair = pairs[currentIndex];
+      this.pauseActionIndex = currentIndex;
       switch (pair) {
         case '100':
           this.moveForward();
@@ -258,32 +270,26 @@ export class ExistingModelComponent {
   }
 
   // Method to pause the model
-  // pauseModel(): void {
-  //   this.isModelPaused = true;
-  //   this.test.x = this.currentPosition.x;
-  //   this.test.y = this.currentPosition.y;
-  // }
+  pauseModel(): void {
+    this.isModelPaused = true;
+    this.pauseButtonClicked = false;
+    this.restartButtonClicked = true;
+    this.pausePosition.x = this.currentPosition.x;
+    this.pausePosition.y = this.currentPosition.y;
+  }
 
   // Method to restart the model
-  // restartModel(): void {
-  //   this.isModelPaused = false;
-  //   this.currentPosition.x = this.test.x;
-  //   this.currentPosition.y = this.test.y;
-  //   this.recreatingActions = true;
+  restartModel(): void {
+    this.isModelPaused = false;
+    this.pauseButtonClicked = true;
+    this.restartButtonClicked = true;
+    this.currentPosition.x = this.pausePosition.x;
+    this.currentPosition.y = this.pausePosition.y;
+    this.recreatingActions = true;
 
-  //   // Calculate the starting index for instructions processing
-  //   let startIndex = Math.floor((this.currentDirectionIndex + 1) / 3) * 3;
-
-  //   // If the next instruction is a rotation, increment the startIndex
-  //   if (this.displayedRecording.actions.charAt(startIndex) === '1') {
-  //     startIndex += 3;
-  //   }
-
-  //   // Extract the remaining instructions from the action sequence
-  //   const remainingInstructions =
-  //     this.displayedRecording.actions.substring(startIndex);
-
-  //   // Process the remaining instructions
-  //   this.processInstructions(remainingInstructions);
-  // }
+    const actionsArray = this.displayedRecording.actions.split(', ');
+    let remainingActions = actionsArray.slice(this.pauseActionIndex);
+    remainingActions = remainingActions.join(', ');
+    this.processInstructions(remainingActions);
+  }
 }
