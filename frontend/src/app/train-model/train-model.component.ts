@@ -71,6 +71,10 @@ export class TrainModelComponent {
       this.initialPostion.x = this.recording?.robot_start.x;
     if (this.recording?.robot_start.y)
       this.initialPostion.y = this.recording?.robot_start.y;
+    this.currentPosition = {
+        x: this.initialPostion.x,
+        y: this.initialPostion.y,
+      };
   }
 
   // Method that reveal neccessary buttons to train a new model
