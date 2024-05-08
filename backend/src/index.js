@@ -25,12 +25,14 @@ app.listen(4201, () => {
 
 const server_address = "0.0.0.0";
 const server_port = 4202;
+let dataFromPython;
 
 const server = net.createServer((socket) => {
   console.log("Client connected");
 
   // Handle incoming data from the client
   socket.on("data", (data) => {
+    dataFromPython = data.toString();
     console.log("Received:", data.toString());
     socket.write('0');
   });
@@ -47,6 +49,11 @@ const server = net.createServer((socket) => {
     console.log("Sending test value to the client:", test);
     socket.write(test);
   });
+});
+
+app.get("/get-data-from-python", (req, res) => {
+  data = dataFromPython;
+  res.json({ data });
 });
 
 server.listen(server_port, server_address, () => {

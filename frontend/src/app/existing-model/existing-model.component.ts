@@ -64,6 +64,9 @@ export class ExistingModelComponent {
   };
   pauseActionIndex = 0;
 
+  // Copy of the pause index
+  copyPauseActionIndex = 0;
+
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
@@ -122,7 +125,6 @@ export class ExistingModelComponent {
       (err: any, res: any) => {
         if (err || res.error) {
           console.log('nu s au putut afisa inregistrarile');
-          return;
         }
         this.recordingsInfo = res.result;
         res.result.forEach((recording: any) => {
@@ -184,6 +186,7 @@ export class ExistingModelComponent {
     this.recreatingActions = true;
     this.pauseButtonClicked = true;
     this.restartButtonClicked = false;
+    this.copyPauseActionIndex = 0;
   }
 
   // Method to move forward when '100' appears in the sequence
@@ -222,14 +225,13 @@ export class ExistingModelComponent {
   // Method to process the instructions from the array
   processInstructions(instructions: string) {
     // Separeta each pair of 3 digitals
-    const pairs = instructions.match(/\d{3}/g);
+    const pairs = instructions.match(/\d{3}|0/g);
     if (!pairs) return;
 
     // Delay time (in milliseconds) between each move
     const delay = 1000;
 
-    let currentIndex = this.currentDirectionIndex;
-    this.pauseActionIndex = currentIndex;
+    let currentIndex = 0;
 
     const executeNextMove = () => {
       if (this.isModelPaused) return; // Stop execution if the model is paused
@@ -242,7 +244,7 @@ export class ExistingModelComponent {
         case '110':
           this.rotateLeft();
           break;
-        case '000':
+        case '0':
           console.log('Array is done');
           this.recreatingActions = false;
           this.pauseButtonClicked = false;
@@ -281,6 +283,7 @@ export class ExistingModelComponent {
     this.restartButtonClicked = true;
     this.pausePosition.x = this.currentPosition.x;
     this.pausePosition.y = this.currentPosition.y;
+    this.copyPauseActionIndex += this.pauseActionIndex;
   }
 
   // Method to restart the model
@@ -293,7 +296,10 @@ export class ExistingModelComponent {
     this.recreatingActions = true;
 
     const actionsArray = this.displayedRecording.actions.split(', ');
-    let remainingActions = actionsArray.slice(this.pauseActionIndex-1).join(', ');
+    let remainingActions = actionsArray
+      .slice(this.copyPauseActionIndex)
+      .join(', ');
+    this.pauseActionIndex = 0;
     this.processInstructions(remainingActions);
   }
 }

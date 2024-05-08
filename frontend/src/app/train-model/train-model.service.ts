@@ -19,4 +19,21 @@ export class TrainModelService {
       }
     );
   }
+
+  getDataFromPython(): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.http.get<any>('http://localhost:4201/get-data-from-python').subscribe(
+        (response) => {
+          // console.log(response.data);
+          resolve(response); // Return the entire response
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+  // getDataFromPython(): Promise<any> {
+  //   return this.http.get<any>('http://localhost:4201/get-data-from-python').toPromise();
+  // }
 }

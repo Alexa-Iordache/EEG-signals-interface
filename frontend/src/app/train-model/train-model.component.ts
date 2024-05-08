@@ -49,7 +49,8 @@ export class TrainModelComponent {
   // Variable for the last direction to be displayed.
   lastDirection: string = '';
 
-  test = '20000';
+  // Data sent to python script
+  dataSent = '';
 
   constructor(
     private configurationService: ConfigurationService,
@@ -76,9 +77,8 @@ export class TrainModelComponent {
   trainModel(): void {
     this.trainModelButton = true;
     this.startRecordEnabled = true;
-    if (this.recording?.configuration_time)
-      this.test = this.recording?.configuration_time.toString();
-    this.trainModelService.sendData(this.test);
+    if (this.recording?.configuration_time) this.dataSent = this.recording?.configuration_time.toString();
+    this.trainModelService.sendData(this.dataSent);
   }
 
   // Method to go back to main options buttons
@@ -88,10 +88,9 @@ export class TrainModelComponent {
   }
 
   // Method to start recording the actions
-  startRecord(): void {
-    // TO DO: take the string from python scrip
-    // this.actions = '[100, 110, 110, 110, 100, 100, 000]';
-    this.actions = '[100, 100, 000]';
+  async startRecord() {
+    let receivedData = await this.trainModelService.getDataFromPython()
+    this.actions = receivedData.data;
     this.processInstructions(this.actions);
 
     this.startRecordEnabled = false;
@@ -199,7 +198,8 @@ export class TrainModelComponent {
   // Method to process the instructions from the array
   processInstructions(instructions: string) {
     // Separeta each pair of 3 digitals
-    const pairs = instructions.match(/\d{3}/g);
+    const pairs = instructions.match(/\d{3}|0/g);
+    console.log(pairs?.length);
     if (!pairs) return;
 
     // Delay time (in milliseconds) between each move
@@ -210,12 +210,14 @@ export class TrainModelComponent {
       const pair = pairs[currentIndex];
       switch (pair) {
         case '100':
+          console.log('merge in fata');
           this.moveForward();
           break;
         case '110':
+          console.log('se roteste');
           this.rotateLeft();
           break;
-        case '000':
+        case '0':
           console.log('Array is done');
           this.recreatingActions = false;
           this.stopRecordEnabled = true;
