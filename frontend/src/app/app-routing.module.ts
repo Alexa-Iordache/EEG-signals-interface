@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'configuration', component: ConfigurationComponent},
   { path: 'profile-page', component: ProfilePageComponent},
   { path: 'train-model', component: TrainModelComponent},
+  { path: 'send-data', component: TrainModelComponent},
   { path: 'use-existing-model', component: ExistingModelComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

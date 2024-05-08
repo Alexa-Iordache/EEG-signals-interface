@@ -23,35 +23,32 @@ app.listen(4201, () => {
   });
 });
 
-// message = "";
+const server_address = "0.0.0.0";
+const server_port = 4202;
 
-// // Create a server object
-// const server = net.createServer((socket) => {
-//   app.post("/apply-changes", (req, res) => {
-//     const { width, height } = req.body; // Ensure these are sent from the client
-//     console.log(`Received width: ${width} and height: ${height}`);
+const server = net.createServer((socket) => {
+  console.log("Client connected");
 
-//     // Send these values to the Python script
-//     message = JSON.stringify({ width, height });
-//     // When data is received, print it to the console
-//     socket.on("data", (data) => {
-//       console.log("Received data:", data.toString());
-//       // Send data back to the client
-//       socket.write(message);
-//     });
+  // Handle incoming data from the client
+  socket.on("data", (data) => {
+    console.log("Received:", data.toString());
+    socket.write('0');
+  });
 
-//     // When the connection is closed, print a message
-//     socket.on("close", () => {
-//       console.log("Connection closed");
-//     });
-//   });
-// });
+  // Handle end of connection
+  socket.on("end", () => {
+    console.log("Client disconnected");
+  });
 
-// // Define the server address and port
-// const server_address = "0.0.0.0"; // replace with the actual IP of the Node.js server
-// const server_port = 4202; // replace with the actual port of the Node.js server
+  // Handle POST requests from the Angular application
+  app.post("/send-data", (req, res) => {
+    const { test } = req.body;
+    console.log("Received test value from Angular:", test);
+    console.log("Sending test value to the client:", test);
+    socket.write(test);
+  });
+});
 
-// // Start the server
-// server.listen(server_port, server_address, () => {
-//   console.log("Server started at", server_address, ":", server_port);
-// });
+server.listen(server_port, server_address, () => {
+  console.log("Server started at", server_address, ":", server_port);
+});

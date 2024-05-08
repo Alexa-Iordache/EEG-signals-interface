@@ -9,6 +9,8 @@ import {
   Obstacle,
   Position,
 } from '../reusable-components/interfaces';
+import { HttpClient } from '@angular/common/http';
+import { TrainModelService } from './train-model.service';
 
 @Component({
   selector: 'app-train-model',
@@ -27,7 +29,6 @@ export class TrainModelComponent {
     x: 0,
     y: 0,
   };
-
   // Variable illustrating whether a certain button was clicked on or not.
   trainModelButton = false;
   chooseFinishPointActive = false;
@@ -48,11 +49,15 @@ export class TrainModelComponent {
   // Variable for the last direction to be displayed.
   lastDirection: string = '';
 
+  test = '20000';
+
   constructor(
     private configurationService: ConfigurationService,
     private router: Router,
     private rpcService: RpcService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private http: HttpClient,
+    private trainModelService: TrainModelService
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +76,9 @@ export class TrainModelComponent {
   trainModel(): void {
     this.trainModelButton = true;
     this.startRecordEnabled = true;
+    if (this.recording?.configuration_time)
+      this.test = this.recording?.configuration_time.toString();
+    this.trainModelService.sendData(this.test);
   }
 
   // Method to go back to main options buttons
