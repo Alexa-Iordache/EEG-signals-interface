@@ -81,6 +81,7 @@ export class TrainModelComponent {
   trainModel(): void {
     this.trainModelButton = true;
     this.startRecordEnabled = true;
+    console.log(this.recording);
     if (this.recording?.configuration_time) this.dataSent = this.recording?.configuration_time.toString();
     this.trainModelService.sendData(this.dataSent);
   }

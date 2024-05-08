@@ -1,8 +1,6 @@
 import { Component, HostListener } from '@angular/core';
-import { RpcService } from '../services/rpc.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteObstacleModalComponent } from '../modals/delete-obstacle-modal/delete-obstacle-modal.component';
-import { HttpClient } from '@angular/common/http';
 import { ConfigurationService } from './configuration.service';
 import { Router } from '@angular/router';
 import {
@@ -31,7 +29,7 @@ export class ConfigurationComponent {
       x: 0,
       y: 0,
     },
-    configuration_time: 3,
+    configuration_time: 0.5,
     performance: 90,
     room_name: '',
     description: '',
@@ -44,8 +42,6 @@ export class ConfigurationComponent {
   // Variables from form-fields inputs
   obstacleWidth = '70';
   obstacleHeight = '30';
-  confTime = '3'; // 3 seconds between recording 2 sequences
-  performance = '80'; // 80% performance
 
   // Variables for delete confirmation popup
   showDeleteConfirmation = false;
@@ -74,15 +70,10 @@ export class ConfigurationComponent {
   handleFinishPointClickButton = false;
 
   constructor(
-    private http: HttpClient,
-    private rpcService: RpcService,
     public dialog: MatDialog,
     private configurationService: ConfigurationService,
     private router: Router
-  ) {
-    // this.obstacleWidth = '10';
-    // this.obstacleHeight = '10';
-  }
+  ) {}
 
   ngOnInit(): void {
     // Data will not be lost while switching pages
@@ -172,7 +163,9 @@ export class ConfigurationComponent {
     boardHeight: number,
     obstacleWidth: string,
     obstacleHeight: string,
-    step: number
+    step: number,
+    confTime: number,
+    performance: number
   ) {
     // Update values from input fields
     if (typeof boardWidth === 'string')
@@ -182,6 +175,10 @@ export class ConfigurationComponent {
     this.obstacleWidth = obstacleWidth;
     this.obstacleHeight = obstacleHeight;
     if (typeof step === 'string') this.recording.robot_step = parseInt(step);
+    if (typeof confTime === 'string')
+      this.recording.configuration_time = parseFloat(confTime);
+    if (typeof performance === 'string')
+      this.recording.performance = parseInt(performance);
 
     // Update state for 'step' buttons
     this.step = 0;
@@ -347,8 +344,6 @@ export class ConfigurationComponent {
   // Method that reveal neccessary form-fields to customize recording performance
   configurationSettings(): void {
     this.step = 5;
-    this.recording.configuration_time = parseInt(this.confTime);
-    this.recording.performance = parseInt(this.performance);
   }
 
   // Method that switches page to train-model mode

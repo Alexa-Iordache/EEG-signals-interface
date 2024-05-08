@@ -164,14 +164,19 @@
         <!-- RECORDING CONFIGURATION -->
         <mat-form-field *ngIf="step === 5" class="right-container_form-field">
           <mat-label>Configuration time (s)</mat-label>
-          <input matInput type="text" [(ngModel)]="confTime" name="confTime" />
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="recording.configuration_time"
+            name="confTime"
+          />
         </mat-form-field>
         <mat-form-field *ngIf="step === 5" class="right-container_form-field">
           <mat-label>Performance percentage (%)</mat-label>
           <input
             matInput
             type="text"
-            [(ngModel)]="performance"
+            [(ngModel)]="recording.performance"
             name="performance"
           />
         </mat-form-field>
@@ -188,7 +193,9 @@
             recording.board_height,
             obstacleWidth,
             obstacleHeight,
-            recording.robot_step
+            recording.robot_step,
+            recording.configuration_time,
+            recording.performance
           )
         "
       >
