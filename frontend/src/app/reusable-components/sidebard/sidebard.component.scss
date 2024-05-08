@@ -4,11 +4,10 @@
   @include displayFormat(flex, center, flex-end);
   height: 50px;
   background: linear-gradient(to right, black, #3533cd);
-  border-bottom: 2px solid black;
   padding-right: 30px;
 
   .mat-icon {
-    color: black;
+    color: white;
     font-size: 25px;
   }
 }
@@ -17,7 +16,6 @@
   @include displayFormat(flex, center, flex-end);
   height: 50px;
   background: linear-gradient(to right, black, #a6a6a6);
-  border-bottom: 2px solid black;
   padding-right: 30px;
 
   .mat-icon {

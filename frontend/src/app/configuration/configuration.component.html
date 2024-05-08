@@ -58,7 +58,7 @@
       <form class="form-container">
         <!-- BOARD SETTINGS -->
         <mat-form-field *ngIf="step === 1" class="right-container_form-field">
-          <mat-label>Board width (px)</mat-label>
+          <mat-label>Room width (cm)</mat-label>
           <input
             matInput
             type="text"
@@ -67,7 +67,7 @@
           />
         </mat-form-field>
         <mat-form-field *ngIf="step === 1" class="right-container_form-field">
-          <mat-label>Board height (px)</mat-label>
+          <mat-label>Room height (cm)</mat-label>
           <input
             matInput
             type="text"
@@ -78,7 +78,7 @@
 
         <!-- ROBOT SETTINGS -->
         <mat-form-field *ngIf="step === 2" class="right-container_form-field">
-          <mat-label>Step used by the robot to move</mat-label>
+          <mat-label>Step used by the robot to move (cm)</mat-label>
           <input
             matInput
             type="text"
@@ -105,7 +105,7 @@
 
         <!-- OBSTACLES SETTINGS -->
         <mat-form-field *ngIf="step === 3" class="right-container_form-field">
-          <mat-label>Obstacle width (px)</mat-label>
+          <mat-label>Obstacle width (cm)</mat-label>
           <input
             matInput
             type="text"
@@ -114,7 +114,7 @@
           />
         </mat-form-field>
         <mat-form-field *ngIf="step === 3" class="right-container_form-field">
-          <mat-label>Obstacle height (px)</mat-label>
+          <mat-label>Obstacle height (cm)</mat-label>
           <input
             matInput
             type="text"
@@ -163,11 +163,11 @@
 
         <!-- RECORDING CONFIGURATION -->
         <mat-form-field *ngIf="step === 5" class="right-container_form-field">
-          <mat-label>Configuration time</mat-label>
+          <mat-label>Configuration time (s)</mat-label>
           <input matInput type="text" [(ngModel)]="confTime" name="confTime" />
         </mat-form-field>
         <mat-form-field *ngIf="step === 5" class="right-container_form-field">
-          <mat-label>Performance percentage</mat-label>
+          <mat-label>Performance percentage (%)</mat-label>
           <input
             matInput
             type="text"
