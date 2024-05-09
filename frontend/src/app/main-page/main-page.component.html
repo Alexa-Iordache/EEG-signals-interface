@@ -7,12 +7,27 @@
       </div>
 
       <div class="navbar_icons">
-        <div class="icon" (click)="showProfile()">
+        <button
+          mat-icon-button
+          class="form-field-button"
+          (click)="showProfile()"
+        >
           <mat-icon>person</mat-icon>
-        </div>
-        <div class="icon exit" (click)="exitButton()">
+        </button>
+        <button
+          mat-icon-button
+          class="form-field-button"
+          (click)="changeLanguage()"
+        >
+          <mat-icon>language</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          class="form-field-button"
+          (click)="exitButton()"
+        >
           <mat-icon>exit_to_app</mat-icon>
-        </div>
+        </button>
       </div>
     </div>
     <div class="main-page_top-part">

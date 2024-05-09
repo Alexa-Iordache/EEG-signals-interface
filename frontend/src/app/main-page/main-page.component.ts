@@ -29,6 +29,10 @@ export class MainPageComponent {
     this.router.navigate(['/profile-page']);
   }
 
+  changeLanguage(): void {
+    console.log('change language');
+  }
+
   // exit function - returns to login page
   exitButton(): void {
     let copyInstance = this; // a copy of this class (atributes + methods)

@@ -290,9 +290,9 @@ export class ConfigurationComponent {
           } else {
             console.log(event);
           }
-        }, 1000 * index); // Delay each action to visually distinguish them
+        }, 500 * index); // Delay each action to visually distinguish them
       });
-    }, 1000); // Delay before the first action
+    }, 500); // Delay before the first action
   }
 
   // Method to choose the starting position of the robot

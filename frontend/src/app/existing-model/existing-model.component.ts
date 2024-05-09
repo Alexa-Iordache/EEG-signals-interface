@@ -94,6 +94,11 @@ export class ExistingModelComponent {
     }
   }
 
+  // Method to clear filters
+  clearFilters(): void {
+    this.dataSource.filter = ''; // Reset the filter input value
+  }
+
   // Method to get all the obstacles from database
   getObstaclesFromDB(): void {
     let params = {
@@ -274,6 +279,7 @@ export class ExistingModelComponent {
   // Method to go back to table
   backToTable(): void {
     this.selectButtonClicked = false;
+    this.clearFilters();
   }
 
   // Method to pause the model

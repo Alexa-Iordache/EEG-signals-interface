@@ -22,4 +22,9 @@ export class SidebardComponent {
   goToProfile(): void {
     console.log('go to profile');
   }
+
+  // Method to change language
+  changeLanguage(): void {
+    console.log('change language');
+  }
 }

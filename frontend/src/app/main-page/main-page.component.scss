@@ -41,14 +41,7 @@
 
     .navbar_icons {
       @include displayFormatWithDirection(flex, row, center, flex-end);
-
-      .icon {
-        margin-right: 20px;
-
-        &.exit {
-          margin-right: 50px;
-        }
-      }
+      padding-right: 30px;
     }
   }
 

@@ -15,8 +15,7 @@
   background-size: cover;
 
   .login-page_description-container {
-    @include dimension(80%, auto);
-    max-width: 600px;
+    @include displayFormatWithDirection(flex, column, center, none);
     padding: 20px;
     margin-right: 150px;
     text-align: justify;
@@ -42,6 +41,7 @@
       max-width: 200px;
       font-size: 1.5vw;
       background-color: #02c4ff;
+      margin-top: 50px;
     }
 
     .login-page-input-container {
@@ -81,7 +81,7 @@ input {
   margin-left: 17px;
 }
 
-::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+:host ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: #02c4ff;
 }
 
