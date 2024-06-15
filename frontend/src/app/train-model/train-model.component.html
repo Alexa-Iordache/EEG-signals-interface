@@ -1,8 +1,10 @@
-<app-sidebard></app-sidebard>
 <div class="train-model-page">
-  <div class="train-model-page_title">Train your model here:</div>
+  <div class="header-container">
+    <div class="title">Train your model here:</div>
+    <app-sidebard></app-sidebard>
+  </div>
 
-  <div class="train-model-page_content">
+  <div class="main-container">
     <div class="train-model-page_left-content">
       <app-direction
         [recreateActionsButton]="recreatingActions"

@@ -1,10 +1,10 @@
-<app-sidebard></app-sidebard>
 <div class="existing-model-page">
-  <div class="existing-model-title">Use a model you created before</div>
-  <div *ngIf="!selectButtonClicked" class="existing-model-subtitle">
-    Choose your model:
+  <div class="header-container">
+    <div class="title">Use a model you created before</div>
+    <app-sidebard></app-sidebard>
   </div>
-  <div *ngIf="selectButtonClicked" class="existing-model-subtitle">
+  <div *ngIf="!selectButtonClicked" class="subtitle">Choose your model:</div>
+  <div *ngIf="selectButtonClicked" class="subtitle">
     Recording:
     {{ displayedRecording?.room_name ? displayedRecording?.room_name : "-" }}
   </div>
@@ -111,6 +111,7 @@
     <div *ngIf="selectButtonClicked" class="buttons-container">
       <button
         mat-raised-button
+        color="accent"
         class="model-button"
         [disabled]="recreatingActions"
         (click)="startModel()"
@@ -119,6 +120,7 @@
       </button>
       <button
         mat-raised-button
+        color="accent"
         class="model-button"
         [disabled]="recreatingActions"
         (click)="backToTable()"
@@ -128,6 +130,7 @@
       <button
         *ngIf="selectButtonClicked"
         mat-raised-button
+        color="accent"
         class="model-button"
         [disabled]="!pauseButtonClicked"
         (click)="pauseModel()"
@@ -137,6 +140,7 @@
       <button
         *ngIf="selectButtonClicked"
         mat-raised-button
+        color="accent"
         class="model-button"
         [disabled]="!restartButtonClicked"
         (click)="restartModel()"

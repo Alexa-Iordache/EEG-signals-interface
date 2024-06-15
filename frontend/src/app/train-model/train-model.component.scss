@@ -1,19 +1,24 @@
 @import "../../general/mixins.scss";
 
 .train-model-page {
-  @include displayFormatWithDirection(flex, column, flex-start, space-around);
+  @include displayFormatWithDirection(flex, column, center, space-around);
   height: 100%;
-  background: linear-gradient(to right, black, #3533cd);
+  background-color: #162942;
 
-  .train-model-page_title {
-    font-size: 40px;
-    color: white;
-    margin-left: 100px;
+  .header-container {
+    @include displayFormatWithDirection(flex, row, center, space-between);
+    width: 90%;
+    padding-top: 30px;
+
+    .title {
+      font-size: 40px;
+      color: white;
+    }
   }
 
-  .train-model-page_content {
-    @include displayFormatWithDirection(flex, row, center, space-evenly);
-    width: 100%;
+  .main-container {
+    @include displayFormatWithDirection(flex, row, center, space-between);
+    width: 90%;
 
     .train-model-page_left-content {
       display: flex;
@@ -50,7 +55,7 @@
 
     .train-model-page_right-content {
       @include displayFormatWithDirection(flex, column, center, space-evenly);
-      max-width: 20%;
+      max-width: 30%;
       min-height: 80%;
 
       .train-model_buttons-container {

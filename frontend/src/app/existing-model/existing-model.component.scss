@@ -1,29 +1,32 @@
 @import "../../general/mixins.scss";
 
 .existing-model-page {
-  @include displayFormatWithDirection(flex, column, flex-start, flex-start);
+  @include displayFormatWithDirection(flex, column, center, flex-start);
   min-height: 100%;
-  background: linear-gradient(to right, black, #3533cd);
+  background-color: #162942;
 
-  .existing-model-title {
-    font-size: 40px;
-    color: white;
-    margin-left: 100px;
-    margin-top: 50px;
+  .header-container {
+    @include displayFormatWithDirection(flex, row, center, space-between);
+    width: 90%;
+    padding-top: 30px;
+
+    .title {
+      font-size: 40px;
+      color: white;
+    }
   }
 
-  .existing-model-subtitle {
+
+  .subtitle {
+    @include displayFormat(flex, flex-start, space-between);
     font-size: 30px;
     color: white;
-    margin-left: 100px;
-    margin-top: 50px;
+    margin-top: 100px;
   }
 
   .existing-model-table-container {
-    width: 80%;
-    margin-left: 100px;
+    width: 90%;
     margin-top: 50px;
-    margin-bottom: 20px;
 
     table {
       width: 100%;

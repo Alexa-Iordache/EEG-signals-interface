@@ -2,21 +2,8 @@
 
 .sidebar-main-container {
   @include displayFormat(flex, center, flex-end);
-  height: 50px;
-  background: linear-gradient(to right, black, #3533cd);
-  padding-right: 30px;
-
-  .mat-icon {
-    color: white;
-    font-size: 25px;
-  }
-}
-
-.grey-sidebar-main-container {
-  @include displayFormat(flex, center, flex-end);
-  height: 50px;
-  background: linear-gradient(to right, black, #a6a6a6);
-  padding-right: 30px;
+  height: 100%;
+  background: transparent;
 
   .mat-icon {
     color: white;

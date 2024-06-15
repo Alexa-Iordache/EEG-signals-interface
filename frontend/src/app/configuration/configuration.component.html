@@ -1,8 +1,9 @@
-<app-sidebard [backgroundColorBlue]="false"></app-sidebard>
 <div class="configuration-page">
-  <div class="configuration-page_title">Make your model configuration:</div>
-
-  <div class="configuration-page_content">
+  <div class="header-container">
+    <div class="title">Make your model configuration:</div>
+    <app-sidebard></app-sidebard>
+  </div>
+  <div class="main-container">
     <div class="configuration-page_left-content">
       <app-direction
         [recreateActionsButton]="recreatingSimulation"
@@ -185,8 +186,9 @@
       <!-- OPTIONS BUTTONS -->
       <button
         *ngIf="step !== 0"
-        mat-raised-button
-        color="warn"
+        mat-button
+        color="accent"
+        class="back-to-steps-button"
         (click)="
           applyChanges(
             recording.board_width,

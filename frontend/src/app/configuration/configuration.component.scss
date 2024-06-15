@@ -1,22 +1,24 @@
 @import "../../general/mixins.scss";
 
 .configuration-page {
-  @include displayFormatWithDirection(flex, column, flex-start, space-around);
+  @include displayFormatWithDirection(flex, column, center, space-around);
   height: 100%;
-  // width: 100%;
-  // background-image: url("../../images/configuration.png");
-  // background-size: cover;
-  background: linear-gradient(to right, black, #a6a6a6);
+  background-color: #162942;
 
-  .configuration-page_title {
-    font-size: 40px;
-    color: white;
-    margin-left: 100px;
+  .header-container {
+    @include displayFormatWithDirection(flex, row, center, space-between);
+    width: 90%;
+    padding-top: 30px;
+
+    .title {
+      font-size: 40px;
+      color: white;
+    }
   }
 
-  .configuration-page_content {
-    @include displayFormatWithDirection(flex, row, center, space-evenly);
-    width: 100%;
+  .main-container {
+    @include displayFormatWithDirection(flex, row, center, space-between);
+    width: 90%;
 
     .configuration-page_left-content {
       display: flex;
@@ -28,7 +30,6 @@
         min-height: 650px;
 
         .board {
-          // @include dimension(800px, 600px);
           position: relative;
           background-color: white;
 
@@ -54,7 +55,7 @@
 
     .configuration-page_right-content {
       @include displayFormatWithDirection(flex, column, center, space-evenly);
-      max-width: 20%;
+      max-width: 30%;
       min-height: 80%;
 
       .form-container {
@@ -70,12 +71,16 @@
           margin-bottom: 20px;
         }
       }
+
+      .back-to-steps-button {
+        font-size: 18px;
+      }
     }
 
     .step-buttons {
       @include displayFormatWithDirection(flex, column, flex-start, center);
-      @include dimension(100%, 100%);
-      max-width: 20%;
+      @include dimension(100%, 80%);
+      max-width: 30%;
 
       .configuration_button {
         width: 100%;
