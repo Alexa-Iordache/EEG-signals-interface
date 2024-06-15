@@ -1,11 +1,16 @@
+@import "../../../general/mixins.scss";
+
 .login-modal-main-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include displayFormatWithDirection(flex, column, center, center);
   background-color: white;
 
-  .change-color {
+  .error-message {
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  .dark-color {
     color: #162942;
   }
 
@@ -14,13 +19,31 @@
     flex-direction: column;
   }
 
+  .no-account-container {
+    @include displayFormatWithDirection(flex, column, center, center);
+
+    .signup-button {
+      background-color: #eaf9ff;
+      color: #162942;
+      margin-top: 10px;
+    }
+  }
+
   .login-button {
     background-color: #eaf9ff;
+    color: #162942;
 
     &.disabled {
       background-color: rgb(192, 192, 192);
       color: rgb(146, 141, 141);
     }
+  }
+
+  .login-modal-footer {
+    width: 100%;
+    justify-content: center;
+    border-top: 1px solid #162942;
+    padding: 20px 10px;
   }
 }
 

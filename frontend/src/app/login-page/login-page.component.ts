@@ -11,11 +11,6 @@ import { LoginModalComponent } from '../modals/login-modal/login-modal.component
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
-  authFailed = false;
-  // loginButtonClicked = false;
-  username = '';
-  password = '';
-
   @Input() currentPage: any;
   @Output() loginButtonPressed = new EventEmitter<string>();
 
@@ -27,55 +22,18 @@ export class LoginPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.loginButtonClicked = false;
     if (!this.currentPage) this.currentPage = 'login';
-  }
-
-  login(username: string, password: string): void {
-    console.log('s-a apasat butonul de login');
-
-    // if there is no username or password
-    if (!username || !password) {
-      console.log('username or password was not introduced');
-      return;
-    }
-
-    let parameters = {
-      username: username,
-      password: password,
-      query: `SELECT * FROM Users WHERE username = '${username}' LIMIT 1;`,
-    };
-
-    let copyInstance = this; // a copy of this class (atributes + methods)
-
-    this.rpcService.callRPC(
-      'auth.login',
-      parameters,
-      (error: any, res: any) => {
-        if (error) {
-          console.log('login failed');
-          this.authFailed = true;
-          return;
-        }
-
-        // daca nu avem eroare
-        copyInstance.cookieService.set('eeg-login', res.result.encoded);
-        copyInstance.loginButtonPressed.emit('done');
-        copyInstance.router.navigate(['/main-page']);
-        console.log('a mers logarea');
-      }
-    );
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LoginModalComponent, {
-      data: { username: this.username, password: this.password },
+      data: { username: '', password: '' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-      if (result.username && result.password) {
-        this.login(result.username, result.password);
+      if (result === 'done') {
+        this.loginButtonPressed.emit('done');
+        this.router.navigate(['/main-page']);
       }
     });
   }
