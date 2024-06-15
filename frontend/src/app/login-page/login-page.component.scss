@@ -1,31 +1,31 @@
 @import "../../general/mixins.scss";
 
-@mixin input-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  border-radius: 10px;
-}
-
-
 .login-page-main-component {
-  @include displayFormat(flex, center, flex-end);
+  @include displayFormat(flex, center, flex-start);
   @include dimension(100%, 100%);
-  background-image: url("../../images/EEG_login-page.png");
+  background-image: url("../../images/LoginPage.jpeg");
   background-size: cover;
 
   .login-page_description-container {
     @include displayFormatWithDirection(flex, column, center, none);
-    padding: 20px;
-    margin-right: 150px;
     text-align: justify;
+    max-width: 650px;
+    font-family: "Inter";
+    font-size: 4vw;
+    font-weight: 700;
+    line-height: 30px;
+    color: white;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    padding: 20px;
 
-    .login-page_title {
-      font-family: "Inter";
-      font-size: 4vw;
-      font-weight: 700;
-      color: #02c4ff;
+    .login-page-title {
+      line-height: 60px;
       margin-bottom: 20px;
+    }
+
+    .login-page-description {
+      font-size: 1.75vw;
     }
 
     .login-page_description-text {
@@ -40,49 +40,11 @@
       @include dimension(100%, 50px);
       max-width: 200px;
       font-size: 1.5vw;
-      background-color: #02c4ff;
+      background-color: #eaf9ff;
       margin-top: 50px;
-    }
-
-    .login-page-input-container {
-      width: 100%;
-      max-width: 400px;
-      // display: flex;
-      // flex-direction: column;
-      // width: 400px;
-      // background-color: white;
-      // border-radius: 10px;
-      // margin-top: 30px;
-      // padding: 30px;
+      color: #162942;
     }
   }
-}
-
-.login-page-error-message {
-  color: red;
-}
-
-.login-page-first-input-container {
-  @include input-container();
-  margin-top: 30px;
-}
-
-.login-page-second-input-container {
-  @include input-container();
-  margin-top: 10px;
-}
-
-.login-page-input {
-  width: 100%;
-}
-
-input {
-  height: 22px;
-  margin-left: 17px;
-}
-
-:host ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  background-color: #02c4ff;
 }
 
 .login-page-button-container {

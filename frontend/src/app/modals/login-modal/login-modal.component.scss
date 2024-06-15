@@ -1,0 +1,44 @@
+.login-modal-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+
+  .change-color {
+    color: #162942;
+  }
+
+  .input-fields {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login-button {
+    background-color: #eaf9ff;
+
+    &.disabled {
+      background-color: rgb(192, 192, 192);
+      color: rgb(146, 141, 141);
+    }
+  }
+}
+
+:host ::ng-deep {
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: #eaf9ff;
+  }
+
+  .mat-mdc-form-field-infix {
+    label {
+      mat-label {
+        color: #162942;
+      }
+    }
+  }
+
+  .mdc-text-field--filled:not(.mdc-text-field--disabled)
+    .mdc-text-field__input {
+    color: #162942;
+  }
+}
