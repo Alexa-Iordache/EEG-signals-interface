@@ -29,6 +29,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { SidebardComponent } from './reusable-components/sidebard/sidebard.component';
 import { LoginModalComponent } from './modals/login-modal/login-modal.component';
+import { DeleteRecordingComponent } from './modals/delete-recording/delete-recording.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { LoginModalComponent } from './modals/login-modal/login-modal.component'
     ExistingModelComponent,
     SidebardComponent,
     LoginModalComponent,
+    DeleteRecordingComponent,
   ],
   imports: [
     BrowserModule,

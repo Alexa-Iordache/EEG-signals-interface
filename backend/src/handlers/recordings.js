@@ -59,6 +59,18 @@ let recordings = {
       }
     );
   },
+
+  deleteRecording(req, res, next) {
+    let recordingID = req.body.params.recordingID;
+    mysql.query(
+      `DELETE FROM Recordings WHERE id = '${recordingID}';`,
+      (error, result) => {
+        if (error) {
+          throw error;
+        }
+      }
+    );
+  },
 };
 
 module.exports = recordings;

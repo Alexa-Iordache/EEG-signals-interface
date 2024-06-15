@@ -9,6 +9,8 @@ import {
   Recording,
   rowData,
 } from '../reusable-components/interfaces';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteRecordingComponent } from '../modals/delete-recording/delete-recording.component';
 
 @Component({
   selector: 'app-existing-model',
@@ -70,7 +72,10 @@ export class ExistingModelComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
-  constructor(private rpcService: RpcService) {
+  constructor(
+    public dialog: MatDialog,
+    private rpcService: RpcService
+  ) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -307,5 +312,32 @@ export class ExistingModelComponent {
       .join(', ');
     this.pauseActionIndex = 0;
     this.processInstructions(remainingActions);
+  }
+
+  // Method to delete a recording from the database
+  deleteRecording(recording: any): void {
+    const dialogRef = this.dialog.open(DeleteRecordingComponent, {
+      data: { name: recording.name },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+
+      if (result === 'yes') {
+        let params = {
+          recordingID: recording.recordingID,
+        };
+        this.rpcService.callRPC(
+          'recordings.deleteRecording',
+          params,
+          (error: any, res: any) => {
+            if (error) {
+              console.log('nu s a putut sterge inregistrarea');
+              return;
+            }
+          }
+        );
+      }
+    });
   }
 }
