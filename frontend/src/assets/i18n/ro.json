@@ -1,0 +1,21 @@
+{
+  "welcome": "Aplicatie pentru controlul unui dispozitiv asistiv virtual folosind semnale EEG",
+  "subtitle": "",
+  "description": "Descoperiți puterea minții dvs. cu tehnologia avansată EEG pentru controlul dispozitivelor asistente. Experimentați independența și accesibilitatea fără efort",
+  "configuration": {
+    "title": "Configurație",
+    "description": "Tabloul de bord \"Configurație\" este destinat personalului tehnic..."
+  },
+  "trainModel": {
+    "title": "Antrenare model nou",
+    "description": "Un buton „Go Train Model” din acest tablou de bord transportă utilizatorii..."
+  },
+  "useModel": {
+    "title": "Utilizare model existent",
+    "description": "Tabloul de bord „Utilizare model existent” prezintă o tabelă cu înregistrări salvate..."
+  },
+  "menu": {
+    "romanian": "Limba romana",
+    "english": "Limba engleza"
+  }
+}

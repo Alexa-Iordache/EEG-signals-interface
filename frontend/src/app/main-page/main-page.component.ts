@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-main-page',
@@ -7,7 +8,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-  constructor(private router: Router) {}
+  translations: any = {};
+
+  constructor(
+    private router: Router,
+    public translationService: TranslationService
+  ) {}
+
+  ngOnInit() {
+    this.translationService.getTranslations().subscribe(translations => {
+      this.translations = translations;
+    });
+  }
 
   configuration(): void {
     console.log('Configuration mode');
@@ -29,8 +41,9 @@ export class MainPageComponent {
     this.router.navigate(['/profile-page']);
   }
 
-  changeLanguage(): void {
+  changeLanguage(lang: string): void {
     console.log('change language');
+    this.translationService.switchLang(lang);
   }
 
   // exit function - returns to login page

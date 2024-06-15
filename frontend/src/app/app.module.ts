@@ -30,6 +30,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { SidebardComponent } from './reusable-components/sidebard/sidebard.component';
 import { LoginModalComponent } from './modals/login-modal/login-modal.component';
 import { DeleteRecordingComponent } from './modals/delete-recording/delete-recording.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { DeleteRecordingComponent } from './modals/delete-recording/delete-recor
     MatSortModule,
     MatTableModule,
     MatPaginatorModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],

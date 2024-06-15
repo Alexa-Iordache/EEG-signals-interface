@@ -1,0 +1,21 @@
+{
+  "welcome": "Welcome to Assistive Device Control!",
+  "subtitle": "- Empower Mindful Control -",
+  "description": "Discover the power of your mind with our advanced EEG technology for controlling assistive devices. Experience effortless independence and accessibility.",
+  "configuration": {
+    "title": "Configuration",
+    "description": "The \"Configuration\" dashboard is designed for technical personnel..."
+  },
+  "trainModel": {
+    "title": "Train new model",
+    "description": "A \"Go Train Model\" button within this dashboard transports users..."
+  },
+  "useModel": {
+    "title": "Use existing model",
+    "description": "The \"Use Existing Model\" dashboard presents a table of saved recordings..."
+  },
+  "menu": {
+    "romanian": "Limba romana",
+    "english": "Limba engleza"
+  }
+}

@@ -83,7 +83,7 @@ export class TrainModelComponent {
     this.startRecordEnabled = true;
     console.log(this.recording);
     if (this.recording?.configuration_time) this.dataSent = this.recording?.configuration_time.toString();
-    this.trainModelService.sendData(this.dataSent);
+    // this.trainModelService.sendData(this.dataSent);
   }
 
   // Method to go back to main options buttons
@@ -94,8 +94,9 @@ export class TrainModelComponent {
 
   // Method to start recording the actions
   async startRecord() {
-    let receivedData = await this.trainModelService.getDataFromPython()
-    this.actions = receivedData.data;
+    // let receivedData = await this.trainModelService.getDataFromPython()
+    // this.actions = receivedData.data;
+    this.actions = "['100', '100', '0']"
     this.processInstructions(this.actions);
 
     this.startRecordEnabled = false;
