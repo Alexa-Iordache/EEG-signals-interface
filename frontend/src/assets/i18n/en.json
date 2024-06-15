@@ -1,21 +1,33 @@
 {
-  "welcome": "Welcome to Assistive Device Control!",
-  "subtitle": "- Empower Mindful Control -",
-  "description": "Discover the power of your mind with our advanced EEG technology for controlling assistive devices. Experience effortless independence and accessibility.",
-  "configuration": {
-    "title": "Configuration",
-    "description": "The \"Configuration\" dashboard is designed for technical personnel..."
+  "loginPage": {
+    "title": "Assistive Device Control",
+    "welcome": "Welcome!",
+    "subtitle": "Please enter your username and password",
+    "username": "Username",
+    "password": "Password",
+    "errorMessage": "Username or password is incorrect. Please try again.",
+    "cancel": "Cancel",
+    "login": "Login"
   },
-  "trainModel": {
-    "title": "Train new model",
-    "description": "A \"Go Train Model\" button within this dashboard transports users..."
-  },
-  "useModel": {
-    "title": "Use existing model",
-    "description": "The \"Use Existing Model\" dashboard presents a table of saved recordings..."
-  },
-  "menu": {
-    "romanian": "Limba romana",
-    "english": "Limba engleza"
+  "mainPage": {
+    "welcome": "Welcome to Assistive Device Control!",
+    "subtitle": "- Empower Mindful Control -",
+    "description": "Discover the power of your mind with our advanced EEG technology for controlling assistive devices. Experience effortless independence and accessibility.",
+    "configuration": {
+      "title": "Configuration",
+      "description": "The \"Configuration\" dashboard is designed for technical personnel. Here, users can customize recording settings such as room dimensions, robot start and end points, and the robot's movement steps. Obstacles within the room can be added and customized, and incorrect additions can be easily removed. Additionally, users can define recording parameters like duration and performance metrics. Within this dashboard, technical users can simulate the path using arrow keys on the keyboard."
+    },
+    "trainModel": {
+      "title": "Train new model",
+      "description": "A \"Go Train Model\" button within this dashboard transports users to the \"Train Model\" dashboard. Here, the configured room from the previous dashboard is displayed. Users are presented with two buttons: \"Train Model\" initiates the recording simulation, allowing users to record multiple sessions before saving the correct recording. Upon saving, users must provide a room name and description of the recorded action."
+    },
+    "useModel": {
+      "title": "Use existing model",
+      "description": "The \"Use Existing Model\" dashboard presents a table of saved recordings. Selecting a model displays the corresponding room setup, including dimensions, obstacles, and robot settings. Users can initiate the model, directing the robot to perform trained actions, and have the ability to pause and resume robot actions with specific buttons."
+    },
+    "menu": {
+      "romanian": "Romanian",
+      "english": "English"
+    }
   }
 }

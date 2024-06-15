@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { RpcService } from '../services/rpc.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginModalComponent } from '../modals/login-modal/login-modal.component';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-login-page',
@@ -14,15 +15,25 @@ export class LoginPageComponent implements OnInit {
   @Input() currentPage: any;
   @Output() loginButtonPressed = new EventEmitter<string>();
 
+  translations: any = {};
+
   constructor(
     public dialog: MatDialog,
     private router: Router,
     private rpcService: RpcService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    public translationService: TranslationService
   ) {}
 
   ngOnInit(): void {
+    this.translationService.getTranslations().subscribe(translations => {
+      this.translations = translations;
+    });
     if (!this.currentPage) this.currentPage = 'login';
+  }
+
+  changeLanguage(lang: string): void {
+    this.translationService.switchLang(lang);
   }
 
   openDialog(): void {

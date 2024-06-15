@@ -1,13 +1,13 @@
 <div class="login-modal-main-container">
-  <h1 mat-dialog-title class="dark-color">Welcome!</h1>
+  <h1 mat-dialog-title class="dark-color"> {{ translations?.loginPage.welcome }} </h1>
   <div mat-dialog-content>
-    <p class="dark-color">Please enter your username and password</p>
+    <p class="dark-color"> {{ translations?.loginPage.subtitle }}</p>
     <div *ngIf="data.authFailed === true" class="error-message">
-      Username or password is incorrect. Please try again.
+      {{ translations?.loginPage.errorMessage }}
     </div>
     <div class="input-fields">
       <mat-form-field appearance="fill">
-        <mat-label>Username</mat-label>
+        <mat-label> {{ translations?.loginPage.username }} </mat-label>
         <input
           matInput
           [(ngModel)]="data.username"
@@ -15,7 +15,7 @@
         />
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
+        <mat-label> {{ translations?.loginPage.password }} </mat-label>
         <input
           matInput
           type="password"
@@ -32,7 +32,7 @@
     </div> -->
   </div>
   <div mat-dialog-actions class="login-modal-footer">
-    <button mat-button class="dark-color" (click)="onNoClick()">Cancel</button>
+    <button mat-button class="dark-color" (click)="onNoClick()"> {{ translations?.loginPage.cancel }} </button>
     <button
       mat-raised-button
       class="login-button"
@@ -40,7 +40,7 @@
       [disabled]="isLoginButtonDisabled"
       (click)="login()"
     >
-      Login
+    {{ translations?.loginPage.login }}
     </button>
   </div>
 </div>

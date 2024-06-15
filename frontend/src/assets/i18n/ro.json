@@ -1,21 +1,33 @@
 {
-  "welcome": "Aplicatie pentru controlul unui dispozitiv asistiv virtual folosind semnale EEG",
-  "subtitle": "",
-  "description": "Descoperiți puterea minții dvs. cu tehnologia avansată EEG pentru controlul dispozitivelor asistente. Experimentați independența și accesibilitatea fără efort",
-  "configuration": {
-    "title": "Configurație",
-    "description": "Tabloul de bord \"Configurație\" este destinat personalului tehnic..."
+  "loginPage": {
+    "title": "Controlul dispozitivelor asistive",
+    "welcome": "Bine ai venit!",
+    "subtitle": "Introdu numele de utilizator si parola",
+    "username": "Nume utilizator",
+    "password": "Parola",
+    "errorMessage": "Numele de utilizator sau parola sunt incorecte. Te rugam sa incerci din nou.",
+    "cancel": "Anuleaza",
+    "login": "Autentificare"
   },
-  "trainModel": {
-    "title": "Antrenare model nou",
-    "description": "Un buton „Go Train Model” din acest tablou de bord transportă utilizatorii..."
-  },
-  "useModel": {
-    "title": "Utilizare model existent",
-    "description": "Tabloul de bord „Utilizare model existent” prezintă o tabelă cu înregistrări salvate..."
-  },
-  "menu": {
-    "romanian": "Limba romana",
-    "english": "Limba engleza"
+  "mainPage": {
+    "welcome": "Aplicatie pentru controlul unui dispozitiv asistiv virtual folosind semnale EEG",
+    "subtitle": "",
+    "description": "Descoperă puterea minții tale cu tehnologia EEG avansată pentru controlul dispozitivelor asistive. Obtii independență și accesibilitate fara dificultati",
+    "configuration": {
+      "title": "Configurare",
+      "description": "Pagine de configurare este destinata personalului tehnic. Aici, utilizatorii pot personaliza setările de înregistrare, cum ar fi dimensiunile camerei, punctele de început și de sfârșit ale robotului și pașii de mișcare ai robotului. Obstacolele din cameră pot fi adăugate și personalizate, iar cele adaugate incorecte pot fi eliminate cu ușurință. În plus, utilizatorii pot defini parametrii de înregistrare precum durata și metricile de performanță. În aceasta pagina, utilizatorii tehnici pot simula traseul folosind tastele săgeți de pe tastatură."
+    },
+    "trainModel": {
+      "title": "Antrenarea unui nou model",
+      "description": "In aceasta pagina se afla un buton \"Antrenare model\" care redirectioneaza utilizatorul la pagina de antrenare a unui nou model. Aici este afișată camera asa cum a fost configurata pe pagina de \"Configurare\". Exista doua butoane: \"Antrenare model\" care inițiază simularea înregistrării, permițând utilizatorilor să înregistreze mai multe sesiuni înainte de a salva înregistrarea corectă. După salvare, utilizatorii trebuie să furnizeze un nume de cameră și o descriere a acțiunii înregistrate."
+    },
+    "useModel": {
+      "title": "Utilizarea unui model existent",
+      "description": "Pagina pentru utilizarea unui model deja existent prezintă un tabel cu înregistrările salvate. Selectarea unui model afișează configurarea camerei corespunzătoare, inclusiv dimensiunile, obstacolele și setările robotului. Utilizatorul pot iniția modelul pentru a observa cum robotul efectueaza acțiuni antrenate. De asemenea, utilizatorul poate sa opreasca si sa reia acțiunile robotului folosind butoane corespunzatoare."
+    },
+    "menu": {
+      "romanian": "Limba romana",
+      "english": "Limba engleza"
+    }
   }
 }

@@ -20,23 +20,23 @@
         (click)="changeLanguage('ro')"
         [disabled]="translationService.getCurrentLang() === 'ro'"
       >
-        Limba romana
+        {{ translations?.mainPage.menu.romanian }}
       </button>
       <button
         mat-menu-item
         (click)="changeLanguage('en')"
         [disabled]="translationService.getCurrentLang() === 'en'"
       >
-        Limba engleza
+        {{ translations?.mainPage.menu.english }}
       </button>
     </mat-menu>
   </div>
 
   <div class="main-container">
     <div class="main-container-text">
-      <div class="title">{{ translations?.welcome }}</div>
-      <div class="subtitle">{{ translations?.subtitle }}</div>
-      <div class="description">{{ translations?.description }}</div>
+      <div class="title">{{ translations?.mainPage.welcome }}</div>
+      <div class="subtitle">{{ translations?.mainPage.subtitle }}</div>
+      <div class="description">{{ translations?.mainPage.description }}</div>
     </div>
   </div>
 
@@ -48,16 +48,10 @@
         class="menu-button"
         (click)="configuration()"
       >
-        Configuration
+        {{ translations?.mainPage.configuration.title }}
       </button>
       <div class="menu-text">
-        The "Configuration" dashboard is designed for technical personnel. Here,
-        users can customize recording settings such as room dimensions, robot
-        start and end points, and the robot's movement steps. Obstacles within
-        the room can be added and customized, and incorrect additions can be
-        easily removed. Additionally, users can define recording parameters like
-        duration and performance metrics. Within this dashboard, technical users
-        can simulate the path using arrow keys on the keyboard.
+        {{ translations?.mainPage.configuration.description }}
       </div>
     </div>
     <div class="button-and-text second">
@@ -67,15 +61,10 @@
         class="menu-button"
         (click)="trainModel()"
       >
-        Train new model
+        {{ translations?.mainPage.trainModel.title }}
       </button>
       <div class="menu-text">
-        A "Go Train Model" button within this dashboard transports users to the
-        "Train Model" dashboard. Here, the configured room from the previous
-        dashboard is displayed. Users are presented with two buttons: "Train
-        Model" initiates the recording simulation, allowing users to record
-        multiple sessions before saving the correct recording. Upon saving,
-        users must provide a room name and description of the recorded action.
+        {{ translations?.mainPage.trainModel.description }}
       </div>
     </div>
     <div class="button-and-text third">
@@ -85,14 +74,10 @@
         class="menu-button"
         (click)="useModel()"
       >
-        Use existing model
+        {{ translations?.mainPage.useModel.title }}
       </button>
       <div class="menu-text">
-        The "Use Existing Model" dashboard presents a table of saved recordings.
-        Selecting a model displays the corresponding room setup, including
-        dimensions, obstacles, and robot settings. Users can initiate the model,
-        directing the robot to perform trained actions, and have the ability to
-        pause and resume robot actions with specific buttons.
+        {{ translations?.mainPage.useModel.description }}
       </div>
     </div>
   </div>

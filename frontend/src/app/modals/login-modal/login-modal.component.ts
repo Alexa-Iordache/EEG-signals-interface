@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { RpcService } from 'src/app/services/rpc.service';
+import { TranslationService } from 'src/app/services/translation.service';
 
 export interface LoginInputs {
   username: string;
@@ -16,8 +17,10 @@ export interface LoginInputs {
 })
 export class LoginModalComponent {
   isLoginButtonDisabled = true;
+  translations: any = {};
 
   constructor(
+    public translationService: TranslationService,
     public dialogRef: MatDialogRef<LoginModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LoginInputs,
     private rpcService: RpcService,
@@ -26,13 +29,18 @@ export class LoginModalComponent {
     this.checkIfLoginButtonShouldBeEnabled();
   }
 
+  ngOnInit() {
+    this.translationService.getTranslations().subscribe(translations => {
+      this.translations = translations;
+    });
+  }
+
   login(): void {
     if (!this.data.username || !this.data.password) {
       console.log('username or password was not introduced');
       return;
     }
-    // this.data.authFailed = false;
-    // console.log(this.data);
+
     const parameters = {
       username: this.data.username,
       password: this.data.password,

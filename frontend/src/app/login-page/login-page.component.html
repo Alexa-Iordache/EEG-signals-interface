@@ -1,8 +1,31 @@
 <div class="login-page-main-component">
   <div class="login-page_description-container">
-    <div class="login-page-title">Assistive Device Control</div>
+    <div class="login-page-title">{{ translations?.loginPage.title }}</div>
     <button mat-raised-button class="login_button" (click)="openDialog()">
-      Login
+      {{ translations?.loginPage.login }}
     </button>
+  </div>
+
+  <div class="language-button-container">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="language-button">
+      <mat-icon>language</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        (click)="changeLanguage('ro')"
+        [disabled]="translationService.getCurrentLang() === 'ro'"
+      >
+        {{ translations?.mainPage.menu.romanian }}
+      </button>
+      <button
+        mat-menu-item
+        (click)="changeLanguage('en')"
+        [disabled]="translationService.getCurrentLang() === 'en'"
+      >
+        {{ translations?.mainPage.menu.english }}
+      </button>
+    </mat-menu>
   </div>
 </div>
