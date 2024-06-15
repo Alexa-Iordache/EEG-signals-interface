@@ -3,7 +3,7 @@
 .login-page-main-component {
   @include displayFormat(flex, center, flex-start);
   @include dimension(100%, 100%);
-  background-image: url("../../images/LoginPage.jpeg");
+  background-image: url("../../images/LoginPage.png");
   background-size: cover;
 
   .login-page_description-container {
@@ -21,18 +21,6 @@
 
     .login-page-title {
       line-height: 60px;
-      margin-bottom: 20px;
-    }
-
-    .login-page-description {
-      font-size: 1.75vw;
-    }
-
-    .login-page_description-text {
-      font-family: "Inter";
-      font-size: 1.5vw;
-      font-weight: 400;
-      color: white;
       margin-bottom: 20px;
     }
 

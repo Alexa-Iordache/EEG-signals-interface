@@ -1,78 +1,92 @@
 @import "../../general/mixins.scss";
 
 .main-page {
-  @include displayFormat(flex, center, center);
-  height: 100%;
-  background: linear-gradient(to right, black, #3533cd);
+  @include displayFormatWithDirection(flex, column, center, flex-start);
+  @include dimension(100%, 100%);
+  background-image: url("../../images/MainPage2.png");
+  background-size: cover;
 
-  .white_container {
-    width: 90%;
-    background-color: #eeeeff;
-    border-radius: 20px;
+  .navbar-icons {
+    @include displayFormat(flex, none, flex-end);
+    width: 100%;
+    margin: 50px 250px 0 0;
+    color: white;
   }
 
-  .navbar {
-    @include displayFormatWithDirection(flex, row, center, space-between);
-    height: 70px;
-    background-color: #2a29a1;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
+  .main-container {
+    @include dimension(90%, 40%);
+    @include displayFormatWithDirection(flex, column, start, none);
+    margin-top: 100px;
+    margin-bottom: 100px;
 
-    .navbar_text {
-      @include displayFormatWithDirection(flex, row, center, none);
-      height: 100%;
-      margin-left: 50px;
+    .main-container-text {
+      @include displayFormatWithDirection(flex, column, end, none);
+      width: 100%;
+      font-family: "Inter";
+      font-weight: 700;
+      color: white;
+      line-height: 60px;
+      padding-top: 30px;
 
-      .navbar_text_first {
-        font-family: "Inter";
+      .title {
         font-size: 40px;
-        font-weight: 700;
-        color: black;
+        padding-right: 50px;
       }
 
-      .navbar_text_second {
-        margin-left: 10px;
-        font-family: "Inter";
-        font-size: 40px;
-        font-weight: 700;
-        color: #eeeeff;
+      .subtitle {
+        font-size: 30px;
+        padding-right: 50px;
       }
-    }
 
-    .navbar_icons {
-      @include displayFormatWithDirection(flex, row, center, flex-end);
-      padding-right: 30px;
+      .description {
+        width: 50%;
+        margin-top: 10px;
+        font-size: 20px;
+        line-height: 30px;
+      }
     }
   }
 
-  .main-page_top-part {
-    @include displayFormatWithDirection(flex, column, center, none);
-    padding: 50px;
-    height: 100%;
+  .footer-container {
+    @include dimension(90%, auto);
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid white;
+    margin-bottom: 50px;
 
     .button-and-text {
-      @include displayFormatWithDirection(flex, row, center, center);
-      margin-bottom: 30px;
+      padding: 20px;
+
+      &.first {
+        border-top: 1px solid white;
+        border-right: 1px solid white;
+        border-top-right-radius: 30px;
+      }
+
+      &.second {
+        border-top: 1px solid white;
+        border-left: 1px solid white;
+        border-top-left-radius: 30px;
+        border-right: 1px solid white;
+        border-top-right-radius: 30px;
+      }
+
+      &.third {
+        border-right: none;
+        border-top: 1px solid white;
+        border-left: 1px solid white;
+        border-top-left-radius: 30px;
+      }
 
       .menu-button {
-        @include dimension(100%, 60px);
-        display: flex;
-        max-width: 25%;
-        background-color: #2a29a1;
-        color: white;
+        font-size: 20px;
+        margin-bottom: 10px;
       }
 
       .menu-text {
-        @include dimension(100%, 100%);
-        display: flex;
+        color: white;
         text-align: justify;
-        padding-left: 50px;
       }
     }
-  }
-
-  .main-page_bottom-part {
-    @include displayFormatWithDirection(flex, column, center, none);
-    margin: 50px 100px;
   }
 }
