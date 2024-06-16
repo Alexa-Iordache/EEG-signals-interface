@@ -1,6 +1,6 @@
 <div class="train-model-page">
   <div class="header-container">
-    <div class="title">Train your model here:</div>
+    <div class="title">{{ translations?.trainModel?.title }}</div>
     <app-sidebard></app-sidebard>
   </div>
 
@@ -64,7 +64,7 @@
           [disabled]="!startRecordEnabled"
           (click)="startRecord()"
         >
-          Start record
+          {{ translations?.trainModel?.start_record }}
         </button>
         <button
           mat-raised-button
@@ -72,7 +72,7 @@
           [disabled]="!stopRecordEnabled"
           (click)="stopRecord()"
         >
-          Save record
+          {{ translations?.trainModel?.save_record }}
         </button>
         <button
           mat-raised-button
@@ -80,7 +80,7 @@
           [disabled]="!recreateActionsEnabled"
           (click)="recreateActions()"
         >
-          Recreate actions
+          {{ translations?.trainModel?.recreate_actions }}
         </button>
         <button
           mat-raised-button
@@ -88,7 +88,7 @@
           [disabled]="!tryAgainEnabled || recreatingActions"
           (click)="tryAgain()"
         >
-          Try again
+          {{ translations?.trainModel?.try_again }}
         </button>
       </div>
 
@@ -99,7 +99,7 @@
         color="accent"
         (click)="backButton()"
       >
-        Back
+        {{ translations?.trainModel?.back }}
       </button>
     </div>
 
@@ -112,7 +112,7 @@
         [disabled]="recording === null"
         (click)="trainModel()"
       >
-        Train model
+        {{ translations?.trainModel?.train_model }}
       </button>
       <button
         mat-raised-button
@@ -120,7 +120,7 @@
         class="train-model_button"
         (click)="backToConfiguration()"
       >
-        Back to configuration mode
+        {{ translations?.trainModel?.back_to_configuration }}
       </button>
     </div>
   </div>

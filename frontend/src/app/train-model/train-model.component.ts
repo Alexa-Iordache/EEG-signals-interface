@@ -9,8 +9,7 @@ import {
   Obstacle,
   Position,
 } from '../reusable-components/interfaces';
-import { HttpClient } from '@angular/common/http';
-import { TrainModelService } from './train-model.service';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-train-model',
@@ -55,13 +54,14 @@ export class TrainModelComponent {
   // Array to store robot's trace
   robotTrace: { x: number; y: number }[] = [];
 
+  translations: any = {};
+
   constructor(
     private configurationService: ConfigurationService,
     private router: Router,
     private rpcService: RpcService,
     public dialog: MatDialog,
-    private http: HttpClient,
-    private trainModelService: TrainModelService
+    public translationService: TranslationService
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +78,11 @@ export class TrainModelComponent {
       x: this.initialPostion.x,
       y: this.initialPostion.y,
     };
+
+    // translations
+    this.translationService.getTranslations().subscribe(translations => {
+      this.translations = translations;
+    });
   }
 
   // Method that reveal neccessary buttons to train a new model

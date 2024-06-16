@@ -1,5 +1,5 @@
 <div *ngIf="!recreateActionsButton" class="direction-container">
-  <span>Direction: </span>
+  <span>{{ translations?.direction?.direction }}</span>
   <mat-icon *ngIf="lastKeyPressed === 'ArrowLeft'" class="direction-icon"
     >arrow_back</mat-icon
   >
@@ -14,5 +14,5 @@
   >
 </div>
 <div *ngIf="recreateActionsButton" class="direction-container">
-  <span>Recreating the last simulation </span>
+  <span>{{ translations?.direction?.recreate_simulation }}</span>
 </div>

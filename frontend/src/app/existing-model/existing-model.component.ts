@@ -11,6 +11,7 @@ import {
 } from '../reusable-components/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRecordingComponent } from '../modals/delete-recording/delete-recording.component';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-existing-model',
@@ -72,11 +73,14 @@ export class ExistingModelComponent {
   // Array to store the robot trace path
   robotTrace: Position[] = [];
 
+  translations: any = {};
+
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
   constructor(
     public dialog: MatDialog,
+    public translationService: TranslationService,
     private rpcService: RpcService
   ) {
     this.dataSource = new MatTableDataSource();
@@ -85,6 +89,11 @@ export class ExistingModelComponent {
   ngOnInit(): void {
     // this.getObstaclesFromDB();
     this.getAllRecordingsFromDB();
+
+    // translations
+    this.translationService.getTranslations().subscribe(translations => {
+      this.translations = translations;
+    });
   }
 
   ngAfterViewInit(): void {

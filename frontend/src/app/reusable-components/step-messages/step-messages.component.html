@@ -1,24 +1,28 @@
 <div *ngIf="step === 1" class="right-container_text">
-  STEP 1: Set board dimensions
+  {{ translations?.stepMessages?.step1 }}
 </div>
-<div *ngIf="step === 2" class="right-container_text">STEP 2: Set robot</div>
-<div *ngIf="step === 3" class="right-container_text">STEP 3: Set obstacles</div>
-<div *ngIf="step === 4" class="right-container_text">STEP 4: Simulate your model</div>
+<div *ngIf="step === 2" class="right-container_text">
+  {{ translations?.stepMessages?.step2 }}
+</div>
+<div *ngIf="step === 3" class="right-container_text">
+  {{ translations?.stepMessages?.step3 }}
+</div>
+<div *ngIf="step === 4" class="right-container_text">
+  {{ translations?.stepMessages?.step4 }}
+</div>
 <div *ngIf="step === 5" class="right-container_text">
-  STEP 5: Recording configuration
+  {{ translations?.stepMessages?.step5 }}
 </div>
 <div *ngIf="step === 5" class="right-container_extra-info">
-  <span class="bold_text">Configuration time </span>
-  <span
-    >represents the time measured in seconds between two consecutive
-    orders.</span
-  >
+  <span class="bold_text">{{
+    translations?.stepMessages?.step5_configuration_title
+  }} </span>
+  <span>{{ translations?.stepMessages?.step5_configuration_description }}</span>
 </div>
 
 <div *ngIf="step === 5" class="right-container_extra-info">
-  <span class="bold_text">Performance percentage </span>
-  <span
-    >represents the similarity percentage between the real data and the
-    processed data.</span
-  >
+  <span class="bold_text">{{
+    translations?.stepMessages?.step5_performance_title
+  }} </span>
+  <span>{{ translations?.stepMessages?.step5_performance_description }}</span>
 </div>

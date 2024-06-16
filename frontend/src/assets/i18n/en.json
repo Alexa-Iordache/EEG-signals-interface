@@ -29,5 +29,71 @@
       "romanian": "Romanian",
       "english": "English"
     }
+  },
+  "configuration": {
+    "title": "Make your model configuration:",
+    "direction": "Direction:",
+    "step1": "STEP 1: Board settings",
+    "step2": "STEP 2: Robot settings",
+    "step3": "STEP 3: Obstacles settings",
+    "step4": "STEP 4: Simulation",
+    "step5": "STEP 5: Recording configuration",
+    "step6": "STEP 6: Go train model",
+    "step1_input1": "Room width (cm)",
+    "step1_input2": "Room height (cm)",
+    "step2_input1": "Step used by the robot to move (cm)",
+    "step2_button1": "Choose starting point for robot",
+    "step2_button2": "Choose finish point for robot",
+    "step3_input1": "Obstacle width (cm)",
+    "step3_input2": "Obstacle height (cm)",
+    "step4_button1": "Start simulation",
+    "step4_button2": "Stop simulation",
+    "step4_button3": "Recreate simulation",
+    "step4_button4": "Try again",
+    "step5_input1": "Configuration time (s)",
+    "step5_input2": "Performance percentage (%)",
+    "back_button": "Back to steps"
+  },
+  "stepMessages": {
+    "step1": "STEP 1: Set board dimensions",
+    "step2": "STEP 2: Set robot",
+    "step3": "STEP 3: Set obstacles",
+    "step4": "STEP 4: Simulate your model",
+    "step5": "STEP 5: Recording configuration",
+    "step5_configuration_title": "Configuration time",
+    "step5_configuration_description": "represents the time measured in seconds between two consecutive orders.",
+    "step5_performance_title": "Performance percentage",
+    "step5_performance_description": "represents the similarity percentage between the real data and the processed data."
+  },
+  "trainModel": {
+    "title": "Train your model here:",
+    "direction": "Direction",
+    "start_record": "Start record",
+    "save_record": "Save record",
+    "recreate_actions": "Recreate actions",
+    "try_again": "Try again",
+    "back": "Back",
+    "train_model": "Train model",
+    "back_to_configuration": "Back to configuration mode"
+  },
+  "direction": {
+    "direction": "Direction: ",
+    "recreate_simulation": "Recreating the last simulation "
+  },
+  "existingModel": {
+    "title": "Use a model you created before",
+    "subtitle": "Choose your model:",
+    "recording": "Recording:",
+    "filter": "Filter",
+    "placeholder": "Ex. bedroom",
+    "room_name": "Room name",
+    "action_description": "Action description",
+    "select_model": "Select model",
+    "delete_model": "Delete model",
+    "filter_error": " No data matching the filter",
+    "start": "Start model",
+    "back": "Back to table",
+    "pause": "Pause model",
+    "continue": "Continue"
   }
 }

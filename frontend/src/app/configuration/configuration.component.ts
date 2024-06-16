@@ -8,6 +8,7 @@ import {
   Position,
   Recording,
 } from '../reusable-components/interfaces';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-configuration',
@@ -72,13 +73,20 @@ export class ConfigurationComponent {
   tryAgainButton = false;
   handleFinishPointClickButton = false;
 
+  translations: any = {};
+
   constructor(
     public dialog: MatDialog,
+    public translationService: TranslationService,
     private configurationService: ConfigurationService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.translationService.getTranslations().subscribe(translations => {
+      this.translations = translations;
+    });
+
     // Data will not be lost while switching pages
     this.recording = this.configurationService.getRecording() || this.recording;
     this.obstacles = this.configurationService.getObstacles();

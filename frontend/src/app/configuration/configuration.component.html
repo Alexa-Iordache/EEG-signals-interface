@@ -1,6 +1,6 @@
 <div class="configuration-page">
   <div class="header-container">
-    <div class="title">Make your model configuration:</div>
+    <div class="title">{{ translations?.configuration?.title }}</div>
     <app-sidebard></app-sidebard>
   </div>
   <div class="main-container">
@@ -72,7 +72,7 @@
       <form class="form-container">
         <!-- BOARD SETTINGS -->
         <mat-form-field *ngIf="step === 1" class="right-container_form-field">
-          <mat-label>Room width (cm)</mat-label>
+          <mat-label>{{ translations?.configuration?.step1_input1 }}</mat-label>
           <input
             matInput
             type="text"
@@ -81,7 +81,7 @@
           />
         </mat-form-field>
         <mat-form-field *ngIf="step === 1" class="right-container_form-field">
-          <mat-label>Room height (cm)</mat-label>
+          <mat-label>{{ translations?.configuration?.step1_input2 }}</mat-label>
           <input
             matInput
             type="text"
@@ -92,7 +92,7 @@
 
         <!-- ROBOT SETTINGS -->
         <mat-form-field *ngIf="step === 2" class="right-container_form-field">
-          <mat-label>Step used by the robot to move (cm)</mat-label>
+          <mat-label>{{ translations?.configuration?.step2_input1 }}</mat-label>
           <input
             matInput
             type="text"
@@ -106,7 +106,7 @@
           class="form-field-button"
           (click)="chooseStartingPoint()"
         >
-          Choose starting point for robot
+          {{ translations?.configuration?.step2_button1 }}
         </button>
         <button
           *ngIf="step === 2"
@@ -114,12 +114,12 @@
           class="form-field-button"
           (click)="chooseFinishPoint()"
         >
-          Choose finish point for robot
+          {{ translations?.configuration?.step2_button2 }}
         </button>
 
         <!-- OBSTACLES SETTINGS -->
         <mat-form-field *ngIf="step === 3" class="right-container_form-field">
-          <mat-label>Obstacle width (cm)</mat-label>
+          <mat-label>{{ translations?.configuration?.step3_input1 }}</mat-label>
           <input
             matInput
             type="text"
@@ -128,7 +128,7 @@
           />
         </mat-form-field>
         <mat-form-field *ngIf="step === 3" class="right-container_form-field">
-          <mat-label>Obstacle height (cm)</mat-label>
+          <mat-label>{{ translations?.configuration?.step3_input2 }}</mat-label>
           <input
             matInput
             type="text"
@@ -145,7 +145,7 @@
           [disabled]="recreateSimulationButton"
           (click)="startSimulation()"
         >
-          Start simulation
+          {{ translations?.configuration?.step4_button1 }}
         </button>
         <button
           *ngIf="step === 4"
@@ -154,7 +154,7 @@
           [disabled]="!stopSimulationButton"
           (click)="stopSimulation()"
         >
-          Stop simulation
+          {{ translations?.configuration?.step4_button2 }}
         </button>
         <button
           *ngIf="step === 4"
@@ -163,7 +163,7 @@
           class="form-field-button"
           (click)="recreateSimulation()"
         >
-          Recreate simulation
+          {{ translations?.configuration?.step4_button3 }}
         </button>
         <button
           *ngIf="step === 4"
@@ -172,12 +172,12 @@
           class="form-field-button"
           (click)="tryAgain()"
         >
-          Try again
+          {{ translations?.configuration?.step4_button4 }}
         </button>
 
         <!-- RECORDING CONFIGURATION -->
         <mat-form-field *ngIf="step === 5" class="right-container_form-field">
-          <mat-label>Configuration time (s)</mat-label>
+          <mat-label>{{ translations?.configuration?.step5_input1 }}</mat-label>
           <input
             matInput
             type="text"
@@ -186,7 +186,7 @@
           />
         </mat-form-field>
         <mat-form-field *ngIf="step === 5" class="right-container_form-field">
-          <mat-label>Performance percentage (%)</mat-label>
+          <mat-label>{{ translations?.configuration?.step5_input2 }}</mat-label>
           <input
             matInput
             type="text"
@@ -214,7 +214,7 @@
           )
         "
       >
-        Back to steps
+        {{ translations?.configuration?.back_button }}
       </button>
     </div>
 
@@ -226,7 +226,7 @@
         class="configuration_button"
         (click)="boardSettings()"
       >
-        STEP 1: Board settings
+        {{ translations?.configuration?.step1 }}
       </button>
       <button
         mat-raised-button
@@ -234,7 +234,7 @@
         class="configuration_button"
         (click)="robotSettings()"
       >
-        STEP 2: Robot settings
+        {{ translations?.configuration?.step2 }}
       </button>
       <button
         mat-raised-button
@@ -242,7 +242,7 @@
         class="configuration_button"
         (click)="obstaclesSettings()"
       >
-        STEP 3: Obstacles settings
+        {{ translations?.configuration?.step3 }}
       </button>
       <button
         mat-raised-button
@@ -250,7 +250,7 @@
         class="configuration_button"
         (click)="simulation()"
       >
-        STEP 4: Simulation
+        {{ translations?.configuration?.step4 }}
       </button>
       <button
         mat-raised-button
@@ -258,7 +258,7 @@
         class="configuration_button"
         (click)="configurationSettings()"
       >
-        STEP 5: Recording configuration
+        {{ translations?.configuration?.step5 }}
       </button>
       <button
         mat-raised-button
@@ -266,7 +266,7 @@
         class="configuration_button"
         (click)="goTrainModel()"
       >
-        STEP 6: Go train model
+        {{ translations?.configuration?.step6 }}
       </button>
     </div>
   </div>

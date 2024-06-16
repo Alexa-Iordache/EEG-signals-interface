@@ -1,20 +1,23 @@
 <div class="existing-model-page">
   <div class="header-container">
-    <div class="title">Use a model you created before</div>
+    <div class="title">{{ translations?.existingModel?.title }}</div>
     <app-sidebard></app-sidebard>
   </div>
-  <div *ngIf="!selectButtonClicked" class="subtitle">Choose your model:</div>
+  <div *ngIf="!selectButtonClicked" class="subtitle">
+    {{ translations?.existingModel?.subtitle }}
+  </div>
   <div *ngIf="selectButtonClicked" class="subtitle">
-    Recording:
-    {{ displayedRecording?.room_name ? displayedRecording?.room_name : "-" }}
+    {{ translations?.existingModel?.recording }}
+    {{ displayedRecording?.room_name ? displayedRecording?.room_name : "-" }} -
+    {{ displayedRecording?.room_name ? displayedRecording?.description : "-" }}
   </div>
   <div *ngIf="!selectButtonClicked" class="existing-model-table-container">
     <mat-form-field>
-      <mat-label>Filter</mat-label>
+      <mat-label>{{ translations?.existingModel?.filter }}</mat-label>
       <input
         matInput
         (keyup)="applyFilter($event)"
-        placeholder="Ex. bedroom"
+        placeholder="{{ translations?.existingModel?.placeholder }}"
         #input
       />
     </mat-form-field>
@@ -23,7 +26,9 @@
       <table mat-table [dataSource]="dataSource" matSort>
         <!-- Room name Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Room name</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ translations?.existingModel?.room_name }}
+          </th>
           <td mat-cell *matCellDef="let recording">
             {{
               recording.name === null || recording.name === "undefined"
@@ -36,7 +41,7 @@
         <!-- Action description Column -->
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Action description
+            {{ translations?.existingModel?.action_description }}
           </th>
           <td mat-cell *matCellDef="let recording">
             {{ recording.description === null ? "-" : recording.description }}
@@ -52,7 +57,7 @@
               color="accent"
               (click)="buttonClicked(recording)"
             >
-              Select model
+              {{ translations?.existingModel?.select_model }}
             </button>
             <button
               mat-button
@@ -60,7 +65,7 @@
               class="table-delete-button"
               (click)="deleteRecording(recording)"
             >
-              Delete model
+              {{ translations?.existingModel?.delete_model }}
             </button>
           </td>
         </ng-container>
@@ -71,7 +76,7 @@
         <!-- Row shown when there is no matching data. -->
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="4">
-            No data matching the filter "{{ input.value }}"
+            {{ translations?.existingModel?.filter_error }} "{{ input.value }}"
           </td>
         </tr>
       </table>
@@ -137,7 +142,7 @@
         [disabled]="recreatingActions"
         (click)="startModel()"
       >
-        Start model
+        {{ translations?.existingModel?.start }}
       </button>
       <button
         mat-raised-button
@@ -146,7 +151,7 @@
         [disabled]="recreatingActions"
         (click)="backToTable()"
       >
-        Back to table
+        {{ translations?.existingModel?.back }}
       </button>
       <button
         *ngIf="selectButtonClicked"
@@ -156,7 +161,7 @@
         [disabled]="!pauseButtonClicked"
         (click)="pauseModel()"
       >
-        Pause model
+        {{ translations?.existingModel?.pause }}
       </button>
       <button
         *ngIf="selectButtonClicked"
@@ -166,7 +171,7 @@
         [disabled]="!restartButtonClicked"
         (click)="restartModel()"
       >
-        Continue
+        {{ translations?.existingModel?.continue }}
       </button>
     </div>
   </div>

@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { RpcService } from '../services/rpc.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginModalComponent } from '../modals/login-modal/login-modal.component';
 import { TranslationService } from '../services/translation.service';
@@ -20,8 +18,6 @@ export class LoginPageComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private rpcService: RpcService,
-    private cookieService: CookieService,
     public translationService: TranslationService
   ) {}
 

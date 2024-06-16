@@ -12,22 +12,88 @@
   "mainPage": {
     "welcome": "Aplicatie pentru controlul unui dispozitiv asistiv virtual folosind semnale EEG",
     "subtitle": "",
-    "description": "Descoperă puterea minții tale cu tehnologia EEG avansată pentru controlul dispozitivelor asistive. Obtii independență și accesibilitate fara dificultati",
+    "description": "Descopera puterea mintii tale cu tehnologia EEG avansata pentru controlul dispozitivelor asistive. Obtii independenta si accesibilitate fara dificultati",
     "configuration": {
       "title": "Configurare",
-      "description": "Pagine de configurare este destinata personalului tehnic. Aici, utilizatorii pot personaliza setările de înregistrare, cum ar fi dimensiunile camerei, punctele de început și de sfârșit ale robotului și pașii de mișcare ai robotului. Obstacolele din cameră pot fi adăugate și personalizate, iar cele adaugate incorecte pot fi eliminate cu ușurință. În plus, utilizatorii pot defini parametrii de înregistrare precum durata și metricile de performanță. În aceasta pagina, utilizatorii tehnici pot simula traseul folosind tastele săgeți de pe tastatură."
+      "description": "Pagine de configurare este destinata personalului tehnic. Aici, utilizatorii pot personaliza setarile de inregistrare, cum ar fi dimensiunile camerei, punctele de inceput si de sfarsit ale robotului si pasii de miscare ai robotului. Obstacolele din camera pot fi adaugate si personalizate, iar cele adaugate incorecte pot fi eliminate cu usurinta. In plus, utilizatorii pot defini parametrii de inregistrare precum durata si metricile de performanta. In aceasta pagina, utilizatorii tehnici pot simula traseul folosind tastele sageți de pe tastatura."
     },
     "trainModel": {
       "title": "Antrenarea unui nou model",
-      "description": "In aceasta pagina se afla un buton \"Antrenare model\" care redirectioneaza utilizatorul la pagina de antrenare a unui nou model. Aici este afișată camera asa cum a fost configurata pe pagina de \"Configurare\". Exista doua butoane: \"Antrenare model\" care inițiază simularea înregistrării, permițând utilizatorilor să înregistreze mai multe sesiuni înainte de a salva înregistrarea corectă. După salvare, utilizatorii trebuie să furnizeze un nume de cameră și o descriere a acțiunii înregistrate."
+      "description": "In aceasta pagina se afla un buton \"Antrenare model\" care redirectioneaza utilizatorul la pagina de antrenare a unui nou model. Aici este afisata camera asa cum a fost configurata pe pagina de \"Configurare\". Exista doua butoane: \"Antrenare model\" care initiaza simularea inregistrarii, permitand utilizatorilor sa inregistreze mai multe sesiuni inainte de a salva inregistrarea corecta. Dupa salvare, utilizatorii trebuie sa furnizeze un nume de camera si o descriere a actiunii inregistrate."
     },
     "useModel": {
       "title": "Utilizarea unui model existent",
-      "description": "Pagina pentru utilizarea unui model deja existent prezintă un tabel cu înregistrările salvate. Selectarea unui model afișează configurarea camerei corespunzătoare, inclusiv dimensiunile, obstacolele și setările robotului. Utilizatorul pot iniția modelul pentru a observa cum robotul efectueaza acțiuni antrenate. De asemenea, utilizatorul poate sa opreasca si sa reia acțiunile robotului folosind butoane corespunzatoare."
+      "description": "Pagina pentru utilizarea unui model deja existent prezinta un tabel cu inregistrarile salvate. Selectarea unui model afiseaza configurarea camerei corespunzatoare, inclusiv dimensiunile, obstacolele si setarile robotului. Utilizatorul pot initia modelul pentru a observa cum robotul efectueaza actiuni antrenate. De asemenea, utilizatorul poate sa opreasca si sa reia actiunile robotului folosind butoane corespunzatoare."
     },
     "menu": {
       "romanian": "Limba romana",
       "english": "Limba engleza"
     }
+  },
+  "configuration": {
+    "title": "Configurare model:",
+    "direction": "Directie robot:",
+    "step1": "PASUL 1: Configurare camera",
+    "step2": "PASUL 2: Configurare robot",
+    "step3": "PASUL 3: Configurare obstacole",
+    "step4": "PASUL 4: Simulare",
+    "step5": "PASUL 5: Configurare inregistrare",
+    "step6": "PASUL 6: Antrenare model",
+    "step1_input1": "Lungime camera (cm)",
+    "step1_input2": "Latime camera (cm)",
+    "step2_input1": "Pas folosit de robot pentru deplasare (cm)",
+    "step2_button1": "Punctul de start pentru robot",
+    "step2_button2": "Punctul de oprire pentru robot",
+    "step3_input1": "Lungime obstacol (cm)",
+    "step3_input2": "Latime obstacol (cm)",
+    "step4_button1": "Start simularea",
+    "step4_button2": "Stop simularea",
+    "step4_button3": "Recreare simularea",
+    "step4_button4": "Incercati din nou",
+    "step5_input1": "Timp de configurare (s)",
+    "step5_input2": "Procentaj performanta (%)",
+    "back_button": "Inapoi la pasii principali"
+  },
+  "stepMessages": {
+    "step1": "PASUL 1: Configuare dimensiuni camera",
+    "step2": "PASUL 2: Configuare robotul",
+    "step3": "PASUL 3: Configuare obstacole",
+    "step4": "PASUL 4: Simuleaza modelul tau",
+    "step5": "PASUL 5: Configurare inregistrare",
+    "step5_configuration_title": "Timp de configurare",
+    "step5_configuration_description": "reprezinta timpul masurat in secunde intre doua ordine consecutive.",
+    "step5_performance_title": "Procentaj de performanta",
+    "step5_performance_description": "reprezinta procentul de similaritate dintre datele reale si datele procesate."
+  },
+  "trainModel": {
+    "title": "Antreneaza modelul tau aici:",
+    "direction": "Directie",
+    "start_record": "Start inregistrare",
+    "save_record": "Salvare inregistrare",
+    "recreate_actions": "Recreare actiuni",
+    "try_again": "Incearca din nou",
+    "back": "Inapoi",
+    "train_model": "Antreneaza model",
+    "back_to_configuration": "Inapoi la modul de configurare"
+  },
+  "direction": {
+    "direction": "Directie robor: ",
+    "recreate_simulation": "Recrearea ultimei simulari  "
+  },
+  "existingModel": {
+    "title": "Foloseste un model creat anterior",
+    "subtitle": "Alege modelul:",
+    "recording": "Inregistrare:",
+    "filter": "Filtreaza",
+    "placeholder": "Ex. dormitor",
+    "room_name": "Camera",
+    "action_description": "Descrierea actiunii",
+    "select_model": "Selecteaza",
+    "delete_model": "Sterge",
+    "filter_error": "Nu exista date care sa corespunda filtrului",
+    "start": "Start inregistrare",
+    "back": "Inapoi la tabel",
+    "pause": "Pauza",
+    "continue": "Continua"
   }
 }
