@@ -52,6 +52,9 @@ export class TrainModelComponent {
   // Data sent to python script
   dataSent = '';
 
+  // Array to store robot's trace
+  robotTrace: { x: number; y: number }[] = [];
+
   constructor(
     private configurationService: ConfigurationService,
     private router: Router,
@@ -191,6 +194,9 @@ export class TrainModelComponent {
         this.lastDirection = 'ArrowUp';
         break;
     }
+
+    // Update robot's trace after movement
+    this.updateRobotTrace();
   }
 
   // Method to rotate with 90 degrees when '110' appears in the sequence
@@ -295,6 +301,14 @@ export class TrainModelComponent {
           }
         }
       );
+    });
+  }
+
+  // Method to update robot's trace with current position
+  updateRobotTrace(): void {
+    this.robotTrace.push({
+      x: this.currentPosition.x,
+      y: this.currentPosition.y,
     });
   }
 }

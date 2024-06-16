@@ -69,6 +69,9 @@ export class ExistingModelComponent {
   // Copy of the pause index
   copyPauseActionIndex = 0;
 
+  // Array to store the robot trace path
+  robotTrace: Position[] = [];
+
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
@@ -188,6 +191,7 @@ export class ExistingModelComponent {
 
   // Method to recreat the actions for the selected recording
   startModel(): void {
+    this.robotTrace = [];
     this.currentPosition.x = this.displayedRecording.robot_start_x;
     this.currentPosition.y = this.displayedRecording.robot_start_y;
     this.currentDirectionIndex = 0;
@@ -222,6 +226,9 @@ export class ExistingModelComponent {
         this.lastDirection = 'ArrowUp';
         break;
     }
+
+     // Add current position to robotTrace
+     this.robotTrace.push({ x: this.currentPosition.x, y: this.currentPosition.y });
   }
 
   // Method to rotate with 90 degrees when '110' appears in the sequence

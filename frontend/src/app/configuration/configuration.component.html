@@ -48,6 +48,13 @@
             [style.height.px]="obstacle.height"
             (click)="handleObstacleClick($event, obstacle)"
           ></div>
+
+          <div
+            class="robot-trace"
+            [style.left.px]="recording.robot_start.x"
+            [style.top.px]="recording.robot_start.y"
+          ></div>
+
           <div
             class="robot-trace"
             *ngFor="let trace of robotTrace"

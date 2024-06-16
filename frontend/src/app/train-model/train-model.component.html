@@ -40,6 +40,19 @@
             [style.width.px]="obstacle.width"
             [style.height.px]="obstacle.height"
           ></div>
+
+          <div
+            class="trace"
+            [style.left.px]="recording?.robot_start?.x"
+            [style.top.px]="recording?.robot_start?.y"
+          ></div>
+
+          <div
+            *ngFor="let trace of robotTrace"
+            class="trace"
+            [style.left.px]="trace.x"
+            [style.top.px]="trace.y"
+          ></div>
         </div>
       </div>
     </div>

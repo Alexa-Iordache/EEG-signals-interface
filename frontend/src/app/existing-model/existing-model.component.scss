@@ -16,7 +16,6 @@
     }
   }
 
-
   .subtitle {
     @include displayFormat(flex, flex-start, space-between);
     font-size: 30px;
@@ -83,6 +82,14 @@
         .obstacle {
           position: absolute;
           background-color: blue;
+        }
+
+        .trace {
+          @include dimension(30px, 30px);
+          position: absolute;
+          background-color: rgba(0, 0, 0, 0.2);
+          z-index: 1;
+          pointer-events: none;
         }
       }
     }

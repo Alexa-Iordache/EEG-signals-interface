@@ -49,6 +49,19 @@
             position: absolute;
             background-color: blue;
           }
+
+          .trace {
+            @include dimension(30px, 30px);
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            pointer-events: none;
+            // width: 5px; /* Adjust thickness of the trace line */
+            // height: 5px; /* Adjust thickness of the trace line */
+            // background-color: rgba(0, 0, 255, 0.5); /* Adjust color and opacity of the trace */
+            // border-radius: 50%; /* Circle shape */
+            // transform: translate(-50%, -50%);
+          }
         }
       }
     }
