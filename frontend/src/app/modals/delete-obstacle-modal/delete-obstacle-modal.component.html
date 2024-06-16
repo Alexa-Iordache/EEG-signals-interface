@@ -1,8 +1,10 @@
-<h1 mat-dialog-title>Delete element</h1>
-<div mat-dialog-content>Do you want to delete this element?</div>
+<h1 mat-dialog-title>{{ translations?.deleteObstacleModal?.title }}</h1>
+<div mat-dialog-content>{{ translations?.deleteObstacleModal?.subtitle }}</div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close mcdkFocusInitial (click)="onNoClick()">
-    No
+    {{ translations?.deleteObstacleModal?.no }}
   </button>
-  <button mat-button mat-dialog-close (click)="onYesClick()">Yes</button>
+  <button mat-button mat-dialog-close (click)="onYesClick()">
+    {{ translations?.deleteObstacleModal?.yes }}
+  </button>
 </div>

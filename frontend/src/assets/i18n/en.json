@@ -95,5 +95,25 @@
     "back": "Back to table",
     "pause": "Pause model",
     "continue": "Continue"
+  },
+  "deleteObstacleModal": {
+    "title": "Delete element",
+    "subtitle": "Do you want to delete this element?",
+    "no": "No",
+    "yes": "Yes"
+  },
+  "deleteRecordingModal": {
+    "title": "Delete recording",
+    "subtitle": "Do you want to delete this recording?",
+    "no": "No",
+    "yes": "Yes"
+  },
+  "saveRecordingModal": {
+    "title": "Save recording",
+    "subtitle": "Give a description for this board:",
+    "room_name": "Room name",
+    "description": "Description",
+    "no": "Don't save",
+    "yes": "Save"
   }
 }

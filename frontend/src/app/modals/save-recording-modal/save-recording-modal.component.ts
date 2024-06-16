@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RpcService } from 'src/app/services/rpc.service';
+import { TranslationService } from 'src/app/services/translation.service';
 
 export interface SaveRecordingDialogData {
   saved: boolean;
@@ -35,10 +36,19 @@ export class SaveRecordingModalComponent {
   // Save button disabled state
   saveDisabled = false;
 
+  translations: any = {};
+
   constructor(
+    public translationService: TranslationService,
     public dialogRef: MatDialogRef<SaveRecordingModalComponent>,
     private rpcService: RpcService
   ) {}
+
+  ngOnInit(): void {
+    this.translationService.getTranslations().subscribe((translations) => {
+      this.translations = translations;
+    });
+  }
 
   // Method for 'do not save' case
   onNoClick(): void {

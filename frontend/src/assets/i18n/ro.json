@@ -77,7 +77,7 @@
     "back_to_configuration": "Inapoi la modul de configurare"
   },
   "direction": {
-    "direction": "Directie robor: ",
+    "direction": "Directie robot: ",
     "recreate_simulation": "Recrearea ultimei simulari  "
   },
   "existingModel": {
@@ -95,5 +95,25 @@
     "back": "Inapoi la tabel",
     "pause": "Pauza",
     "continue": "Continua"
+  },
+  "deleteObstacleModal": {
+    "title": "Sterge elementul",
+    "subtitle": "Vrei sa stergi acest element?",
+    "no": "Nu",
+    "yes": "Da"
+  },
+  "deleteRecordingModal": {
+    "title": "Sterge inregistrarea",
+    "subtitle": "Vrei sa stergi aceasta inregistrare?",
+    "no": "Nu",
+    "yes": "Da"
+  },
+  "saveRecordingModal": {
+    "title": "Salveaza inregistrarea",
+    "subtitle": "Completeaza detaliile pentru aceasta inregistare:",
+    "room_name": "Denumire camera",
+    "description": "Descriere actiune",
+    "no": "Nu salva",
+    "yes": "Salveaza"
   }
 }

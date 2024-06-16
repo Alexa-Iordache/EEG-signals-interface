@@ -1,9 +1,8 @@
-<h1 mat-dialog-title>Save recording</h1>
-<!-- <div mat-dialog-content>Do you want to save this recording?</div> -->
+<h1 mat-dialog-title>{{ translations?.saveRecordingModal?.title }}</h1>
 <div mat-dialog-content class="save-recording-modal-content">
-  Give a description for this board:
+  {{ translations?.saveRecordingModal?.subtitle }}
   <mat-form-field>
-    <mat-label>Room name</mat-label>
+    <mat-label>{{ translations?.saveRecordingModal?.room_name }}</mat-label>
     <input
       matInput
       type="text"
@@ -13,7 +12,7 @@
     />
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Description</mat-label>
+    <mat-label>{{ translations?.saveRecordingModal?.description }}</mat-label>
     <input
       matInput
       type="text"
@@ -26,7 +25,7 @@
 </div>
 <div mat-dialog-actions class="footer-container">
   <button mat-button mat-dialog-close mcdkFocusInitial (click)="onNoClick()">
-    Don't save
+    {{ translations?.saveRecordingModal?.no }}
   </button>
   <button
     mat-button
@@ -34,6 +33,6 @@
     [disabled]="descriptionText === '' || roomNameText === '' || saveDisabled"
     (click)="onYesClick()"
   >
-    Save
+  {{ translations?.saveRecordingModal?.yes }}
   </button>
 </div>

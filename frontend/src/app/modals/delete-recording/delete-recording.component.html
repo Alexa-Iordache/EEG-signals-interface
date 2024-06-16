@@ -1,8 +1,10 @@
-<h1 mat-dialog-title>Delete recording</h1>
-<div mat-dialog-content>Would you like to delete '{{ data.name }}' recording?</div>
+<h1 mat-dialog-title>{{ translations?.deleteRecordingModal?.title }}</h1>
+<div mat-dialog-content>{{ translations?.deleteRecordingModal?.subtitle }}</div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close cdkFocusInitial (click)="onNoClick()">
-    No
+    {{ translations?.deleteRecordingModal?.no }}
   </button>
-  <button mat-button mat-dialog-close (click)="onYesClick()">Yes</button>
+  <button mat-button mat-dialog-close (click)="onYesClick()">
+    {{ translations?.deleteRecordingModal?.yes }}
+  </button>
 </div>
