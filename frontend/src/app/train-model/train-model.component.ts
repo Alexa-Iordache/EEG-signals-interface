@@ -151,6 +151,7 @@ export class TrainModelComponent {
     this.currentPosition.x = this.initialPostion.x;
     this.currentPosition.y = this.initialPostion.y;
     this.currentDirectionIndex = 0;
+    this.robotTrace = [];
 
     // Reset buttons state
     this.startRecordEnabled = true;
@@ -266,6 +267,19 @@ export class TrainModelComponent {
       room_name: this.recording?.room_name,
     };
 
+    // Check if obstacles array is empty
+    if (this.obstacles.length === 0) {
+      // Create default obstacle with 0 values
+      let defaultObstacle: Obstacle = {
+        width: 0,
+        height: 0,
+        pos: { x: 0, y: 0 },
+      };
+
+      // Add default obstacle to the obstacles array
+      this.obstacles.push(defaultObstacle);
+    }
+
     this.rpcService.callRPC(
       'recordings.addRecording',
       paramsAddRecording,
@@ -274,7 +288,7 @@ export class TrainModelComponent {
           console.log(error);
           return;
         } else {
-          this.addAllObstaclesToDatabase(this.obstacles, response.recordingId);
+          this.addAllObstaclesToDatabase(this.obstacles, response);
         }
       }
     );

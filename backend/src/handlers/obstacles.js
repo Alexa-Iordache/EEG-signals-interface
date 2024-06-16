@@ -19,7 +19,7 @@ let obstacles = {
         VALUES ('${recordingId}', '${width}', '${height}', '${xPos}', '${yPos}');`,
       (error, result) => {
         if (error) {
-          throw err;
+          throw error;
         }
       }
     );

@@ -20,23 +20,23 @@
         (click)="changeLanguage('ro')"
         [disabled]="translationService.getCurrentLang() === 'ro'"
       >
-        {{ translations?.mainPage.menu.romanian }}
+        {{ translations?.mainPage?.menu.romanian }}
       </button>
       <button
         mat-menu-item
         (click)="changeLanguage('en')"
         [disabled]="translationService.getCurrentLang() === 'en'"
       >
-        {{ translations?.mainPage.menu.english }}
+        {{ translations?.mainPage?.menu.english }}
       </button>
     </mat-menu>
   </div>
 
   <div class="main-container">
     <div class="main-container-text">
-      <div class="title">{{ translations?.mainPage.welcome }}</div>
-      <div class="subtitle">{{ translations?.mainPage.subtitle }}</div>
-      <div class="description">{{ translations?.mainPage.description }}</div>
+      <div class="title">{{ translations?.mainPage?.welcome }}</div>
+      <div class="subtitle">{{ translations?.mainPage?.subtitle }}</div>
+      <div class="description">{{ translations?.mainPage?.description }}</div>
     </div>
   </div>
 
@@ -48,10 +48,10 @@
         class="menu-button"
         (click)="configuration()"
       >
-        {{ translations?.mainPage.configuration.title }}
+        {{ translations?.mainPage?.configuration.title }}
       </button>
       <div class="menu-text">
-        {{ translations?.mainPage.configuration.description }}
+        {{ translations?.mainPage?.configuration.description }}
       </div>
     </div>
     <div class="button-and-text second">
@@ -61,10 +61,10 @@
         class="menu-button"
         (click)="trainModel()"
       >
-        {{ translations?.mainPage.trainModel.title }}
+        {{ translations?.mainPage?.trainModel.title }}
       </button>
       <div class="menu-text">
-        {{ translations?.mainPage.trainModel.description }}
+        {{ translations?.mainPage?.trainModel.description }}
       </div>
     </div>
     <div class="button-and-text third">
@@ -74,10 +74,10 @@
         class="menu-button"
         (click)="useModel()"
       >
-        {{ translations?.mainPage.useModel.title }}
+        {{ translations?.mainPage?.useModel.title }}
       </button>
       <div class="menu-text">
-        {{ translations?.mainPage.useModel.description }}
+        {{ translations?.mainPage?.useModel.description }}
       </div>
     </div>
   </div>

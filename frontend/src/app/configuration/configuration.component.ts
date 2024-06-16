@@ -339,6 +339,7 @@ export class ConfigurationComponent {
     this.currentPosition.x = this.recording.robot_start.x;
     this.currentPosition.y = this.recording.robot_start.y;
     this.obstacles = [];
+    this.robotTrace = [];
     this.lastKeyPressed = '';
 
     // Reset buttons state

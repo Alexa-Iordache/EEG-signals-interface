@@ -292,6 +292,8 @@ export class ExistingModelComponent {
   backToTable(): void {
     this.selectButtonClicked = false;
     this.clearFilters();
+
+    this.robotTrace = []
   }
 
   // Method to pause the model
