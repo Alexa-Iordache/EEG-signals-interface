@@ -1,7 +1,18 @@
+@import "../../../general/mixins.scss";
+
 .save-recording-modal-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include displayFormatWithDirection(flex, column, center, none);
   padding-bottom: 0px;
   gap: 20px;
+
+  .error-message {
+    max-width: 300px;
+    color: red;
+    margin-top: -15px;
+    text-align: center;
+  }
+}
+
+.footer-container {
+  @include displayFormat(flex, center, center);
 }

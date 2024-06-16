@@ -41,7 +41,7 @@ let recordings = {
 
   getOneRecording(req, res, next) {
     let recordingID = req.body.params.recordingID;
-    
+
     mysql.query(
       `SELECT * FROM Recordings WHERE id = '${recordingID}';`,
       (error, result) => {
@@ -67,6 +67,25 @@ let recordings = {
       (error, result) => {
         if (error) {
           throw error;
+        }
+      }
+    );
+  },
+
+  checkDuplicateRecording(req, res, next) {
+    let room_name = req.body.params.room_name;
+    let description = req.body.params.description;
+
+    mysql.query(
+      `SELECT * FROM Recordings WHERE room_name = '${room_name}' AND description = '${description}';`,
+      (error, results) => {
+        if (error) {
+          return next(error);
+        }
+        if (results.length > 0) {
+          return res.json({ exists: true });
+        } else {
+          return res.json({ exists: false });
         }
       }
     );

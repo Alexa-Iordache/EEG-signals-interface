@@ -96,7 +96,7 @@ export class TrainModelComponent {
   async startRecord() {
     // let receivedData = await this.trainModelService.getDataFromPython()
     // this.actions = receivedData.data;
-    this.actions = "[100, 100, 0]";
+    this.actions = '[100, 100, 0]';
     this.processInstructions(this.actions);
 
     this.startRecordEnabled = false;
@@ -263,12 +263,12 @@ export class TrainModelComponent {
     this.rpcService.callRPC(
       'recordings.addRecording',
       paramsAddRecording,
-      (error: any, recordingId: any) => {
+      (error: any, response: any) => {
         if (error) {
           console.log(error);
           return;
         } else {
-          this.addAllObstaclesToDatabase(this.obstacles, recordingId);
+          this.addAllObstaclesToDatabase(this.obstacles, response.recordingId);
         }
       }
     );

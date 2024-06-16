@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { RpcService } from 'src/app/services/rpc.service';
 
 export interface SaveRecordingDialogData {
   saved: boolean;
@@ -28,13 +29,21 @@ export class SaveRecordingModalComponent {
     description: '',
   };
 
-  constructor(public dialogRef: MatDialogRef<SaveRecordingModalComponent>) {}
+  // Error message to display in the modal
+  errorMessage: string | null = null;
+
+  // Save button disabled state
+  saveDisabled = false;
+
+  constructor(
+    public dialogRef: MatDialogRef<SaveRecordingModalComponent>,
+    private rpcService: RpcService
+  ) {}
 
   // Method for 'do not save' case
   onNoClick(): void {
     this.dataSent.saved = false;
     this.dialogRef.close(this.dataSent);
-    console.log(this.roomNameText);
   }
 
   // Method for 'save' case
@@ -43,5 +52,31 @@ export class SaveRecordingModalComponent {
     this.dataSent.description = this.descriptionText;
     this.dataSent.roomName = this.roomNameText;
     this.dialogRef.close(this.dataSent);
+  }
+
+  // Check for duplicate recordings
+  checkForDuplicates(): void {
+    let paramsCheckRecording = {
+      room_name: this.roomNameText,
+      description: this.descriptionText,
+    };
+
+    this.rpcService.callRPC(
+      'recordings.checkDuplicateRecording',
+      paramsCheckRecording,
+      (error: any, response: any) => {
+        if (error) {
+          console.log(error);
+          return;
+        } else if (response.exists) {
+          this.errorMessage =
+            'Recording with the same room name and description already exists.';
+          this.saveDisabled = true;
+        } else {
+          this.errorMessage = null;
+          this.saveDisabled = false;
+        }
+      }
+    );
   }
 }
