@@ -310,8 +310,13 @@ export class ExistingModelComponent {
   backToTable(): void {
     this.selectButtonClicked = false;
     this.clearFilters();
-
     this.robotTrace = [];
+
+    setTimeout(() => {
+      if (this.paginator) {
+        this.dataSource.paginator = this.paginator;
+      }
+    }, 0);
   }
 
   // Method to pause the model
