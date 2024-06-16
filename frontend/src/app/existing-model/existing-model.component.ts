@@ -1,4 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -81,7 +86,8 @@ export class ExistingModelComponent {
   constructor(
     public dialog: MatDialog,
     public translationService: TranslationService,
-    private rpcService: RpcService
+    private rpcService: RpcService,
+    private cdr: ChangeDetectorRef
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -91,7 +97,7 @@ export class ExistingModelComponent {
     this.getAllRecordingsFromDB();
 
     // translations
-    this.translationService.getTranslations().subscribe(translations => {
+    this.translationService.getTranslations().subscribe((translations) => {
       this.translations = translations;
     });
   }
@@ -236,8 +242,11 @@ export class ExistingModelComponent {
         break;
     }
 
-     // Add current position to robotTrace
-     this.robotTrace.push({ x: this.currentPosition.x, y: this.currentPosition.y });
+    // Add current position to robotTrace
+    this.robotTrace.push({
+      x: this.currentPosition.x,
+      y: this.currentPosition.y,
+    });
   }
 
   // Method to rotate with 90 degrees when '110' appears in the sequence
@@ -302,7 +311,7 @@ export class ExistingModelComponent {
     this.selectButtonClicked = false;
     this.clearFilters();
 
-    this.robotTrace = []
+    this.robotTrace = [];
   }
 
   // Method to pause the model
@@ -339,12 +348,16 @@ export class ExistingModelComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-
       if (result === 'yes') {
         let params = {
           recordingID: recording.recordingID,
         };
+
+        this.displayedInfo = this.displayedInfo.filter(
+          (item) => item.recordingID !== recording.recordingID
+        );
+        this.dataSource.data = this.displayedInfo;
+
         this.rpcService.callRPC(
           'recordings.deleteRecording',
           params,
