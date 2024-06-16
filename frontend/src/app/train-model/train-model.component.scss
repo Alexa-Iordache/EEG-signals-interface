@@ -9,6 +9,11 @@
     @include displayFormatWithDirection(flex, row, center, space-between);
     width: 90%;
     padding-top: 30px;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-bottom-left-radius: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
 
     .title {
       font-size: 40px;
