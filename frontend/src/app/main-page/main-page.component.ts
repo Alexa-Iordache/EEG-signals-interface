@@ -42,7 +42,6 @@ export class MainPageComponent {
   }
 
   changeLanguage(lang: string): void {
-    console.log('change language');
     this.translationService.switchLang(lang);
   }
 

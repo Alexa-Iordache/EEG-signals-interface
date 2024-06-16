@@ -29,7 +29,7 @@ let recordings = {
         '${actions}', '${description}', '${room_name}');`,
       (error, result) => {
         if (error) {
-          throw err;
+          throw error;
         }
 
         // Send the recording ID back in the response
@@ -46,7 +46,7 @@ let recordings = {
       `SELECT * FROM Recordings WHERE id = '${recordingID}';`,
       (error, result) => {
         if (error) {
-          throw err;
+          throw error;
         }
         if (result.length == 0) {
           res.json({

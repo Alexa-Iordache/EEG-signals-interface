@@ -72,17 +72,17 @@ export class TrainModelComponent {
     if (this.recording?.robot_start.y)
       this.initialPostion.y = this.recording?.robot_start.y;
     this.currentPosition = {
-        x: this.initialPostion.x,
-        y: this.initialPostion.y,
-      };
+      x: this.initialPostion.x,
+      y: this.initialPostion.y,
+    };
   }
 
   // Method that reveal neccessary buttons to train a new model
   trainModel(): void {
     this.trainModelButton = true;
     this.startRecordEnabled = true;
-    console.log(this.recording);
-    if (this.recording?.configuration_time) this.dataSent = this.recording?.configuration_time.toString();
+    if (this.recording?.configuration_time)
+      this.dataSent = this.recording?.configuration_time.toString();
     // this.trainModelService.sendData(this.dataSent);
   }
 
@@ -96,7 +96,7 @@ export class TrainModelComponent {
   async startRecord() {
     // let receivedData = await this.trainModelService.getDataFromPython()
     // this.actions = receivedData.data;
-    this.actions = "['100', '100', '0']"
+    this.actions = "[100, 100, 0]";
     this.processInstructions(this.actions);
 
     this.startRecordEnabled = false;
@@ -205,7 +205,6 @@ export class TrainModelComponent {
   processInstructions(instructions: string) {
     // Separeta each pair of 3 digitals
     const pairs = instructions.match(/\d{3}|0/g);
-    console.log(pairs?.length);
     if (!pairs) return;
 
     // Delay time (in milliseconds) between each move
@@ -216,15 +215,12 @@ export class TrainModelComponent {
       const pair = pairs[currentIndex];
       switch (pair) {
         case '100':
-          console.log('merge in fata');
           this.moveForward();
           break;
         case '110':
-          console.log('se roteste');
           this.rotateLeft();
           break;
         case '0':
-          console.log('Array is done');
           this.recreatingActions = false;
           this.stopRecordEnabled = true;
           break;
