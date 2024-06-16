@@ -60,6 +60,9 @@ export class ConfigurationComponent {
   // Variable to control the state of the "Try again" button
   recreatingSimulation: boolean = false;
 
+  // Array to store robot's trace
+  robotTrace: { x: number; y: number }[] = [];
+
   // Variables to illustrate which buttons have been clicked on
   chooseStartingPointActive = false;
   chooseFinishPointActive = false;
@@ -126,6 +129,9 @@ export class ConfigurationComponent {
           y: this.currentPosition.y,
         });
       }
+
+      // Call updateRobotTrace here to update the trace whenever the position changes
+      this.updateRobotTrace(this.currentPosition.x, this.currentPosition.y);
     }
   }
 
@@ -362,5 +368,10 @@ export class ConfigurationComponent {
     this.stopSimulationButton = false;
     this.recreateSimulationButton = false;
     this.tryAgainButton = false;
+  }
+
+  // Method to update robot's trace
+  updateRobotTrace(x: number, y: number): void {
+    this.robotTrace.push({ x, y });
   }
 }

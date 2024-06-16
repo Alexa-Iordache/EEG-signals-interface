@@ -49,6 +49,15 @@
             position: absolute;
             background-color: blue;
           }
+
+          .robot-trace {
+            @include dimension(30px, 30px);
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            pointer-events: none;
+          }
+
         }
       }
     }
