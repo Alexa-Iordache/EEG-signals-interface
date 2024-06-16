@@ -35,19 +35,4 @@ export class MainPageComponent {
     console.log('Use existing model');
     this.router.navigate(['/use-existing-model']);
   }
-
-  showProfile(): void {
-    console.log('Show user profile');
-    this.router.navigate(['/profile-page']);
-  }
-
-  changeLanguage(lang: string): void {
-    this.translationService.switchLang(lang);
-  }
-
-  // exit function - returns to login page
-  exitButton(): void {
-    let copyInstance = this; // a copy of this class (atributes + methods)
-    copyInstance.router.navigate(['/login']);
-  }
 }

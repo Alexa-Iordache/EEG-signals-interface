@@ -1,20 +1,31 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslationService } from 'src/app/services/translation.service';
 
 @Component({
   selector: 'app-sidebard',
   templateUrl: './sidebard.component.html',
-  styleUrls: ['./sidebard.component.scss']
+  styleUrls: ['./sidebard.component.scss'],
 })
 export class SidebardComponent {
+  translations: any = {};
 
-  @Input() backgroundColorBlue = true;
+  // Input representing whether the buttons are used for the Main Page or any other dashboard.
+  @Input() mainPage = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    public translationService: TranslationService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.translationService.getTranslations().subscribe((translations) => {
+      this.translations = translations;
+    });
+  }
 
   // Method to go back to main-page
   backHome(): void {
-    console.log('back to home');
     this.router.navigate(['/main-page']);
   }
 
@@ -24,7 +35,13 @@ export class SidebardComponent {
   }
 
   // Method to change language
-  changeLanguage(): void {
-    console.log('change language');
+  changeLanguage(lang: string): void {
+    this.translationService.switchLang(lang);
+  }
+
+  // exit function - returns to login page
+  exitButton(): void {
+    let copyInstance = this; // a copy of this class (atributes + methods)
+    copyInstance.router.navigate(['/login']);
   }
 }

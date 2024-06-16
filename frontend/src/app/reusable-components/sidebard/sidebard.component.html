@@ -1,11 +1,41 @@
 <div class="sidebar-main-container">
-  <button mat-icon-button class="form-field-button" (click)="backHome()">
+  <button
+    *ngIf="!mainPage"
+    mat-icon-button
+    class="form-field-button"
+    (click)="backHome()"
+  >
     <mat-icon>home</mat-icon>
   </button>
   <button mat-icon-button class="form-field-button" (click)="goToProfile()">
     <mat-icon>person</mat-icon>
   </button>
-  <button mat-icon-button class="form-field-button" (click)="changeLanguage()">
+  <button mat-icon-button class="form-field-button" [matMenuTriggerFor]="menu">
     <mat-icon>language</mat-icon>
   </button>
+  <button
+    *ngIf="mainPage"
+    mat-icon-button
+    class="form-field-button"
+    (click)="exitButton()"
+  >
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button
+      mat-menu-item
+      (click)="changeLanguage('ro')"
+      [disabled]="translationService.getCurrentLang() === 'ro'"
+    >
+      {{ translations?.mainPage?.menu.romanian }}
+    </button>
+    <button
+      mat-menu-item
+      (click)="changeLanguage('en')"
+      [disabled]="translationService.getCurrentLang() === 'en'"
+    >
+      {{ translations?.mainPage?.menu.english }}
+    </button>
+  </mat-menu>
 </div>

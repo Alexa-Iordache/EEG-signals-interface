@@ -1,36 +1,5 @@
 <div class="main-page">
-  <div class="navbar-icons">
-    <button mat-icon-button (click)="showProfile()">
-      <mat-icon>person</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      [matMenuTriggerFor]="menu"
-      class="form-field-button"
-    >
-      <mat-icon>language</mat-icon>
-    </button>
-    <button mat-icon-button (click)="exitButton()">
-      <mat-icon>exit_to_app</mat-icon>
-    </button>
-
-    <mat-menu #menu="matMenu">
-      <button
-        mat-menu-item
-        (click)="changeLanguage('ro')"
-        [disabled]="translationService.getCurrentLang() === 'ro'"
-      >
-        {{ translations?.mainPage?.menu.romanian }}
-      </button>
-      <button
-        mat-menu-item
-        (click)="changeLanguage('en')"
-        [disabled]="translationService.getCurrentLang() === 'en'"
-      >
-        {{ translations?.mainPage?.menu.english }}
-      </button>
-    </mat-menu>
-  </div>
+  <app-sidebard [mainPage]="true" class="navbar-icons"></app-sidebard>
 
   <div class="main-container">
     <div class="main-container-text">
