@@ -10,6 +10,7 @@ import {
   Position,
 } from '../reusable-components/interfaces';
 import { TranslationService } from '../services/translation.service';
+// import { TrainModelService } from './train-model.service';
 
 @Component({
   selector: 'app-train-model',
@@ -61,7 +62,8 @@ export class TrainModelComponent {
     private router: Router,
     private rpcService: RpcService,
     public dialog: MatDialog,
-    public translationService: TranslationService
+    public translationService: TranslationService,
+    // public trainModelService: TrainModelService
   ) {}
 
   ngOnInit(): void {
@@ -80,7 +82,7 @@ export class TrainModelComponent {
     };
 
     // translations
-    this.translationService.getTranslations().subscribe(translations => {
+    this.translationService.getTranslations().subscribe((translations) => {
       this.translations = translations;
     });
   }
@@ -102,7 +104,7 @@ export class TrainModelComponent {
 
   // Method to start recording the actions
   async startRecord() {
-    // let receivedData = await this.trainModelService.getDataFromPython()
+    // let receivedData = await this.trainModelService.getDataFromPython();
     // this.actions = receivedData.data;
     this.actions = '[100, 100, 0]';
     this.processInstructions(this.actions);
