@@ -115,5 +115,19 @@
     "description": "Descriere actiune",
     "no": "Nu salva",
     "yes": "Salveaza"
+  },
+  "profileModal": {
+    "title": "Profilul utilizatorului",
+    "last_name": "Nume de familie:",
+    "first_name": "Prenume:",
+    "age": "Varsta:",
+    "sex": "Sex:",
+    "medical_problems": "Probleme medicale:",
+    "causes": "Cauze:",
+    "close": "Inchide",
+    "save": "Salveaza",
+    "change_info": "Modifica informatiile",
+    "error_message": "Toate campurile sunt obligatorii!"
   }
+
 }

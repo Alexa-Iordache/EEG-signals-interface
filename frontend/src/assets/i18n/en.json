@@ -115,5 +115,18 @@
     "description": "Description",
     "no": "Don't save",
     "yes": "Save"
+  },
+  "profileModal": {
+    "title": "User Profile",
+    "last_name": "Last name:",
+    "first_name": "First name:",
+    "age": "Age:",
+    "sex": "Sex:",
+    "medical_problems": "Medical problems:",
+    "causes": "Causes:",
+    "close": "Close",
+    "save": "Save",
+    "change_info": "Change info:",
+    "error_message": "All fields are required!"
   }
 }
