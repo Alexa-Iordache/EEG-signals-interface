@@ -1,8 +1,8 @@
 <div class="login-page-main-component">
   <div class="login-page_description-container">
-    <div class="login-page-title">{{ translations?.loginPage.title }}</div>
+    <div class="login-page-title">{{ translations?.loginPage?.title }}</div>
     <button mat-raised-button class="login_button" (click)="openDialog()">
-      {{ translations?.loginPage.login }}
+      {{ translations?.loginPage?.login }}
     </button>
   </div>
 
@@ -17,14 +17,14 @@
         (click)="changeLanguage('ro')"
         [disabled]="translationService.getCurrentLang() === 'ro'"
       >
-        {{ translations?.mainPage.menu.romanian }}
+        {{ translations?.mainPage?.menu.romanian }}
       </button>
       <button
         mat-menu-item
         (click)="changeLanguage('en')"
         [disabled]="translationService.getCurrentLang() === 'en'"
       >
-        {{ translations?.mainPage.menu.english }}
+        {{ translations?.mainPage?.menu.english }}
       </button>
     </mat-menu>
   </div>

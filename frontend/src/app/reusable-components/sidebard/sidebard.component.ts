@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ProfileModalComponent } from 'src/app/modals/profile-modal/profile-modal.component';
+import { ProfileService } from 'src/app/modals/profile-modal/profile-modal.service';
 import { TranslationService } from 'src/app/services/translation.service';
 
 @Component({
@@ -15,6 +18,8 @@ export class SidebardComponent {
 
   constructor(
     public translationService: TranslationService,
+    public dialog: MatDialog,
+    public profileService: ProfileService,
     private router: Router
   ) {}
 
@@ -29,11 +34,6 @@ export class SidebardComponent {
     this.router.navigate(['/main-page']);
   }
 
-  // Method to go to user profile dashboard
-  goToProfile(): void {
-    console.log('go to profile');
-  }
-
   // Method to change language
   changeLanguage(lang: string): void {
     this.translationService.switchLang(lang);
@@ -43,5 +43,13 @@ export class SidebardComponent {
   exitButton(): void {
     let copyInstance = this; // a copy of this class (atributes + methods)
     copyInstance.router.navigate(['/login']);
+  }
+
+   // Method to go to user profile dashboard
+   goToProfile(): void {
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo') || '{}');
+    this.dialog.open(ProfileModalComponent, {
+      data: userInfo,
+    });
   }
 }

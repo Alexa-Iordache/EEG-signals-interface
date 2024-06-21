@@ -1,0 +1,47 @@
+@import "../../../general/mixins.scss";
+
+.header {
+  @include displayFormat(flex, center, center);
+  color: white;
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+  margin-top: 20px;
+}
+
+.content {
+  padding-right: 60px;
+  padding-left: 60px;
+
+  .profile-field {
+    @include displayFormat(flex, center, none);
+    margin-bottom: 20px;
+
+    .profile-label {
+      font-weight: bold;
+      color: white;
+      margin-right: 10px;
+    }
+  }
+
+  .profile-field input:not([disabled]) {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    color: white;
+  }
+
+  .profile-field input[disabled] {
+    background-color: transparent;
+    border: none;
+    color: black;
+    padding-left: 0;
+  }
+}
+
+.footer {
+  @include displayFormat(flex, center, center);
+  margin-bottom: 10px;
+  padding-top: 20px;
+  border-top: 1px solid white;
+}

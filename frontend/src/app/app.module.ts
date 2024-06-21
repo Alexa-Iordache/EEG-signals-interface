@@ -31,6 +31,7 @@ import { SidebardComponent } from './reusable-components/sidebard/sidebard.compo
 import { LoginModalComponent } from './modals/login-modal/login-modal.component';
 import { DeleteRecordingComponent } from './modals/delete-recording/delete-recording.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { ProfileModalComponent } from './modals/profile-modal/profile-modal.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {MatMenuModule} from '@angular/material/menu';
     SidebardComponent,
     LoginModalComponent,
     DeleteRecordingComponent,
+    ProfileModalComponent,
   ],
   imports: [
     BrowserModule,

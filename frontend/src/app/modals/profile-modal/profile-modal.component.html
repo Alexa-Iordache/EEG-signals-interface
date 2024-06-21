@@ -1,0 +1,38 @@
+<h1 mat-dialog-title class="header">User Profile</h1>
+<div mat-dialog-content class="content">
+  <div class="profile-field">
+    <label class="profile-label">Last Name:</label>
+    <span *ngIf="!isEditing">{{ data[0].last_name }}</span>
+    <input matInput *ngIf="isEditing" [(ngModel)]="data[0].last_name" />
+  </div>
+  <div class="profile-field">
+    <label class="profile-label">First Name:</label>
+    <span *ngIf="!isEditing">{{ data[0].first_name }}</span>
+    <input matInput *ngIf="isEditing" [(ngModel)]="data[0].first_name" />
+  </div>
+  <div class="profile-field">
+    <label class="profile-label">Age:</label>
+    <span *ngIf="!isEditing">{{ data[0].age }}</span>
+    <input matInput *ngIf="isEditing" [(ngModel)]="data[0].age" type="number" />
+  </div>
+  <div class="profile-field">
+    <label class="profile-label">Sex:</label>
+    <span *ngIf="!isEditing">{{ data[0].sex }}</span>
+    <input matInput *ngIf="isEditing" [(ngModel)]="data[0].sex" />
+  </div>
+  <div class="profile-field">
+    <label class="profile-label">Medical problems:</label>
+    <span *ngIf="!isEditing">{{ data[0].medical_problems }}</span>
+    <input matInput *ngIf="isEditing" [(ngModel)]="data[0].medical_problems" />
+  </div>
+  <div class="profile-field">
+    <label class="profile-label">Causes:</label>
+    <span *ngIf="!isEditing">{{ data[0].causes }}</span>
+    <input matInput *ngIf="isEditing" [(ngModel)]="data[0].causes" />
+  </div>
+</div>
+<div mat-dialog-actions class="footer">
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button *ngIf="!isEditing" (click)="enableEditing()">Change Info</button>
+  <button mat-button *ngIf="isEditing" (click)="saveChanges()">Save</button>
+</div>

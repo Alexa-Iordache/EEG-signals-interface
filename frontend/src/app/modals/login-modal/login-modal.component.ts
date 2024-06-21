@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { RpcService } from 'src/app/services/rpc.service';
 import { TranslationService } from 'src/app/services/translation.service';
+import { ProfileService } from '../profile-modal/profile-modal.service';
 
 export interface LoginInputs {
   username: string;
@@ -22,6 +23,7 @@ export class LoginModalComponent {
   constructor(
     public translationService: TranslationService,
     public dialogRef: MatDialogRef<LoginModalComponent>,
+    public profileService: ProfileService,
     @Inject(MAT_DIALOG_DATA) public data: LoginInputs,
     private rpcService: RpcService,
     private cookieService: CookieService
@@ -30,7 +32,7 @@ export class LoginModalComponent {
   }
 
   ngOnInit() {
-    this.translationService.getTranslations().subscribe(translations => {
+    this.translationService.getTranslations().subscribe((translations) => {
       this.translations = translations;
     });
   }
@@ -53,8 +55,6 @@ export class LoginModalComponent {
       (error: any, res: any) => {
         if (error) {
           console.log('login failed');
-          console.log(this.data);
-          console.log(parameters)
           this.data.authFailed = true;
           return;
         }
@@ -62,6 +62,7 @@ export class LoginModalComponent {
         this.data.authFailed = false; // Resetare authFailed la succes
         this.cookieService.set('eeg-login', res.result.encoded);
         this.dialogRef.close('done');
+        this.profileService.getUserInfo(this.data.username);
         console.log('a mers logarea');
       }
     );

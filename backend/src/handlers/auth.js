@@ -41,6 +41,14 @@ let auth = {
       }
     );
   },
+
+  getUsers(req, res, next) {
+    let username = req.body.params.username;
+
+    mysql.query(`SELECT * FROM Users WHERE username = '${username}' LIMIT 1`, (error, result) => {
+      res.json({ id: 1, error: null, result: result });
+    });
+  },
 };
 
 module.exports = auth;
