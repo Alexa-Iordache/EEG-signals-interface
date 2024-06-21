@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { RpcService } from 'src/app/services/rpc.service';
 
 @Component({
   selector: 'app-profile-modal',
@@ -11,12 +12,12 @@ export class ProfileModalComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<ProfileModalComponent>
+    private dialogRef: MatDialogRef<ProfileModalComponent>,
+    private rpcService: RpcService
   ) {}
 
   ngOnInit() {
     console.log('Profile data:', this.data);
-    // Ensure data object is initialized
     if (!this.data) {
       this.data = {
         last_name: '',
@@ -33,10 +34,26 @@ export class ProfileModalComponent {
     this.isEditing = true;
   }
 
+  // Method to save changes
   saveChanges(): void {
-    // Add your save logic here, e.g., call a service to save the changes
-    console.log('Saving changes:', this.data);
     this.isEditing = false;
+
+    let params = {
+      username: this.data[0].username,
+      first_name: this.data[0].first_name,
+      last_name: this.data[0].last_name,
+      age: this.data[0].age,
+      sex: this.data[0].sex,
+      medical_problems: this.data[0].medical_problems,
+      causes: this.data[0].causes
+    };
+
+    this.rpcService.callRPC('auth.updateUser', params, (err: any, res: any) => {
+      if (err || res.error) {
+        console.log('nu s a putut afisa utilizatorul');
+      }
+      sessionStorage.setItem('userInfo', JSON.stringify(this.data));
+    });
   }
 
   onNoClick(): void {

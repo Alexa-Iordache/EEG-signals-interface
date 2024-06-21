@@ -49,6 +49,22 @@ let auth = {
       res.json({ id: 1, error: null, result: result });
     });
   },
+
+  updateUser(req, res, next) {
+    let username = req.body.params.username;
+    let first_name = req.body.params.first_name;
+    let last_name = req.body.params.last_name;
+    let age = req.body.params.age;
+    let sex = req.body.params.sex;
+    let medical_problems = req.body.params.medical_problems;
+    let causes = req.body.params.causes;
+
+    mysql.query(`UPDATE Users SET first_name = '${first_name}', last_name = '${last_name}', 
+    age = ${age}, sex = '${sex}', medical_problems = '${medical_problems}',
+    causes = '${causes}' WHERE username = '${username}';`, (error, result) => {
+      res.json({ id: 1, error: null, result: result });
+    });
+  },
 };
 
 module.exports = auth;
