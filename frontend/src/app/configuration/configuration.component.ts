@@ -83,7 +83,7 @@ export class ConfigurationComponent {
   ) {}
 
   ngOnInit(): void {
-    this.translationService.getTranslations().subscribe(translations => {
+    this.translationService.getTranslations().subscribe((translations) => {
       this.translations = translations;
     });
 
@@ -97,6 +97,7 @@ export class ConfigurationComponent {
   handleKeyboardEvent(event: KeyboardEvent) {
     this.lastKeyPressed = event.key;
     const step = this.recording.robot_step;
+    let arrowKeyPressed = false;
 
     // Calculate the potential new position of the point
     let newX = this.currentPosition.x;
@@ -104,15 +105,19 @@ export class ConfigurationComponent {
     switch (event.key) {
       case 'ArrowUp':
         newY -= step;
+        arrowKeyPressed = true;
         break;
       case 'ArrowDown':
         newY += step;
+        arrowKeyPressed = true;
         break;
       case 'ArrowLeft':
         newX -= step;
+        arrowKeyPressed = true;
         break;
       case 'ArrowRight':
         newX += step;
+        arrowKeyPressed = true;
         break;
     }
 
@@ -139,7 +144,9 @@ export class ConfigurationComponent {
       }
 
       // Call updateRobotTrace here to update the trace whenever the position changes
-      this.updateRobotTrace(this.currentPosition.x, this.currentPosition.y);
+      if (arrowKeyPressed) {
+        this.updateRobotTrace(this.currentPosition.x, this.currentPosition.y);
+      }
     }
   }
 
