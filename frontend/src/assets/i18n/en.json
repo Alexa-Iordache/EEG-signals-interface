@@ -113,6 +113,7 @@
     "subtitle": "Give a description for this board:",
     "room_name": "Room name",
     "description": "Description",
+    "errorMessage": "Recording with the same room name and description already exists.",
     "no": "Don't save",
     "yes": "Save"
   },

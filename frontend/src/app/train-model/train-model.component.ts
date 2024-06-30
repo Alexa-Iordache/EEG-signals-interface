@@ -104,9 +104,9 @@ export class TrainModelComponent {
 
   // Method to start recording the actions
   async startRecord() {
-    let receivedData = await this.trainModelService.getDataFromPython();
-    this.actions = receivedData.data;
-    // this.actions = '[100, 100, 0]';
+    // let receivedData = await this.trainModelService.getDataFromPython();
+    // this.actions = receivedData.data;
+    this.actions = '[100, 100, 100, 110, 110, 110, 100, 100, 100, 100, 100, 110, 100, 100, 0]';
     this.processInstructions(this.actions);
 
     this.startRecordEnabled = false;

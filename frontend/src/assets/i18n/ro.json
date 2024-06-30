@@ -113,6 +113,7 @@
     "subtitle": "Completeaza detaliile pentru aceasta inregistare:",
     "room_name": "Denumire camera",
     "description": "Descriere actiune",
+    "errorMessage": "Exista deja o inregistrare in aceasta camera cu aceasta activitate",
     "no": "Nu salva",
     "yes": "Salveaza"
   },

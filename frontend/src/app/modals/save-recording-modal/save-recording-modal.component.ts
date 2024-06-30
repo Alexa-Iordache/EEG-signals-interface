@@ -80,7 +80,7 @@ export class SaveRecordingModalComponent {
           return;
         } else if (response.exists) {
           this.errorMessage =
-            'Recording with the same room name and description already exists.';
+            this.translations?.saveRecordingModal?.errorMessage;
           this.saveDisabled = true;
         } else {
           this.errorMessage = null;
